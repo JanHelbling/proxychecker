@@ -5,7 +5,7 @@
 # License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.txt
 # Comment: Just another ProxyChecker in Python
 #
-#
+# Todo: Use OptParse to parse options
 #
 
 import urllib.request
