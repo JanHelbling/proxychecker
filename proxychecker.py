@@ -5,6 +5,9 @@
 # License: GNU/GPLv3
 # Comment: Just another ProxyChecker in Python
 #
+# ToDo: Multithreading
+#
+#
 
 import urllib.request
 import http.client
@@ -14,6 +17,7 @@ from sys import exc_info,exit,argv
 from socket import timeout
 
 class proxychecker:
+	"""Another Proxychecker in Python"""
 	def __init__(self,in_file,out_file,testsite,to,contains=""):
 		try:
 			self.in_file	=	open(in_file,"rb")
