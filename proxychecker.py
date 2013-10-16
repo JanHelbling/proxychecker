@@ -72,7 +72,7 @@ class proxychecker:
 if __name__ == "__main__":
 	argc	=	len(argv)
 	if argc != 7 and argc != 6:
-		print("Usage:",argv[0]," <proxy.lst> <output> <testsite> <timeout> <number of process>[ testsite must contains]")
+		print("Usage:",argv[0],"<proxy.lst> <output> <testsite> <timeout> <number of process>[ testsite must contains]")
 		exit(0)
 	if argc == 6:
 		p	=	proxychecker(argv[1],argv[2],argv[3],float(argv[4]),int(argv[5]))
