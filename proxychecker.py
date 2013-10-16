@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+#
+# (C) 2013 by Jan Helbling
+# jan.helbling@gmail.com
+# License: GNU/GPLv3
+# Comment: Just another ProxyChecker in Python
+#
 
 import urllib.request
 import http.client
