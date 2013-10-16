@@ -2,7 +2,7 @@
 #
 # (C) 2013 by Jan Helbling
 # jan.helbling@gmail.com
-# License: GNU/GPLv3
+# License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.txt
 # Comment: Just another ProxyChecker in Python
 #
 # ToDo: Multithreading
