@@ -1,2 +1,2 @@
 install:
-	install proxychecker.py /usr/bin/proxychecker.py
+	install proxychecker.py /usr/bin/proxychecker
