@@ -53,6 +53,10 @@ class proxychecker:
 			print("[FAIL]",proxy)
 		except http.client.BadStatusLine as e:
 			print("[FAIL]",proxy)
+		except http.client.IncompleteRead as e:
+			print("[FAIL]",proxy)
+		except KeyboardInterrupt as e:
+			print("[ABORTED CTRL+C]",proxy)
 	
 	def save_proxy(self,proxy):
 		"""Save the proxy to file."""
@@ -70,7 +74,10 @@ class proxychecker:
 			cnt = cnt + 1
 			if cnt == self.process_num:
 				for i in range(self.process_num):
-					wait()
+					try:
+						wait()
+					except KeyboardInterrupt as e:
+						exit(1)
 				cnt = 0
 		self.in_file.close()
 		self.out_file.close()
