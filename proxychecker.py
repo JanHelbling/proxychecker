@@ -11,6 +11,7 @@
 import urllib.request
 import http.client
 from os import fork,wait
+from optparse import OptionParser
 
 from sys import exc_info,exit,argv
 from socket import timeout
@@ -70,12 +71,15 @@ class proxychecker:
 		print("[DONE!]")
 
 if __name__ == "__main__":
-	argc	=	len(argv)
-	if argc != 7 and argc != 6:
-		print("Usage:",argv[0],"<proxy.lst> <output> <testsite> <timeout> <number of process>[ testsite must contains]")
+	if len(argv) == 1:
+		print("Invalid number of arguments!")
 		exit(0)
-	if argc == 6:
-		p	=	proxychecker(argv[1],argv[2],argv[3],float(argv[4]),int(argv[5]))
-	elif argc == 7:
-		p	=	proxychecker(argv[1],argv[2],argv[3],float(argv[4]),int(argv[5]),argv[6])
-	exit(0)
+	parser = OptionParser()
+	parser.add_option("-i", "--input", dest="input",help="read proxys from file", metavar="FILE")
+	parser.add_option("-o", "--output", dest="output",help="write proxys to file", metavar="FILE",default="checked_proxys.txt")
+	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests", metavar="WEBSITE",default="http://www.gnu.org")
+	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains", metavar="STRING",default="GNU")
+	parser.add_option("-t", "--timeout", dest="to",help="timeout", metavar="TIMEOUT",type="float",default=5.0)
+	parser.add_option("-p", "--process", dest="numproc",help="num of processes", metavar="NUM",default=10)
+	(options, args) = parser.parse_args()
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains)
