@@ -3,6 +3,13 @@ ProxyChecker
 
 A Proxychecker, written in Python
 
+It checks the proxylist in format:
+
+80.91.190.188:8181
+185.12.15.123:80
+5.9.212.53:5059
+195.225.144.38:3128
+
 Fetaures:
 	- Multithreaded ( with fork)
 	- Check site and good hit must contain string
