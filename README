@@ -3,6 +3,12 @@ ProxyChecker
 
 A Proxychecker, written in Python
 
+Fetaures:
+	- Multithreaded ( with fork)
+	- Check site and good hit must contain string
+	- Set timeout
+	- Set number of Processes
+
 Usage: proxychecker.py [options]
 
 Options:
@@ -10,18 +16,13 @@ Options:
   -i FILE, --input=FILE
                         read proxys from file
   -o FILE, --output=FILE
-                        write proxys to file
+                        write proxys to file, default: checked_proxys.txt
   -u WEBSITE, --testsite=WEBSITE
-                        use this site for requests
+                        use this site for requests, default http://www.gnu.org
   -c STRING, --contains=STRING
-                        good hit must contains
+                        good hit must contains, default GNU
   -t TIMEOUT, --timeout=TIMEOUT
-                        timeout
+                        timeout, default 5.0
   -p NUM, --process=NUM
-                        num of processes
+                        number of processes, default 10
 
-Fetaures:
-	- Multithreaded ( with fork)
-	- Check site and good hit must contain string
-	- Set timeout
-	- Set number of Processes
