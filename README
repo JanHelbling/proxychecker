@@ -1,7 +1,7 @@
 ProxyChecker
 ============
 
-A Proxychecker, written in Python
+A Proxychecker (and Hitfaker), written in Python
 
 It checks the proxylist in format:
 
