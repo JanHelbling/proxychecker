@@ -72,7 +72,6 @@ class proxychecker:
 				cnt = 0
 		self.in_file.close()
 		self.out_file.close()
-		print("[DONE!]")
 
 if __name__ == "__main__":
 	if len(argv) == 1:
