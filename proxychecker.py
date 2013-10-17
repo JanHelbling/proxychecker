@@ -29,6 +29,8 @@ class proxychecker:
 		
 		self.to			=	to
 		self.testsite		=	testsite
+		if not self.testsite.lower().startswith("http://"):
+			self.testsite	=	"http://" + self.testsite
 		self.contains		=	contains
 		self.process_num	=	process_num
 		# Calling the Main-Function
@@ -80,10 +82,10 @@ if __name__ == "__main__":
 	# Parse options and run the proxychecker
 	parser = OptionParser()
 	parser.add_option("-i", "--input", dest="input",help="read proxys from file", metavar="FILE")
-	parser.add_option("-o", "--output", dest="output",help="write proxys to file", metavar="FILE",default="checked_proxys.txt")
-	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests", metavar="WEBSITE",default="http://www.gnu.org")
-	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains", metavar="STRING",default="GNU")
-	parser.add_option("-t", "--timeout", dest="to",help="timeout", metavar="TIMEOUT",type="float",default=5.0)
-	parser.add_option("-p", "--process", dest="numproc",help="number of processes", metavar="NUM",default=10)
+	parser.add_option("-o", "--output", dest="output",help="write proxys to file, default: checked_proxys.txt", metavar="FILE",default="checked_proxys.txt")
+	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
+	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
+	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
+	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", metavar="NUM",default=10)
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains)
