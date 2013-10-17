@@ -84,6 +84,6 @@ if __name__ == "__main__":
 	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests", metavar="WEBSITE",default="http://www.gnu.org")
 	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains", metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help="timeout", metavar="TIMEOUT",type="float",default=5.0)
-	parser.add_option("-p", "--process", dest="numproc",help="num of processes", metavar="NUM",default=10)
+	parser.add_option("-p", "--process", dest="numproc",help="number of processes", metavar="NUM",default=10)
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains)

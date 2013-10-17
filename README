@@ -23,4 +23,5 @@ Options:
 Fetaures:
 	- Multithreaded ( with fork)
 	- Check site and good hit must contain string
-	- Set timeout 
+	- Set timeout
+	- Set number of Processes
