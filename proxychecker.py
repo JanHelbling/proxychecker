@@ -5,8 +5,6 @@
 # License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.txt
 # Comment: Just another ProxyChecker in Python
 #
-# Todo: Use OptParse to parse options
-#
 
 import urllib.request
 import http.client
@@ -72,7 +70,7 @@ class proxychecker:
 
 if __name__ == "__main__":
 	if len(argv) == 1:
-		print("Invalid number of arguments!")
+		print("Invalid number of arguments! Use -h for options.")
 		exit(0)
 	parser = OptionParser()
 	parser.add_option("-i", "--input", dest="input",help="read proxys from file", metavar="FILE")
