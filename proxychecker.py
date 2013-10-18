@@ -68,14 +68,13 @@ class proxychecker:
 		cnt = 0
 		for proxy in self.proxys:
 			if not fork(): # man fork
-				proxy = proxy.decode("utf-8")
-				self.check_proxy(proxy)
+				self.check_proxy(proxy.decode("utf-8"))
 				exit(0)
 			cnt = cnt + 1
 			if cnt == self.process_num:
 				for i in range(self.process_num):
 					try:
-						wait()
+						wait() # man wait
 					except KeyboardInterrupt as e:
 						exit(1)
 				cnt = 0
