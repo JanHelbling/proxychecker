@@ -44,7 +44,7 @@ class proxychecker:
 		
 		try:
 			fd	=	opener.open(self.testsite,timeout=self.to) # Open the website, with timeout to
-			content	=	(fd.read()).decode("utf-8") # reads the content and decode it
+			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
 			fd.close()
 			if self.contains in content: #Check if the string contains is in content, if true
 				print("[OK]",proxy)
@@ -68,7 +68,7 @@ class proxychecker:
 		cnt = 0
 		for proxy in self.proxys:
 			if not fork(): # man fork
-				self.check_proxy(proxy.decode("utf-8"))
+				self.check_proxy(proxy.decode("utf-8","replace"))
 				exit(0)
 			cnt = cnt + 1
 			if cnt == self.process_num:
