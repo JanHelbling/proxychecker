@@ -16,7 +16,7 @@ from socket import timeout
 
 class proxychecker:
 	"""Another Proxychecker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains=""):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer):
 		"""Run's the programm."""
 		try:
 			# Open the proxylist to be checked and the outputfile
@@ -27,8 +27,10 @@ class proxychecker:
 			print(exc_info()[1])
 			exit(1)
 		
+		self.referer		=	referer
 		self.to			=	to
 		self.testsite		=	testsite
+		if 
 		if not self.testsite.lower().startswith("http://"):
 			self.testsite	=	"http://" + self.testsite
 		self.contains		=	contains
@@ -41,6 +43,7 @@ class proxychecker:
 		proxy		=	proxy.rstrip("\r\n ") # remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
+		opener.addheaders	=	[('Referer',self.referer)]
 		
 		try:
 			fd	=	opener.open(self.testsite,timeout=self.to) # Open the website, with timeout to
@@ -93,5 +96,6 @@ if __name__ == "__main__":
 	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
 	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", metavar="NUM",default=10)
+	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default \"\"",metavar="REFERER",default="")
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer)
