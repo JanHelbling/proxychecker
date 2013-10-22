@@ -30,7 +30,6 @@ class proxychecker:
 		self.referer		=	referer
 		self.to			=	to
 		self.testsite		=	testsite
-		if 
 		if not self.testsite.lower().startswith("http://"):
 			self.testsite	=	"http://" + self.testsite
 		self.contains		=	contains
