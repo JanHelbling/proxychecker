@@ -2,8 +2,9 @@
 #
 # (C) 2013 by Jan Helbling
 # jan.helbling@gmail.com
-# License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.txt
+# License: GNU/GPLv3 or newer http://www.gnu.org/licenses/gpl-3.0.txt
 # Comment: Just another ProxyChecker in Python
+# THIS PROGRAMM IS FREE SOFTWARE (GNU/GPLv3)
 #
 
 import urllib.request
