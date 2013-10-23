@@ -26,11 +26,19 @@ useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident
 	"Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36",
 	"Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14",
 	"Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; de) Presto/2.9.168 Version/11.52",
-	"Lynx/2.8.8dev.3 libwww-FM/2.14 SSL-MM/1.4.1"]
+	"Lynx/2.8.8dev.3 libwww-FM/2.14 SSL-MM/1.4.1",
+	"Mozilla/5.0 (X11; Linux 3.5.4-1-ARCH i686; es) KHTML/4.9.1 (like Gecko) Konqueror/4.9",
+	"w3m/0.5.2 (Linux i686; it; Debian-3.0.6-3)"]
+
+useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
+	"Mozilla/4.0 (compatible; Linux 2.6.22) NetFront/3.4 Kindle/2.5 (screen 824x1200;rotate)",
+	"Mozilla/5.0 (Linux; U; Android 2.3.3; zh-tw; HTC_Pyramid Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari",
+	"Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02"]
+	
 
 class proxychecker:
 	"""Another Proxychecker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring):
 		"""Run's the programm."""
 		try:
 			# Open the proxylist to be checked and the outputfile
@@ -40,7 +48,7 @@ class proxychecker:
 		except IOError as e:
 			print(exc_info()[1])
 			exit(1)
-		
+		self.browserstring	=	browserstring
 		self.referer		=	referer
 		self.to			=	to
 		self.testsite		=	testsite
@@ -56,8 +64,13 @@ class proxychecker:
 		proxy		=	proxy.rstrip("\r\n ") # remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
-		opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[random.randint(0,9)])]
-		
+		if self.browserstring == "computer":
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[random.randint(0,len(useragent)-1)])]
+		elif self.browserstring == "mobile":
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[random.randint(0,len(useragent_mobile)-1)])]
+		else:
+			print("Invalid Browserstring, use \"mobile\" or \"computer\"!")
+			exit(1)
 		try:
 			fd	=	opener.open(self.testsite,timeout=self.to) # Open the website, with timeout to
 			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
@@ -110,5 +123,6 @@ if __name__ == "__main__":
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
 	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", type="int",metavar="NUM",default=10)
 	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default \"\"",metavar="REFERER",default="")
+	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile or computer", metavar="TYPE",default="computer")
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring)
