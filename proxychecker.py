@@ -52,8 +52,8 @@ class proxychecker:
 		self.referer		=	referer
 		self.to			=	to
 		self.testsite		=	testsite
-		if not self.testsite.lower().startswith("http://"):
-			self.testsite	=	"http://" + self.testsite
+		if not self.testsite.lower().startswith("http://"): #check if testsite starts with http://, if not
+			self.testsite	=	"http://" + self.testsite # add http:// before the testsite
 		self.contains		=	contains
 		self.process_num	=	process_num
 		# Calling the Main-Function
@@ -64,7 +64,7 @@ class proxychecker:
 		proxy		=	proxy.rstrip("\r\n ") # remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
-		if self.browserstring == "computer":
+		if self.browserstring == "computer": #check if browserstring is computer or mobile
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[random.randint(0,len(useragent)-1)])]
 		elif self.browserstring == "mobile":
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[random.randint(0,len(useragent_mobile)-1)])]
@@ -122,7 +122,7 @@ if __name__ == "__main__":
 	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
 	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", type="int",metavar="NUM",default=10)
-	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default \"\"",metavar="REFERER",default="")
+	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default None",metavar="REFERER",default="")
 	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile or computer", metavar="TYPE",default="computer")
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring)
