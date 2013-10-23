@@ -15,6 +15,19 @@ from optparse import OptionParser
 from sys import exc_info,exit,argv
 from socket import timeout
 
+import random
+
+useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
+	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
+	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0",
+	"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:21.0) Gecko/20100101 Firefox/21.0",
+	"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/24.0",
+	"Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36",
+	"Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36",
+	"Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14",
+	"Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; de) Presto/2.9.168 Version/11.52",
+	"Lynx/2.8.8dev.3 libwww-FM/2.14 SSL-MM/1.4.1"]
+
 class proxychecker:
 	"""Another Proxychecker in Python"""
 	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer):
@@ -43,7 +56,7 @@ class proxychecker:
 		proxy		=	proxy.rstrip("\r\n ") # remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
-		opener.addheaders	=	[('Referer',self.referer)]
+		opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[random.randint(0,9)])]
 		
 		try:
 			fd	=	opener.open(self.testsite,timeout=self.to) # Open the website, with timeout to
@@ -95,7 +108,7 @@ if __name__ == "__main__":
 	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
 	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
-	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", metavar="NUM",default=10)
+	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", type="int",metavar="NUM",default=10)
 	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default \"\"",metavar="REFERER",default="")
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer)
