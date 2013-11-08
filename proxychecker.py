@@ -19,14 +19,19 @@
 #
 
 import urllib.request
+import gzip
+
 from http.client import IncompleteRead,BadStatusLine
-from os import fork,wait
+from os import fork,wait,path,unlink
 from optparse import OptionParser
 
 from sys import exit,argv
 from socket import timeout
 
 from random import randint
+from time import strftime
+
+
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
 	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
@@ -63,6 +68,7 @@ class proxychecker:
 			self.in_file	=	open(in_file,"rb")
 			self.proxys	=	self.in_file.readlines()
 			self.in_file.close()
+			self.__check_for_old_files(out_file)
 			self.out_file	=	open(out_file,"w")
 		except IOError as e:
 			print("Could not open",e.filename+":",e.strerror)
@@ -78,9 +84,26 @@ class proxychecker:
 		# Calling the Main-Function
 		self.main()
 	
+	def __check_for_old_files(self,out_file):
+		if path.exists(out_file):
+                                self.i  =       0
+                                while True:
+                                        self.filename   =       out_file+".gz."+str(self.i)
+                                        if not path.exists(self.filename):
+                                                print("[INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
+                                                self.gzfd       =       gzip.open(self.filename,"wb",9)
+                                                self.fd         =       open(out_file,"rb")
+                                                self.gzfd.write(self.fd.read())
+                                                self.gzfd.close()
+                                                self.fd.close()
+                                                unlink(out_file)
+                                                print("\x1b\x5b\x33\x32\x6d[DONE]")
+                                                break
+                                        self.i          =       self.i + 1
+	
 	def check_proxy(self,proxy):
 		"""Checks a proxy and save it to file, if the string "contains" is in content."""
-		proxy		=	proxy.decode("utf-8","replace").rstrip("\r\n ") # remove \r\n from the line
+		proxy		=	proxy.decode("utf-8","replace").rstrip("\r\n ") # decode it and remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
@@ -132,7 +155,7 @@ class proxychecker:
 		self.out_file.close()
 
 if __name__ == "__main__":
-	if len(argv) < 2 or ("-i" not in argv and "--input" not in argv):
+	if len(argv) < 2 or ("-i" not in argv and "--input" not in argv and "-h" not in argv):
 		print("Invalid number of arguments! Use -h for options.")
 		exit(0)
 	# Parse options and run the proxychecker
