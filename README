@@ -32,6 +32,7 @@ Fetaures:
 	- Set number of Processes
 	- Choose between Mobile/Desktop UserAgent
 	- Add a HTTP_REFERER
+	- Send POST-Requests
 
 Usage: proxychecker.py [options]
 
@@ -53,4 +54,6 @@ Options:
                         Use this site as referer, default None
   -b TYPE, --browser-string=TYPE
                         mobile or desktop, default desktop
-
+  -P DATA, --post-data=DATA
+  			Data for postrequests, (eg foo=bar&info=false),
+  			default None
