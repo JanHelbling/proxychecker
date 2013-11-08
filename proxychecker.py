@@ -61,7 +61,7 @@ useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build
 
 class proxychecker:
 	"""Another Proxychecker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata):
 		"""Run's the programm."""
 		try:
 			# Open the proxylist to be checked and the outputfile
@@ -73,6 +73,7 @@ class proxychecker:
 		except IOError as e:
 			print("Could not open",e.filename+":",e.strerror)
 			exit(1)
+		self.postdata		=	postdata
 		self.browserstring	=	browserstring
 		self.referer		=	referer
 		self.to			=	to
@@ -114,7 +115,7 @@ class proxychecker:
 			print("Invalid Browserstring, use \"mobile\" or \"desktop\"!")
 			exit(1)
 		try:
-			fd	=	opener.open(self.testsite,timeout=self.to) # Open the website, with timeout to
+			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata.encode("utf-8")) # Open the website, with timeout to
 			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
 			fd.close()
 			if self.contains in content: #Check if the string contains is in content, if true
@@ -168,5 +169,6 @@ if __name__ == "__main__":
 	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", type="int",metavar="NUM",default=10)
 	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default None",metavar="REFERER",default="")
 	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile or desktop, default desktop", metavar="TYPE",default="desktop")
+	parser.add_option("-P", "--post-data", dest="postdata", help="Data for postrequests, (eg. foo=bar&info=false), default None",metavar="DATA",default="")
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata)
