@@ -62,6 +62,7 @@ class proxychecker:
 			# Open the proxylist to be checked and the outputfile
 			self.in_file	=	open(in_file,"rb")
 			self.proxys	=	self.in_file.readlines()
+			self.in_file.close()
 			self.out_file	=	open(out_file,"w")
 		except IOError as e:
 			print(exc_info()[1])
@@ -125,7 +126,6 @@ class proxychecker:
 					except KeyboardInterrupt as e:
 						exit(1)
 				cnt = 0
-		self.in_file.close()
 		self.out_file.close()
 
 if __name__ == "__main__":
