@@ -19,14 +19,14 @@
 #
 
 import urllib.request
-import http.client
+from http.client import IncompleteRead,BadStatusLine
 from os import fork,wait
 from optparse import OptionParser
 
 from sys import exit,argv
 from socket import timeout
 
-import random
+from random import randint
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
 	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
@@ -84,9 +84,9 @@ class proxychecker:
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[random.randint(0,len(useragent)-1)])]
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)])]
 		elif self.browserstring == "mobile":
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[random.randint(0,len(useragent_mobile)-1)])]
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)])]
 		else:
 			print("Invalid Browserstring, use \"mobile\" or \"desktop\"!")
 			exit(1)
@@ -102,9 +102,9 @@ class proxychecker:
 				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Timed Out")
 			else:
 				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t-->",e.strerror)
-		except http.client.BadStatusLine as e:
+		except BadStatusLine as e:
 			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> BadStatusLine")
-		except http.client.IncompleteRead as e:
+		except IncompleteRead as e:
 			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Incomplete Read")
 		except KeyboardInterrupt as e:
 			print("\x1b\x5b\x33\x31\x6d[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User")
