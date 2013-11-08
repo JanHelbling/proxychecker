@@ -23,7 +23,7 @@ import http.client
 from os import fork,wait
 from optparse import OptionParser
 
-from sys import exc_info,exit,argv
+from sys import exit,argv
 from socket import timeout
 
 import random
@@ -65,7 +65,7 @@ class proxychecker:
 			self.in_file.close()
 			self.out_file	=	open(out_file,"w")
 		except IOError as e:
-			print(exc_info()[1])
+			print("Could not open",e.filename+":",e.strerror)
 			exit(1)
 		self.browserstring	=	browserstring
 		self.referer		=	referer
@@ -80,7 +80,7 @@ class proxychecker:
 	
 	def check_proxy(self,proxy):
 		"""Checks a proxy and save it to file, if the string "contains" is in content."""
-		proxy		=	proxy.rstrip("\r\n ") # remove \r\n from the line
+		proxy		=	proxy.decode("utf-8","replace").rstrip("\r\n ") # remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
@@ -98,13 +98,16 @@ class proxychecker:
 				print("[OK]",proxy)
 				self.save_proxy(proxy) # write proxy to file
 		except IOError as e:
-			print("[FAIL]",proxy)
+			if e.strerror == None:
+				print("[FAIL]",proxy," --> Timed Out")
+			else:
+				print("[FAIL]",proxy," -->",e.strerror)
 		except http.client.BadStatusLine as e:
-			print("[FAIL]",proxy)
+			print("[FAIL]",proxy," --> BadStatusLine")
 		except http.client.IncompleteRead as e:
-			print("[FAIL]",proxy)
+			print("[FAIL]",proxy," --> Incomplete Read")
 		except KeyboardInterrupt as e:
-			print("[ABORTED CTRL+C]",proxy)
+			print("[ABORTED CTRL+C]",proxy, " --> Interrupted by User")
 	
 	def save_proxy(self,proxy):
 		"""Save the proxy to file."""
@@ -116,7 +119,7 @@ class proxychecker:
 		cnt = 0
 		for proxy in self.proxys:
 			if not fork(): # man fork
-				self.check_proxy(proxy.decode("utf-8","replace"))
+				self.check_proxy(proxy)
 				exit(0)
 			cnt = cnt + 1
 			if cnt == self.process_num:
