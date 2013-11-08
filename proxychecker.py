@@ -132,7 +132,7 @@ class proxychecker:
 		self.out_file.close()
 
 if __name__ == "__main__":
-	if len(argv) < 2:
+	if len(argv) < 2 or ("-i" not in argv and "--input" not in argv):
 		print("Invalid number of arguments! Use -h for options.")
 		exit(0)
 	# Parse options and run the proxychecker
