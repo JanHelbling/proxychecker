@@ -95,19 +95,19 @@ class proxychecker:
 			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
 			fd.close()
 			if self.contains in content: #Check if the string contains is in content, if true
-				print("[OK]",proxy)
+				print("\x1b\x5b\x33\x32\x6d[OK]",proxy)
 				self.save_proxy(proxy) # write proxy to file
 		except IOError as e:
 			if e.strerror == None:
-				print("[FAIL]",proxy," --> Timed Out")
+				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Timed Out")
 			else:
-				print("[FAIL]",proxy," -->",e.strerror)
+				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t-->",e.strerror)
 		except http.client.BadStatusLine as e:
-			print("[FAIL]",proxy," --> BadStatusLine")
+			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> BadStatusLine")
 		except http.client.IncompleteRead as e:
-			print("[FAIL]",proxy," --> Incomplete Read")
+			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Incomplete Read")
 		except KeyboardInterrupt as e:
-			print("[ABORTED CTRL+C]",proxy, " --> Interrupted by User")
+			print("\x1b\x5b\x33\x31\x6d[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User")
 	
 	def save_proxy(self,proxy):
 		"""Save the proxy to file."""
