@@ -29,7 +29,6 @@ from sys import exit,argv
 from socket import timeout
 
 from random import randint
-from time import strftime
 
 
 
