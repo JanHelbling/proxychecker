@@ -62,7 +62,21 @@ useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build
 class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
 	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie):
-		"""Run's the programm."""
+		"""Run's the program"""
+		self.cookie             =       cookie
+		self.postdata           =       postdata
+		self.browserstring      =       browserstring.lower()
+		self.referer            =       referer
+		self.to                 =       to
+		self.testsite           =       testsite
+		if not self.testsite.lower().startswith("http://"): #check if testsite starts with http://, if not
+			self.testsite   =       "http://" + self.testsite # add http:// before the testsite
+		self.contains           =       contains
+		self.process_num        =       process_num
+		self.cnt                =       0
+		if self.browserstring not in ["mobile","desktop"]:
+                        print("Invalid Browserstring, use \"mobile\" or \"desktop\"!")
+                        exit(1)
 		try:
 			# Open the proxylist to be checked and the outputfile
 			self.in_file	=	open(in_file,"rb")
@@ -74,17 +88,6 @@ class proxychecker:
 		except IOError as e:
 			print("Could not open",e.filename+":",e.strerror)
 			exit(1)
-		self.cookie		=	cookie
-		self.postdata		=	postdata
-		self.browserstring	=	browserstring
-		self.referer		=	referer
-		self.to			=	to
-		self.testsite		=	testsite
-		if not self.testsite.lower().startswith("http://"): #check if testsite starts with http://, if not
-			self.testsite	=	"http://" + self.testsite # add http:// before the testsite
-		self.contains		=	contains
-		self.process_num	=	process_num
-		self.cnt		=	0
 		self.totalproxys	=	len(self.proxys)
 		# Calling the Main-Function
 		self.main()
@@ -113,11 +116,8 @@ class proxychecker:
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent and Cookies
-		elif self.browserstring == "mobile":
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
 		else:
-			print("Invalid Browserstring, use \"mobile\" or \"desktop\"!")
-			exit(1)
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
 		try:
 			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata.encode("utf-8")) # Open the website, with timeout to
 			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
@@ -170,7 +170,7 @@ class proxychecker:
 				exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(RED,"[!!!EPIC FAIL!!!] None, of",self.totalproxys," proxys we checked are working...")
+			print(RED,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working...")
 		else:
 			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!")
 		exit(0)
