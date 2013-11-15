@@ -121,11 +121,13 @@ class proxychecker:
 			if self.contains in content: #Check if the string contains is in content, if true
 				print("\x1b\x5b\x33\x32\x6d[OK]",proxy)
 				self.save_proxy(proxy) # write proxy to file
+		except timeout:
+			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Timed Out")
 		except IOError as e:
-			if e.strerror == None:
-				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Timed Out")
-			else:
+			if e.strerror != None:
 				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t-->",e.strerror)
+			else:
+				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t-->",e.reason.strerror)
 		except BadStatusLine as e:
 			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> BadStatusLine")
 		except IncompleteRead as e:
