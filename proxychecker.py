@@ -22,7 +22,7 @@ import urllib.request
 import gzip
 
 from http.client import IncompleteRead,BadStatusLine
-from os import fork,wait,path,unlink
+from os import fork,wait,path,unlink,devnull
 from optparse import OptionParser
 
 from sys import exit,argv
@@ -60,7 +60,7 @@ useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build
 	
 
 class proxychecker:
-	"""Another Proxychecker in Python"""
+	"""A advanced Proxychecker/Hitfaker in Python"""
 	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie):
 		"""Run's the programm."""
 		try:
@@ -68,7 +68,8 @@ class proxychecker:
 			self.in_file	=	open(in_file,"rb")
 			self.proxys	=	self.in_file.readlines()
 			self.in_file.close()
-			self.__check_for_old_files(out_file)
+			if out_file != devnull:
+				self.__check_for_old_files(out_file)
 			self.out_file	=	open(out_file,"w")
 		except IOError as e:
 			print("Could not open",e.filename+":",e.strerror)
