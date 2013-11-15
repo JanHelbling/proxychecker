@@ -94,20 +94,25 @@ class proxychecker:
 	
 	def __check_for_old_files(self,out_file):
 		if path.exists(out_file):
-                                self.i  =       0
-                                while True:
-                                        self.filename   =       out_file+".gz."+str(self.i)
-                                        if not path.exists(self.filename):
-                                                print("[INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
-                                                self.gzfd       =       gzip.open(self.filename,"wb",9)
-                                                self.fd         =       open(out_file,"rb")
-                                                self.gzfd.write(self.fd.read())
-                                                self.gzfd.close()
-                                                self.fd.close()
-                                                unlink(out_file)
-                                                print(GREEN,"[DONE]")
-                                                break
-                                        self.i          =       self.i + 1
+				self.i  =       0
+				while True:
+					self.filename   =       out_file+".gz."+str(self.i)
+					if not path.exists(self.filename):
+						print("[INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
+						try:
+							self.gzfd       =       gzip.open(self.filename,"wb",9)
+							self.fd         =       open(out_file,"rb")
+							self.gzfd.write(self.fd.read())
+							self.gzfd.close()
+							self.fd.close()
+							unlink(out_file)
+							print(GREEN,"[DONE]")
+							break
+						except IOError as e:
+							print("[FAIL]")
+							print("Error with file",e.filename+":",e.strerror)
+							exit(1)
+					self.i          =       self.i + 1
 	
 	def check_proxy(self,proxy):
 		"""Checks a proxy and save it to file, if the string "contains" is in content."""
