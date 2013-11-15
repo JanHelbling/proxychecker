@@ -22,13 +22,15 @@ import urllib.request
 import gzip
 
 from http.client import IncompleteRead,BadStatusLine
-from os import fork,waitpid,path,unlink,devnull
+from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
 from optparse import OptionParser
 
 from sys import exit,argv
 from socket import timeout
 
 from random import randint
+
+from time import time
 
 RED	= "\x1b\x5b\x33\x31\x6d"
 GREEN	= "\x1b\x5b\x33\x32\x6d"
@@ -115,9 +117,10 @@ class proxychecker:
 					self.i          =       self.i + 1
 	
 	def check_proxy(self,proxy):
-		"""Checks a proxy and save it to file, if the string "contains" is in content."""
+		"""Checks a proxy and save it to file, if the string "contains" is in content, returns true if Success,false on fail"""
 		proxy		=	proxy.decode("utf-8","replace").rstrip("\r\n ") # decode it and remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
+		starttime	=	time()
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent and Cookies
@@ -126,10 +129,12 @@ class proxychecker:
 		try:
 			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata.encode("utf-8")) # Open the website, with timeout to
 			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
+			endtime	=	(time()-starttime).__round__(3)
 			fd.close()
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,"[OK]",proxy)
+				print(GREEN,"[OK] =>",endtime,"sec. ",proxy)
 				self.save_proxy(proxy) # write proxy to file
+				return True
 		except timeout:
 			print(RED,"[FAIL]",proxy,"\t--> Timed Out")
 		except IOError as e:
@@ -143,10 +148,10 @@ class proxychecker:
 			print(RED,"[FAIL]",proxy,"\t--> Incomplete Read")
 		except KeyboardInterrupt:
 			print(RED,"[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User")
+		return False
 	
 	def save_proxy(self,proxy):
 		"""Save the proxy to file."""
-		self.cnt = self.cnt + 1
 		self.out_file.write(proxy+"\n")
 		self.out_file.flush()
 	
@@ -157,20 +162,25 @@ class proxychecker:
 		for proxy in self.proxys:
 			pid.append(fork()) # man fork
 			if not pid[-1]:
-				self.check_proxy(proxy)
-				exit(0)
+				if self.check_proxy(proxy):
+					exit(0)
+				exit(1)
 			cnt = cnt + 1
 			if cnt == self.process_num:
 				for i in pid:
 					try:
-						waitpid(i,0) # man waitpid
+						(_pid,st)	=	waitpid(i,0) # man/pydoc3 (os.) waitpid
+						if WEXITSTATUS(st) == 0:
+							self.cnt=	self.cnt + 1
 					except KeyboardInterrupt:
 						exit(1)
 				cnt = 0
 				pid = []
 		for i in pid:
 			try:
-				waitpid(i,0)
+				(_pid,st)	=	waitpid(i,0)
+				if WEXITSTATUS(st) == 0:
+					self.cnt=       self.cnt + 1
 			except KeyboardInterrupt:
 				exit(1)
 		self.out_file.close()
