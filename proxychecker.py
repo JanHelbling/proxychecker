@@ -71,8 +71,8 @@ class proxychecker:
 		self.referer            =       referer
 		self.to                 =       to
 		self.testsite           =       testsite
-		if not self.testsite.lower().startswith("http://"): #check if testsite starts with http://, if not
-			self.testsite   =       "http://" + self.testsite # add http:// before the testsite
+		if not self.testsite.lower().startswith("http://"):		# check if testsite starts with http://, if not
+			self.testsite   =       "http://" + self.testsite	# add http:// before the testsite
 		self.contains           =       contains
 		self.process_num        =       process_num
 		self.cnt                =       0
@@ -80,12 +80,12 @@ class proxychecker:
                         print("Invalid Browserstring, use \"mobile\" or \"desktop\"!")
                         exit(1)
 		try:
-			# Open the proxylist to be checked and the outputfile
+			# Open (and read) the proxylist to be checked and the outputfile
 			self.in_file	=	open(in_file,"rb")
 			self.proxys	=	self.in_file.readlines()
 			self.in_file.close()
 			if out_file != devnull:
-				self.__check_for_old_files(out_file)
+				self.__check_for_old_files(out_file) 	# check if the out_file already exists
 			self.out_file	=	open(out_file,"w")
 		except IOError as e:
 			print("Could not open",e.filename+":",e.strerror)
@@ -95,6 +95,7 @@ class proxychecker:
 		self.main()
 	
 	def __check_for_old_files(self,out_file):
+		"""Checks if the path "out_file" exists, if yes, then compress it to a gzipped archive with the next number."""
 		if path.exists(out_file):
 				self.i  =       0
 				while True:
@@ -169,7 +170,7 @@ class proxychecker:
 			if cnt == self.process_num:
 				for i in pid:
 					try:
-						(_pid,st)	=	waitpid(i,0) # man/pydoc3 (os.) waitpid
+						(_pid,st)	=	waitpid(i,0)	# man/pydoc3 (os.) waitpid
 						if WEXITSTATUS(st) == 0:
 							self.cnt=	self.cnt + 1
 					except KeyboardInterrupt:
@@ -178,9 +179,9 @@ class proxychecker:
 				pid = []
 		for i in pid:
 			try:
-				(_pid,st)	=	waitpid(i,0)
-				if WEXITSTATUS(st) == 0:
-					self.cnt=       self.cnt + 1
+				(_pid,st)	=	waitpid(i,0) 	# get the exit_code from the forked subproccess
+				if WEXITSTATUS(st) == 0:		# if it's 0, check_proxy has returned true
+					self.cnt=       self.cnt + 1 	# incerase the counter
 			except KeyboardInterrupt:
 				exit(1)
 		self.out_file.close()
