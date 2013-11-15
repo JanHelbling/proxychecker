@@ -169,7 +169,7 @@ class proxychecker:
 				exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(RED,"[!!!EPIC FAIL!!!] Zero, of",len(self.proxys)," proxys we checked are working...")
+			print(RED,"[!!!EPIC FAIL!!!] None, of",len(self.proxys)," proxys we checked are working...")
 		else:
 			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",len(self.proxys)," proxys we checked are working!")
 		exit(0)
