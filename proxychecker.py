@@ -60,7 +60,7 @@ useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build
 
 class proxychecker:
 	"""Another Proxychecker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie):
 		"""Run's the programm."""
 		try:
 			# Open the proxylist to be checked and the outputfile
@@ -72,6 +72,7 @@ class proxychecker:
 		except IOError as e:
 			print("Could not open",e.filename+":",e.strerror)
 			exit(1)
+		self.cookie		=	cookie
 		self.postdata		=	postdata
 		self.browserstring	=	browserstring
 		self.referer		=	referer
@@ -107,9 +108,9 @@ class proxychecker:
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)])]
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent and Cookies
 		elif self.browserstring == "mobile":
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)])]
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
 		else:
 			print("Invalid Browserstring, use \"mobile\" or \"desktop\"!")
 			exit(1)
@@ -169,5 +170,6 @@ if __name__ == "__main__":
 	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default None",metavar="REFERER",default="")
 	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile or desktop, default desktop", metavar="TYPE",default="desktop")
 	parser.add_option("-P", "--post-data", dest="postdata", help="Data for postrequests, (eg. foo=bar&info=false), default None",metavar="DATA",default="")
+	parser.add_option("-C", "--cookie", dest="cookie", help="Cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie)
