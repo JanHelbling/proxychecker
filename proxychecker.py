@@ -136,13 +136,16 @@ class proxychecker:
 				print(GREEN,"[OK] =>",endtime,"sec. ",proxy)
 				self.save_proxy(proxy) # write proxy to file
 				return True
-		except timeout:
-			print(RED,"[FAIL]",proxy,"\t--> Timed Out")
 		except IOError as e:
 			if e.strerror != None:
 				print(RED,"[FAIL]",proxy,"\t-->",e.strerror)
 			else:
-				print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror)
+				if type(e.reason) == type(""):
+					print(RED,"[FAIL]",proxy,"\t-->",e.reason)
+				elif e.reason.args[0] == "timed out":
+					print(RED,"[FAIL]",proxy,"\t--> Timed Out")
+				else:
+					print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror)
 		except BadStatusLine as e:
 			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine")
 		except IncompleteRead as e:
