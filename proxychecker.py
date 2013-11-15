@@ -30,7 +30,8 @@ from socket import timeout
 
 from random import randint
 
-
+RED	= "\x1b\x5b\x33\x31\x6d"
+GREEN	= "\x1b\x5b\x33\x32\x6d"
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
 	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
@@ -98,7 +99,7 @@ class proxychecker:
                                                 self.gzfd.close()
                                                 self.fd.close()
                                                 unlink(out_file)
-                                                print("\x1b\x5b\x33\x32\x6d[DONE]")
+                                                print(GREEN,"[DONE]")
                                                 break
                                         self.i          =       self.i + 1
 	
@@ -119,21 +120,21 @@ class proxychecker:
 			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
 			fd.close()
 			if self.contains in content: #Check if the string contains is in content, if true
-				print("\x1b\x5b\x33\x32\x6d[OK]",proxy)
+				print(GREEN,"[OK]",proxy)
 				self.save_proxy(proxy) # write proxy to file
 		except timeout:
-			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Timed Out")
+			print(RED,"[FAIL]",proxy,"\t--> Timed Out")
 		except IOError as e:
 			if e.strerror != None:
-				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t-->",e.strerror)
+				print(RED,"[FAIL]",proxy,"\t-->",e.strerror)
 			else:
-				print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t-->",e.reason.strerror)
+				print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror)
 		except BadStatusLine as e:
-			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> BadStatusLine")
+			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine")
 		except IncompleteRead as e:
-			print("\x1b\x5b\x33\x31\x6d[FAIL]",proxy,"\t--> Incomplete Read")
+			print(RED,"[FAIL]",proxy,"\t--> Incomplete Read")
 		except KeyboardInterrupt as e:
-			print("\x1b\x5b\x33\x31\x6d[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User")
+			print(RED,"[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User")
 	
 	def save_proxy(self,proxy):
 		"""Save the proxy to file."""
