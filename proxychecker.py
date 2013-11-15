@@ -140,12 +140,15 @@ class proxychecker:
 			if e.strerror != None:
 				print(RED,"[FAIL]",proxy,"\t-->",e.strerror)
 			else:
-				if type(e.reason) == type(""):
-					print(RED,"[FAIL]",proxy,"\t-->",e.reason)
-				elif e.reason.args[0] == "timed out":
-					print(RED,"[FAIL]",proxy,"\t--> Timed Out")
-				else:
-					print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror)
+				try:
+					if type(e.reason) == type(""):
+						print(RED,"[FAIL]",proxy,"\t-->",e.reason)
+					elif e.reason.args[0] == "timed out":
+						print(RED,"[FAIL]",proxy,"\t--> Timed Out")
+					else:
+						print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror)
+				except AttributeError:
+					print(RED,"[FAIL]",proxy,"\t-->",e)
 		except BadStatusLine as e:
 			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine")
 		except IncompleteRead as e:
