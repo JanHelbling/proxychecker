@@ -22,7 +22,7 @@ import urllib.request
 import gzip
 
 from http.client import IncompleteRead,BadStatusLine
-from os import fork,wait,path,unlink,devnull
+from os import fork,waitpid,path,unlink,devnull
 from optparse import OptionParser
 
 from sys import exit,argv
@@ -84,6 +84,7 @@ class proxychecker:
 			self.testsite	=	"http://" + self.testsite # add http:// before the testsite
 		self.contains		=	contains
 		self.process_num	=	process_num
+		self.cnt		=	0
 		# Calling the Main-Function
 		self.main()
 	
@@ -134,30 +135,44 @@ class proxychecker:
 			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine")
 		except IncompleteRead as e:
 			print(RED,"[FAIL]",proxy,"\t--> Incomplete Read")
-		except KeyboardInterrupt as e:
+		except KeyboardInterrupt:
 			print(RED,"[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User")
 	
 	def save_proxy(self,proxy):
 		"""Save the proxy to file."""
+		self.cnt = self.cnt + 1
 		self.out_file.write(proxy+"\n")
 		self.out_file.flush()
 	
 	def main(self):
 		"""Main"""
 		cnt = 0
+		pid = []
 		for proxy in self.proxys:
-			if not fork(): # man fork
+			pid.append(fork()) # man fork
+			if not pid[-1]:
 				self.check_proxy(proxy)
 				exit(0)
 			cnt = cnt + 1
 			if cnt == self.process_num:
-				for i in range(self.process_num):
+				for i in pid:
 					try:
-						wait() # man wait
-					except KeyboardInterrupt as e:
+						waitpid(i,0) # man waitpid
+					except KeyboardInterrupt:
 						exit(1)
 				cnt = 0
+				pid = []
+		for i in pid:
+			try:
+				waitpid(i,0)
+			except KeyboardInterrupt:
+				exit(1)
 		self.out_file.close()
+		if self.cnt == 0:
+			print(RED,"[!!!EPIC FAIL!!!] Zero, of",len(self.proxys)," proxys we checked are working...")
+		else:
+			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",len(self.proxys)," proxys we checked are working!")
+		exit(0)
 
 if __name__ == "__main__":
 	if len(argv) < 2 or ("-i" not in argv and "--input" not in argv and "-h" not in argv):
