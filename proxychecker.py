@@ -85,6 +85,7 @@ class proxychecker:
 		self.contains		=	contains
 		self.process_num	=	process_num
 		self.cnt		=	0
+		self.totalproxys	=	len(self.proxys)
 		# Calling the Main-Function
 		self.main()
 	
@@ -169,9 +170,9 @@ class proxychecker:
 				exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(RED,"[!!!EPIC FAIL!!!] None, of",len(self.proxys)," proxys we checked are working...")
+			print(RED,"[!!!EPIC FAIL!!!] None, of",self.totalproxys," proxys we checked are working...")
 		else:
-			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",len(self.proxys)," proxys we checked are working!")
+			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!")
 		exit(0)
 
 if __name__ == "__main__":
