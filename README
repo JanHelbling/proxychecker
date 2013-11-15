@@ -16,9 +16,9 @@ ProxyChecker
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-A Proxychecker (and Hitfaker), written in Python
+A advanced Proxychecker (and Hitfaker), written in Python
 
-It checks the proxylist in format ip:port :
+It checks the http-proxylist in format ip:port :
 
 80.91.190.188:8181
 185.12.15.123:80
@@ -33,6 +33,7 @@ Fetaures:
 	- Choose between Mobile/Desktop UserAgent
 	- Add a HTTP_REFERER
 	- Send POST-Requests
+	- Send Cookies
 
 Usage: proxychecker.py [options]
 
@@ -57,3 +58,6 @@ Options:
   -P DATA, --post-data=DATA
   			Data for postrequests, (eg foo=bar&info=false),
   			default None
+  -C COOKIE, --cookie=COOKIE
+                        Cookies, seperated by ; (eg. "abc=123; def=456;"),
+                        default None
