@@ -112,7 +112,7 @@ class proxychecker:
 							print(GREEN,"[DONE]")
 							break
 						except IOError as e:
-							print("[FAIL]")
+							print(RED,"[FAIL]")
 							print("Error with file",e.filename+":",e.strerror)
 							exit(1)
 					self.i          =       self.i + 1
