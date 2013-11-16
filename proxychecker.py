@@ -66,7 +66,7 @@ class proxychecker:
 	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie):
 		"""Run's the program"""
 		self.cookie             =       cookie
-		self.postdata           =       postdata
+		self.postdata           =       postdata.encode("utf-8")
 		self.browserstring      =       browserstring.lower()
 		self.referer            =       referer
 		self.to                 =       to
@@ -121,17 +121,19 @@ class proxychecker:
 		"""Checks a proxy and save it to file, if the string "contains" is in content, returns true if Success,false on fail"""
 		proxy		=	proxy.decode("utf-8","replace").rstrip("\r\n ") # decode it and remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
-		starttime	=	time()
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent and Cookies
 		else:
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
 		try:
-			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata.encode("utf-8")) # Open the website, with timeout to
-			content	=	(fd.read()).decode("utf-8","replace") # reads the content and decode it
-			endtime	=	(time()-starttime).__round__(3)
+			starttime	=	time()
+			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
+			content	=	fd.read()
+			endtime	=	time()
+			content	=	content.decode("utf-8","replace")
 			fd.close()
+			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
 				print(GREEN,"[OK] =>",endtime,"sec. ",proxy)
 				self.save_proxy(proxy) # write proxy to file
