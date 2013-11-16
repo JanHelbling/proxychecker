@@ -135,7 +135,7 @@ class proxychecker:
 			fd.close()
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,"[OK] =>",endtime,"sec. ",proxy)
+				print(GREEN,"[OK] =>",endtime,"sec.\t",proxy)
 				self.save_proxy(proxy) # write proxy to file
 				return True
 		except IOError as e:
