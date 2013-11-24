@@ -95,7 +95,7 @@ class proxychecker:
 		self.main()
 	
 	def __check_for_old_files(self,out_file):
-		"""Checks if the path "out_file" exists, if yes, then compress it to a gzipped archive with the next number."""
+		"""Checks if the path "out_file" exists, if true, then compress it to a gzipped archive with the next number."""
 		if path.exists(out_file):
 				self.i  =       0
 				while True:
@@ -174,8 +174,7 @@ class proxychecker:
 				if self.check_proxy(proxy):
 					exit(0)
 				exit(1)
-			cnt = cnt + 1
-			if cnt == self.process_num:
+			if len(pid) == self.process_num:
 				for i in pid:
 					try:
 						(_pid,st)	=	waitpid(i,0)	# man/pydoc3 (os.) waitpid
@@ -183,7 +182,6 @@ class proxychecker:
 							self.cnt=	self.cnt + 1
 					except KeyboardInterrupt:
 						exit(1)
-				cnt = 0
 				pid = []
 		for i in pid:
 			try:
