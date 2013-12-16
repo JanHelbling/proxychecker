@@ -4,9 +4,9 @@ proxychecker:
 	@echo ==============GNU/GPLv3+==============
 	@echo Nothing todo...
 	@echo Possible options:
-	@echo -e "   make test"
-	@echo -e "   make install"
-	@echo -e "   make uninstall"
+	@echo "   make test"
+	@echo "   make install"
+	@echo "   make uninstall"
 install:
 	install proxychecker.py /usr/bin/proxychecker
 uninstall:
