@@ -131,7 +131,7 @@ class proxychecker:
 			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
 			content	=	fd.read()
 			endtime	=	time()
-			content	=	content.decode("utf-8","replace")
+			content	=	content.decode("utf-8","ignore")
 			fd.close()
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
