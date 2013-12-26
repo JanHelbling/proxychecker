@@ -43,6 +43,7 @@ from time import time
 
 RED	= "\x1b\x5b\x33\x31\x6d"
 GREEN	= "\x1b\x5b\x33\x32\x6d"
+NOCOLOR	= "\x1b\x5b\x30\x6d"
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
 	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
@@ -66,14 +67,16 @@ useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build
 	"Mozilla/5.0 (iPad; U; CPU OS 4_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8F191 Safari/6533.18.5",
 	"HTC_Touch_3G Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 7.11)",
 	"Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)",
-	"Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.1.0.346 Mobile Safari/534.11+"
+	"Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.1.0.346 Mobile Safari/534.11+",
 	"Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02"]
 	
 
 class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color):
 		"""Run's the program"""
+		global RED,GREEN,NOCOLOR
+		self.color		=	color.lower()
 		self.cookie             =       cookie
 		self.postdata           =       postdata.encode("utf-8")
 		self.browserstring      =       browserstring.lower()
@@ -86,8 +89,16 @@ class proxychecker:
 		self.process_num        =       process_num
 		self.cnt                =       0
 		if self.browserstring not in ["mobile","desktop"]:
-                        print("Invalid Browserstring, use \"mobile\" or \"desktop\"!")
+                        print("""Invalid Browserstring, use "mobile" or "desktop"!""")
                         exit(1)
+		if self.color not in ["yes","none"]:
+			print("""Invalid value for color, use "yes" or "none"!""")
+			exit(1)
+		if self.color == "none":
+			RED 	= ""
+			GREEN 	= ""
+			NOCOLOR	= ""
+		print(self.color)
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
 			self.in_file	=	open(in_file,"rb")
@@ -118,10 +129,10 @@ class proxychecker:
 							self.gzfd.close()
 							self.fd.close()
 							unlink(out_file)
-							print(GREEN,"[DONE]")
+							print(GREEN,"[DONE]",NOCOLOR)
 							break
 						except IOError as e:
-							print(RED,"[FAIL]")
+							print(RED,"[FAIL]",NOCOLOR)
 							print("Error with file",e.filename+":",e.strerror)
 							exit(1)
 					self.i          =       self.i + 1
@@ -144,28 +155,28 @@ class proxychecker:
 			fd.close()
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,"[OK] =>",endtime,"sec.\t",proxy)
+				print(GREEN,"[OK] =>",endtime,"sec.\t",proxy,NOCOLOR)
 				self.save_proxy(proxy) # write proxy to file
 				return True
 		except IOError as e:
 			if e.strerror != None:
-				print(RED,"[FAIL]",proxy,"\t-->",e.strerror)
+				print(RED,"[FAIL]",proxy,"\t-->",e.strerror,NOCOLOR)
 			else:
 				try:
 					if type(e.reason) == type(""):
-						print(RED,"[FAIL]",proxy,"\t-->",e.reason)
+						print(RED,"[FAIL]",proxy,"\t-->",e.reason,NOCOLOR)
 					elif e.reason.args[0] == "timed out":
-						print(RED,"[FAIL]",proxy,"\t--> Timed Out")
+						print(RED,"[FAIL]",proxy,"\t--> Timed Out",NOCOLOR)
 					else:
-						print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror)
+						print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror,NOCOLOR)
 				except AttributeError:
-					print(RED,"[FAIL]",proxy,"\t--> Timed Out")
+					print(RED,"[FAIL]",proxy,"\t--> Timed Out",NOCOLOR)
 		except BadStatusLine as e:
-			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine")
+			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine",NOCOLOR)
 		except IncompleteRead as e:
-			print(RED,"[FAIL]",proxy,"\t--> Incomplete Read")
+			print(RED,"[FAIL]",proxy,"\t--> Incomplete Read",NOCOLOR)
 		except KeyboardInterrupt:
-			print(RED,"[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User")
+			print(RED,"[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User",NOCOLOR)
 		return False
 	
 	def save_proxy(self,proxy):
@@ -201,9 +212,9 @@ class proxychecker:
 				exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(RED,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working...")
+			print(RED,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working...",NOCOLOR)
 		else:
-			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!")
+			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
 		exit(0)
 
 if __name__ == "__main__":
@@ -222,5 +233,6 @@ if __name__ == "__main__":
 	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile or desktop, default desktop", metavar="TYPE",default="desktop")
 	parser.add_option("-P", "--post-data", dest="postdata", help="Data for postrequests, (eg. foo=bar&info=false), default None",metavar="DATA",default="")
 	parser.add_option("-C", "--cookie", dest="cookie", help="Cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
+	parser.add_option("-e", "--color", dest="color", help="Colored output, none or yes, default yes",metavar="COLOR",default="yes")
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color)
