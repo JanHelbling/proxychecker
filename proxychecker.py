@@ -22,7 +22,16 @@ import urllib.request
 import gzip
 
 from http.client import IncompleteRead,BadStatusLine
-from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
+
+try:
+	from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
+except ImportError as e:
+	if e.msg == "cannot import name fork":
+		print("Error: fork could not be imported from os, this programm is not for Windows-Users!!")
+		print("(Windows has no syscall named fork()...)")
+		print("You must Upgrade to Linux to use this ;)")
+		exit(1)
+
 from optparse import OptionParser
 
 from sys import exit,argv
