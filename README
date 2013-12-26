@@ -56,8 +56,10 @@ Options:
   -b TYPE, --browser-string=TYPE
                         mobile or desktop, default desktop
   -P DATA, --post-data=DATA
-  			Data for postrequests, (eg foo=bar&info=false),
-  			default None
+                        Data for postrequests, (eg. foo=bar&info=false),
+                        default None
   -C COOKIE, --cookie=COOKIE
                         Cookies, seperated by ; (eg. "abc=123; def=456;"),
                         default None
+  -e COLOR, --color=COLOR
+                        Colored output, none or yes, default yes
