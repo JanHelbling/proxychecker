@@ -114,9 +114,9 @@ class proxychecker:
 		if path.exists(out_file):
 				self.i  =       0
 				while True:
-					self.filename   =       out_file+".gz."+str(self.i)
+					self.filename   =       out_file+"."+str(self.i)+".gz"
 					if not path.exists(self.filename):
-						print("[INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
+						print(" [INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
 						try:
 							self.gzfd       =       gzip.open(self.filename,"wb",9)
 							self.fd         =       open(out_file,"rb")
@@ -158,7 +158,7 @@ class proxychecker:
 				print(RED,"[FAIL]",proxy,"\t-->",e.strerror,NOCOLOR)
 			else:
 				try:
-					if type(e.reason) == type(""):
+					if type(e.reason) == str:
 						print(RED,"[FAIL]",proxy,"\t-->",e.reason,NOCOLOR)
 					elif e.reason.args[0] == "timed out":
 						print(RED,"[FAIL]",proxy,"\t--> Timed Out",NOCOLOR)
@@ -169,7 +169,7 @@ class proxychecker:
 		except BadStatusLine as e:
 			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine",NOCOLOR)
 		except IncompleteRead as e:
-			print(RED,"[FAIL]",proxy,"\t--> Incomplete Read",NOCOLOR)
+			print(RED,"[FAIL]",proxy,"\t--> IncompleteRead",NOCOLOR)
 		except KeyboardInterrupt:
 			print(RED,"[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User",NOCOLOR)
 		return False
