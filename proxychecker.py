@@ -20,25 +20,21 @@
 
 import urllib.request
 import gzip
-
 from http.client import IncompleteRead,BadStatusLine
+from sys import exit,argv,stderr
 
 try:
 	from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
 except ImportError as e:
 	if e.msg == "cannot import name fork":
-		print("Error: fork could not be imported from os, this programm is not for Windows-Users!!")
-		print("(Windows has no syscall named fork()...)")
-		print("You must Upgrade to Linux to use this ;)")
+		stderr.write("Error: fork could not be imported from os, this programm is not for Windows-Users!!\n")
+		stderr.write("(Windows has no syscall named fork()...)\n")
+		stderr.write("You must Upgrade to Linux to use this ;)\n")
 		exit(1)
 
 from optparse import OptionParser
-
-from sys import exit,argv
 from socket import timeout
-
 from random import randint
-
 from time import time
 
 RED	= "\x1b\x5b\x33\x31\x6d"
@@ -89,16 +85,15 @@ class proxychecker:
 		self.process_num        =       process_num
 		self.cnt                =       0
 		if self.browserstring not in ["mobile","desktop"]:
-                        print("""Invalid Browserstring, use "mobile" or "desktop"!""")
+                        stderr.write("Invalid Browserstring, use \"mobile\" or \"desktop\"!\n")
                         exit(1)
 		if self.color not in ["yes","none"]:
-			print("""Invalid value for color, use "yes" or "none"!""")
+			stderr.write("Invalid value for color, use \"yes\" or \"none\"!\n")
 			exit(1)
 		if self.color == "none":
 			RED 	= ""
 			GREEN 	= ""
 			NOCOLOR	= ""
-		print(self.color)
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
 			self.in_file	=	open(in_file,"rb")
@@ -108,7 +103,7 @@ class proxychecker:
 				self.__check_for_old_files(out_file) 	# check if the out_file already exists
 			self.out_file	=	open(out_file,"w")
 		except IOError as e:
-			print("Could not open",e.filename+":",e.strerror)
+			stderr.write("Could not open "+e.filename+": "+e.strerror+"\n")
 			exit(1)
 		self.totalproxys	=	len(self.proxys)
 		# Calling the Main-Function
@@ -133,7 +128,7 @@ class proxychecker:
 							break
 						except IOError as e:
 							print(RED,"[FAIL]",NOCOLOR)
-							print("Error with file",e.filename+":",e.strerror)
+							stderr.write("Error with file "+e.filename+": "+e.strerror+"\n")
 							exit(1)
 					self.i          =       self.i + 1
 	
@@ -155,7 +150,7 @@ class proxychecker:
 			fd.close()
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,"[OK] =>",endtime,"sec.\t",proxy,NOCOLOR)
+				print(GREEN,"[OK]\t=>",endtime,"sec.\t",proxy,NOCOLOR)
 				self.save_proxy(proxy) # write proxy to file
 				return True
 		except IOError as e:
