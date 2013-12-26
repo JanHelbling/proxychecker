@@ -159,7 +159,7 @@ class proxychecker:
 					else:
 						print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror)
 				except AttributeError:
-					print(RED,"[FAIL]",proxy,"\t--> Undetected Exception")
+					print(RED,"[FAIL]",proxy,"\t--> Timed Out")
 		except BadStatusLine as e:
 			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine")
 		except IncompleteRead as e:
