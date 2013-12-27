@@ -21,7 +21,7 @@
 import urllib.request
 import gzip
 from http.client import IncompleteRead,BadStatusLine
-from sys import exit,argv,stderr
+from sys import exit,argv,stderr,stdin
 
 try:
 	from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
@@ -104,12 +104,15 @@ class proxychecker:
 			NOCOLOR		= ""
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
-			if in_file.lower().endswith(".gz"):
-				self.in_file	=	gzip.open(in_file,"rb")
+			if in_file != "-":
+				if in_file.lower().endswith(".gz"):
+					self.in_file	=	gzip.open(in_file,"rb")
+				else:
+					self.in_file	=	open(in_file,"rb")
+				self.proxys	=	self.in_file.readlines()
+				self.in_file.close()
 			else:
-				self.in_file	=	open(in_file,"rb")
-			self.proxys	=	self.in_file.readlines()
-			self.in_file.close()
+				self.proxys	=	stdin.readlines()
 			if out_file != devnull:
 				self.__check_for_old_files(out_file) 	# check if the out_file already exists
 			self.out_file	=	open(out_file,"w")
@@ -181,7 +184,9 @@ class proxychecker:
 	
 	def check_proxy(self,proxy):
 		"""Checks a proxy and save it to file, if the string "contains" is in content, returns true if Success,false on fail"""
-		proxy		=	proxy.decode("utf-8","ignore").rstrip("\r\n ") # decode it and remove \r\n from the line
+		if type(proxy) != str:
+			proxy	=	proxy.decode("utf-8","ignore")
+		proxy		=	proxy.rstrip("\r\n ") # decode it and remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or both, add the Cookie if set
