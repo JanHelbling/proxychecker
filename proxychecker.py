@@ -39,6 +39,7 @@ from time import time
 
 RED	= "\x1b\x5b\x33\x31\x6d"
 GREEN	= "\x1b\x5b\x33\x32\x6d"
+YELLOW	= "\x1b\x5b\x30\x3b\x33\x33\x6d"
 NOCOLOR	= "\x1b\x5b\x30\x6d"
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
@@ -72,7 +73,7 @@ class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
 	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color):
 		"""Run's the program"""
-		global RED,GREEN,NOCOLOR
+		global RED,GREEN,YELLOW,NOCOLOR
 		self.color		=	color.lower()
 		self.cookie             =       cookie
 		self.postdata           =       postdata.encode("utf-8")
@@ -107,14 +108,14 @@ class proxychecker:
 		except IOError as e:
 			stderr.write("Could not open "+e.filename+": "+e.strerror+"\n")
 			exit(1)
-		print(" [INFO] Remove empty lines from list...",end="")
+		print(YELLOW,"[INFO] Remove empty lines from list...",end="")
 		self.__remove_empty_lines()
-		print("..."+GREEN+"[",self.invalid_line_counter,"lines removed]",NOCOLOR)
+		print("..."+GREEN+"["+str(self.invalid_line_counter),"lines removed]",NOCOLOR)
 		
 		self.totalproxys	=	len(self.proxys)
-		print(" [TOTAL:",self.totalproxys,"Proxys]")
+		print(YELLOW,"[TOTAL:",self.totalproxys,"Proxys]")
 		
-		print(" [INFO] (working)=(current/total)")
+		print(YELLOW,"[INFO] ("+GREEN+"working"+YELLOW+")=(current/total)")
 		# Calling the Main-Function
 		self.main()
 	
@@ -149,7 +150,7 @@ class proxychecker:
 				while True:
 					self.filename   =       out_file+"."+str(self.i)+".gz"
 					if not path.exists(self.filename):
-						print(" [INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
+						print(YELLOW,"[INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
 						try:
 							self.gzfd       =       gzip.open(self.filename,"wb",9)
 							self.fd         =       open(out_file,"rb")
@@ -189,26 +190,26 @@ class proxychecker:
 				self.save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
-				print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> String not matched",NOCOLOR)
+				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> String not matched",NOCOLOR)
 		except IOError as e:
 			if e.strerror != None:
-				print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
+				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
 			else:
 				try:
 					if type(e.reason) == str:
-						print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason,NOCOLOR)
+						print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason,NOCOLOR)
 					elif e.reason.args[0] == "timed out":
-						print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
+						print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
 					else:
-						print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason.strerror,NOCOLOR)
+						print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason.strerror,NOCOLOR)
 				except AttributeError:
-					print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
+					print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
 		except BadStatusLine as e:
-			print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> BadStatusLine",NOCOLOR)
+			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> BadStatusLine",NOCOLOR)
 		except IncompleteRead as e:
-			print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> IncompleteRead",NOCOLOR)
+			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> IncompleteRead",NOCOLOR)
 		except KeyboardInterrupt:
-			print(RED,"[ABORTED CTRL+C] => ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy, "\t--> Interrupted by User",NOCOLOR)
+			print(RED,"[ABORTED CTRL+C] =>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy, "\t--> Interrupted by User",NOCOLOR)
 		return False
 	
 	def save_proxy(self,proxy):
