@@ -85,6 +85,7 @@ class proxychecker:
 		self.contains           =       contains
 		self.process_num        =       process_num
 		self.cnt                =       0
+		self.totalcnt		=	0
 		if self.browserstring not in ["mobile","desktop","both"]:
                         stderr.write("Invalid Browserstring, use \"mobile\",\"desktop\" or \"both\"!\n")
                         exit(1)
@@ -163,28 +164,28 @@ class proxychecker:
 			fd.close()
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,"[OK]\t=>",endtime,"sec.\t",proxy,NOCOLOR)
+				print(GREEN,"[OK]\t=> ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",endtime,"sec.\t",proxy,NOCOLOR)
 				self.save_proxy(proxy) # write proxy to file
 				return True
 		except IOError as e:
 			if e.strerror != None:
-				print(RED,"[FAIL]",proxy,"\t-->",e.strerror,NOCOLOR)
+				print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
 			else:
 				try:
 					if type(e.reason) == str:
-						print(RED,"[FAIL]",proxy,"\t-->",e.reason,NOCOLOR)
+						print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason,NOCOLOR)
 					elif e.reason.args[0] == "timed out":
-						print(RED,"[FAIL]",proxy,"\t--> Timed Out",NOCOLOR)
+						print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
 					else:
-						print(RED,"[FAIL]",proxy,"\t-->",e.reason.strerror,NOCOLOR)
+						print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason.strerror,NOCOLOR)
 				except AttributeError:
-					print(RED,"[FAIL]",proxy,"\t--> Timed Out",NOCOLOR)
+					print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
 		except BadStatusLine as e:
-			print(RED,"[FAIL]",proxy,"\t--> BadStatusLine",NOCOLOR)
+			print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> BadStatusLine",NOCOLOR)
 		except IncompleteRead as e:
-			print(RED,"[FAIL]",proxy,"\t--> IncompleteRead",NOCOLOR)
+			print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> IncompleteRead",NOCOLOR)
 		except KeyboardInterrupt:
-			print(RED,"[ABORTED CTRL+C]",proxy, "\t--> Interrupted by User",NOCOLOR)
+			print(RED,"[ABORTED CTRL+C] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy, "\t--> Interrupted by User",NOCOLOR)
 		return False
 	
 	def save_proxy(self,proxy):
@@ -197,6 +198,7 @@ class proxychecker:
 		cnt = 0
 		pid = []
 		for proxy in self.proxys:
+			self.totalcnt	=	self.totalcnt + 1
 			pid.append(fork()) # man fork
 			if not pid[-1]:
 				if self.check_proxy(proxy):
