@@ -38,7 +38,7 @@ Fetaures:
 	- gzip support
 	- Open website to regex for proxys
 
-Usage: proxychecker.py -i proxylist[.gz]|URL [options...]
+Usage: proxychecker.py -i <proxylist[.gz]|URL> [options...]
 
 Options:
   --version             show program's version number and exit

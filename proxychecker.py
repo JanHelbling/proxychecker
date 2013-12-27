@@ -301,7 +301,7 @@ if __name__ == "__main__":
 		print("Invalid number of arguments! Use -h for options.")
 		sys.exit(0)
 	# Parse options and run the proxychecker
-	parser = OptionParser(usage="usage: %prog -i proxylist[.gz]|URL [options...]",version="Version: git - master: https://github.com/JanHelbling/ProxyChecker.git\nContact: (c) 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]")
+	parser = OptionParser(usage="usage: %prog -i <proxylist[.gz]|URL> [options...]",version="Version: git - master: https://github.com/JanHelbling/ProxyChecker.git\nContact: (c) 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]")
 	parser.add_option("-i", "--input", dest="input",help="read proxys from file (or from stdin), gz format supported", metavar="FILE")
 	parser.add_option("-o", "--output", dest="output",help="write proxys to file (or to a stream), default: checked_proxys", metavar="FILE",default="checked_proxys")
 	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
