@@ -19,7 +19,7 @@
 #
 
 import urllib.request
-import gzip,sys
+import gzip,sys,re
 
 from http.client import IncompleteRead,BadStatusLine
 
@@ -43,6 +43,8 @@ GREEN		= "\x1b\x5b\x33\x32\x6d"
 GREENBOLD	= "\x1b\x5b\x31\x3b\x33\x32\x6d"
 YELLOW		= "\x1b\x5b\x30\x3b\x33\x33\x6d"
 NOCOLOR		= "\x1b\x5b\x30\x6d"
+
+proxyregex	= re.compile("\d+\.\d+\.\d+.\d+:\d+")
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
 	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
@@ -139,70 +141,15 @@ class proxychecker:
 	def __remove_empty_lines(self):
 		"""Remove empty lines from a list, eg. b"\n"."""
 		self.invalid_line_counter	=	len(self.proxys)
-		lf 	= "\n".encode("utf-8","ignore")
-		lfd	= "\n"
-		crlf	= "\r\n".encode("utf-8","ignore")
-		crlfd	= "\r\n"
-		try:
-			for i in range(100000):
-				self.proxys.remove(lf)
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove(lfd)
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove(" {0}".format(lfd).encode("utf-8"))
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove("  {0}".format(lfd).encode("utf-8"))
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove(" {0}".format(lfd))
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove("  {0}".format(lfd))
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove(crlf)
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove(crlfd)
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove(" {0}".format(crlfd).encode("utf-8"))
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove("  {0}".format(crlfd).encode("utf-8"))
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-	                        self.proxys.remove(" {0}".format(crlfd))
-		except ValueError as e:
-			pass
-		try:
-			for i in range(100000):
-				self.proxys.remove("  {0}".format(crlfd))
-		except ValueError as e:
-			pass
+		self._proxys			=	[]
+		for proxy in self.proxys:
+			if type(proxy) != str:
+				proxy	=	proxy.decode("utf-8","ignore")
+			proxy		=	proxyregex.findall(proxy)
+			if proxy != []:
+				self._proxys.append(proxy[0])
+		self.proxys			=	self._proxys
+		self._proxys			=	[]	
 		self.invalid_line_counter	=	self.invalid_line_counter - len(self.proxys)
 	
 	def __check_for_old_files(self,out_file):
@@ -230,9 +177,6 @@ class proxychecker:
 	
 	def check_proxy(self,proxy):
 		"""Checks a proxy and save it to file, if the string "contains" is in content, returns true if Success,false on fail"""
-		if type(proxy) != str:
-			proxy	=	proxy.decode("utf-8","ignore")
-		proxy		=	proxy.rstrip("\r\n ") # decode it and remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or both, add the Cookie if set
