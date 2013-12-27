@@ -19,7 +19,7 @@
 #
 
 import urllib.request
-import gzip
+import gzip,csv
 from http.client import IncompleteRead,BadStatusLine
 from sys import exit,argv,stderr
 
@@ -73,9 +73,10 @@ useragent_both	= useragent + useragent_mobile
 
 class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color,fmt):
 		"""Run's the program"""
 		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
+		self.fmt		=	fmt.lower()
 		self.color		=	color.lower()
 		self.cookie             =       cookie
 		self.postdata           =       postdata.encode("utf-8")
@@ -95,6 +96,9 @@ class proxychecker:
 		if self.color not in ["yes","none"]:
 			stderr.write("[ERROR] Invalid value for color, use \"yes\" or \"none\"!\n")
 			exit(1)
+		if self.fmt not in ["csv","txt","gz"]:
+			stderr.write("[ERROR] Invalid Fileformat, use \"txt\", \"csv\" or \"gz\"!\n")
+			exit(1)
 		if self.color == "none":
 			RED 		= ""
 			REDBOLD		= ""
@@ -111,8 +115,20 @@ class proxychecker:
 			self.proxys	=	self.in_file.readlines()
 			self.in_file.close()
 			if out_file != devnull:
+				if self.fmt == "gz" and not out_file.lower().endswith(".gz"):
+					out_file = out_file + ".gz"
+				elif self.fmt == "csv" and not out_file.lower().endswith(".csv"):
+					out_file = out_file + ".csv"
 				self.__check_for_old_files(out_file) 	# check if the out_file already exists
-			self.out_file	=	open(out_file,"w")
+			if self.fmt == "gz":
+				self.out_file	=	gzip.open(out_file,"wb")
+			elif self.fmt == "txt":
+				if self.fmt == "txt":
+					self.out_file	=	open(out_file,"w")
+			elif self.fmt == "csv":
+				if self.fmt == "csv":
+					self.out_file	=	open(out_file,"w")
+					self.csv_writer	=	csv.writer(self.out_file)
 		except IOError as e:
 			stderr.write("[ERROR] Could not open "+e.filename+": "+e.strerror+"\n")
 			exit(1)
@@ -159,6 +175,8 @@ class proxychecker:
 	def __check_for_old_files(self,out_file):
 		"""Checks if the path "out_file" exists, if true, then compress it to a gzipped archive with the next number."""
 		if path.exists(out_file):
+				if self.fmt == "gz":
+					self.filename.rstrip(".gz")
 				self.i  =       0
 				while True:
 					self.filename   =       out_file+"."+str(self.i)+".gz"
@@ -200,7 +218,7 @@ class proxychecker:
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
 				print(GREEN,"[OK]\t=>",YELLOW+"("+GREEN+str(self.cnt+1)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+GREEN,proxy,"\t-->",endtime,"sec.",NOCOLOR)
-				self.save_proxy(proxy)	# write proxy to file
+				self.save_proxy(proxy,endtime)	# write proxy to file
 				return True
 			else:				# else, fail
 				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> String not matched",NOCOLOR)
@@ -225,10 +243,17 @@ class proxychecker:
 			print(RED,"[ABORTED CTRL+C] =>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy, "\t--> Interrupted by User",NOCOLOR)
 		return False
 	
-	def save_proxy(self,proxy):
+	def save_proxy(self,proxy,time):
 		"""Save the proxy to file."""
-		self.out_file.write(proxy+"\n")
-		self.out_file.flush()
+		if self.fmt == "txt":
+			self.out_file.write(proxy+"\n")
+			self.out_file.flush()
+		elif self.fmt == "gz":
+			self.out_file.write((proxy+"\n").encode("utf-8","ignore"))
+			self.out_file.flush()
+		elif self.fmt == "csv":
+			ip,port	=	proxy.split(":")
+			self.csv_writer.writerow((ip,port,time))
 	
 	def main(self):
 		"""Main, the main-programm"""
@@ -277,7 +302,7 @@ if __name__ == "__main__":
 	# Parse options and run the proxychecker
 	parser = OptionParser()
 	parser.add_option("-i", "--input", dest="input",help="read proxys from file (gz format supported)", metavar="FILE")
-	parser.add_option("-o", "--output", dest="output",help="write proxys to file, default: checked_proxys.txt", metavar="FILE",default="checked_proxys.txt")
+	parser.add_option("-o", "--output", dest="output",help="write proxys to file, default: checked_proxys", metavar="FILE",default="checked_proxys")
 	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
 	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
@@ -287,5 +312,6 @@ if __name__ == "__main__":
 	parser.add_option("-P", "--post-data", dest="postdata", help="data for postrequests, (eg. foo=bar\&info=false), default None",metavar="DATA",default="")
 	parser.add_option("-C", "--cookie", dest="cookie", help="cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
 	parser.add_option("-e", "--color", dest="color", help="colored output, none or yes, default yes",metavar="COLOR",default="yes")
+	parser.add_option("-x", "--export-format",dest="format",help="write proxys in format: csv,txt or gz, default txt",metavar="format",default="txt")
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.format)
