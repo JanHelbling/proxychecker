@@ -44,7 +44,7 @@ GREENBOLD	= "\x1b\x5b\x31\x3b\x33\x32\x6d"
 YELLOW		= "\x1b\x5b\x30\x3b\x33\x33\x6d"
 NOCOLOR		= "\x1b\x5b\x30\x6d"
 
-proxyregex	= re.compile("\d+\.\d+\.\d+.\d+:\d+")
+proxyregex	= re.compile("\d+\.\d+\.\d+\.\d+:\d+")
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
 	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
@@ -135,7 +135,7 @@ class proxychecker:
 		self.main()
 	
 	def __remove_empty_lines(self):
-		"""Remove empty/invalid nonproxys from the list\n"."""
+		"""Remove empty/invalid nonproxys from the list."""
 		self.invalid_line_counter	=	len(self.proxys)
 		self._proxys			=	[]
 		for proxy in self.proxys:
@@ -254,7 +254,7 @@ class proxychecker:
 				sys.exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working... removing the output-file...",NOCOLOR,end="")
+			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys,"proxys we checked are working... removing the output-file...",NOCOLOR,end="")
 			try:
 				unlink(self.out_file.name)
 				print(GREEN+"[OK]",NOCOLOR)
@@ -262,7 +262,7 @@ class proxychecker:
 				print(RED+"[FAIL]",NOCOLOR)
 		else:
 			print(GREENBOLD,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
-			print(GREEN,"[New Proxylist saved =>",self.out_file.name+"]",NOCOLOR)
+			print(GREEN,"[New Proxylist saved to =>",self.out_file.name+"]",NOCOLOR)
 		sys.exit(0)
 
 if __name__ == "__main__":
