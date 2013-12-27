@@ -112,7 +112,7 @@ class proxychecker:
 		print("..."+GREEN+"[",self.invalid_line_counter,"lines removed]",NOCOLOR)
 		
 		self.totalproxys	=	len(self.proxys)
-		print(" [TOTAL:",self.totalproxys," Proxys]")
+		print(" [TOTAL:",self.totalproxys,"Proxys]")
 		
 		print(" [INFO] (working)=(current/total)")
 		# Calling the Main-Function
@@ -186,8 +186,10 @@ class proxychecker:
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
 				print(GREEN,"[OK]\t=> ("+GREEN+str(self.cnt+1)+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",endtime,"sec.",NOCOLOR)
-				self.save_proxy(proxy) # write proxy to file
+				self.save_proxy(proxy)	# write proxy to file
 				return True
+			else:				# else, fail
+				print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> String not matched",NOCOLOR)
 		except IOError as e:
 			if e.strerror != None:
 				print(RED,"[FAIL]\t=> ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
