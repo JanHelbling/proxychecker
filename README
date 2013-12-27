@@ -18,7 +18,7 @@ ProxyChecker
 
 A advanced Proxychecker (and Hitfaker), written in Python
 
-It checks the http-proxylist in format ip:port :
+It checks the http-proxylist in format ip:port:
 
 80.91.190.188:8181
 185.12.15.123:80
@@ -34,15 +34,21 @@ Fetaures:
 	- Add a HTTP_REFERER
 	- Send POST-Requests
 	- Send Cookies
+	- Colored Output
+	- gzip support
+	- Open website to regex for proxys
 
-Usage: proxychecker.py [options]
+Usage: proxychecker.py -i proxylist[.gz]|URL [options...]
 
 Options:
+  --version             show program's version number and exit
   -h, --help            show this help message and exit
   -i FILE, --input=FILE
-                        read proxys from file
+                        read proxys from file (or from stdin), gz format
+                        supported
   -o FILE, --output=FILE
-                        write proxys to file, default: checked_proxys.txt
+                        write proxys to file (or to a stream), default:
+                        checked_proxys
   -u WEBSITE, --testsite=WEBSITE
                         use this site for requests, default http://www.gnu.org
   -c STRING, --contains=STRING
@@ -52,14 +58,14 @@ Options:
   -p NUM, --process=NUM
                         number of processes, default 10
   -r REFERER, --referer=REFERER
-                        Use this site as referer, default None
+                        use this site as referer, default None
   -b TYPE, --browser-string=TYPE
-                        mobile,desktop or both, default desktop
+                        mobile,desktop or all, default desktop
   -P DATA, --post-data=DATA
-                        Data for postrequests, (eg. foo=bar&info=false),
+                        data for postrequests, (eg. "foo=bar&info=false"),
                         default None
   -C COOKIE, --cookie=COOKIE
-                        Cookies, seperated by ; (eg. "abc=123; def=456;"),
+                        cookies, seperated by ; (eg. "abc=123; def=456;"),
                         default None
   -e COLOR, --color=COLOR
-                        Colored output, none or yes, default yes
+                        colored output, none or yes, default yes
