@@ -71,7 +71,7 @@ useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build
 	"Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.1.0.346 Mobile Safari/534.11+",
 	"Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02"]
 
-useragent_both	= useragent + useragent_mobile
+useragent_all	= useragent + useragent_mobile
 
 class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
@@ -91,12 +91,6 @@ class proxychecker:
 		self.process_num        =       process_num
 		self.cnt                =       0
 		self.totalcnt		=	0
-		if self.browserstring not in ["mobile","desktop","both"]:
-                        sys.stderr.write("[ERROR] Invalid Browserstring, use \"mobile\",\"desktop\" or \"both\"!\n")
-                        sys.exit(1)
-		if self.color not in ["yes","none"]:
-			sys.stderr.write("[ERROR] Invalid value for color, use \"yes\" or \"none\"!\n")
-			sys.exit(1)
 		if self.color == "none":
 			RED 		= ""
 			REDBOLD		= ""
@@ -139,7 +133,7 @@ class proxychecker:
 		self.main()
 	
 	def __remove_empty_lines(self):
-		"""Remove empty lines from a list, eg. b"\n"."""
+		"""Remove empty/invalid nonproxys from the list\n"."""
 		self.invalid_line_counter	=	len(self.proxys)
 		self._proxys			=	[]
 		for proxy in self.proxys:
@@ -179,12 +173,12 @@ class proxychecker:
 		"""Checks a proxy and save it to file, if the string "contains" is in content, returns true if Success,false on fail"""
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
-		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or both, add the Cookie if set
+		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or all, add the Cookie if set
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent (and Cookies if set)
 		elif self.browserstring == "mobile":
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
 		else:
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_both[randint(0,len(useragent_both)-1)]),('Cookie',self.cookie)]
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_all[randint(0,len(useragent_all)-1)]),('Cookie',self.cookie)]
 		try:
 			starttime	=	time()
 			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
@@ -232,26 +226,26 @@ class proxychecker:
 	def main(self):
 		"""Main, the main-programm"""
 		cnt = 0
-		pid = []
+		pids = []
 		for proxy in self.proxys:
 			self.totalcnt	=	self.totalcnt + 1
-			pid.append(fork()) # man fork
-			if not pid[-1]:
+			pids.append(fork()) # man fork
+			if not pids[-1]:
 				if self.check_proxy(proxy):
 					sys.exit(0)
 				sys.exit(1)
-			if len(pid) == self.process_num:
-				for i in pid:
+			if len(pids) == self.process_num:
+				for pid in pids:
 					try:
-						(_pid,st)	=	waitpid(i,0)	# man/pydoc3 (os.) waitpid
+						(_pid,st)	=	waitpid(pid,0)	# man/pydoc3 (os.) waitpid
 						if WEXITSTATUS(st) == 0:
 							self.cnt=	self.cnt + 1
 					except KeyboardInterrupt:
 						sys.exit(1)
-				pid = []
-		for i in pid:
+				pids = []
+		for pid in pids:
 			try:
-				(_pid,st)	=	waitpid(i,0) 	# get the exit_code from the forked subproccess
+				(_pid,st)	=	waitpid(pid,0) 	# get the exit_code from the forked subproccess
 				if WEXITSTATUS(st) == 0:		# if it's 0, check_proxy has returned true
 					self.cnt=       self.cnt + 1 	# incerase the counter
 			except KeyboardInterrupt:
@@ -270,11 +264,11 @@ class proxychecker:
 		sys.exit(0)
 
 if __name__ == "__main__":
-	if len(sys.argv) < 2 or ("-i" not in sys.argv and "--input" not in sys.argv and "-h" not in sys.argv and "--help" not in sys.argv):
+	if len(sys.argv) < 2 or ("--version" not in sys.argv and "-i" not in sys.argv and "--input" not in sys.argv and "-h" not in sys.argv and "--help" not in sys.argv):
 		print("Invalid number of arguments! Use -h for options.")
 		sys.exit(0)
 	# Parse options and run the proxychecker
-	parser = OptionParser()
+	parser = OptionParser(usage="usage: %prog -i proxylist[.gz] [options...]",version="Version: git - master: https://github.com/JanHelbling/ProxyChecker.git\nContact: (c) 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]")
 	parser.add_option("-i", "--input", dest="input",help="read proxys from file (or from stdin), gz format supported", metavar="FILE")
 	parser.add_option("-o", "--output", dest="output",help="write proxys to file (or to a stream), default: checked_proxys", metavar="FILE",default="checked_proxys")
 	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
@@ -282,9 +276,9 @@ if __name__ == "__main__":
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
 	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", type="int",metavar="NUM",default=10)
 	parser.add_option("-r", "--referer", dest="referer",help="use this site as referer, default None",metavar="REFERER",default="")
-	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile,desktop or both, default desktop", metavar="TYPE",default="desktop")
-	parser.add_option("-P", "--post-data", dest="postdata", help="data for postrequests, (eg. foo=bar\&info=false), default None",metavar="DATA",default="")
+	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help="mobile,desktop or all, default desktop", metavar="TYPE",default="desktop")
+	parser.add_option("-P", "--post-data", dest="postdata", help="data for postrequests, (eg. \"foo=bar&info=false\"), default None",metavar="DATA",default="")
 	parser.add_option("-C", "--cookie", dest="cookie", help="cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
-	parser.add_option("-e", "--color", dest="color", help="colored output, none or yes, default yes",metavar="COLOR",default="yes")
+	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help="colored output, none or yes, default yes",metavar="COLOR",default="yes")
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color)
