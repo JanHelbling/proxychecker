@@ -140,7 +140,7 @@ class proxychecker:
 			sys.exit(1)
 		print(YELLOW,"[INFO] Remove empty lines from list...",end="")
 		self.__remove_empty_lines()
-		print("..."+GREEN+"[DONE, "+str(self.invalid_line_counter),"lines removed]",NOCOLOR)
+		print("..."+GREEN+"[DONE, "+self.invalid_line_counter,"lines removed]",NOCOLOR)
 		
 		self.totalproxys	=	len(self.proxys)
 		print(YELLOW,"[TOTAL:",self.totalproxys,"Proxys]")
@@ -159,6 +159,7 @@ class proxychecker:
 			sys.exit(1)
 		
 		print(YELLOW,"[INFO] ("+GREEN+"working"+YELLOW+")=(current/total)",NOCOLOR)
+		
 		# Calling the Main-Function
 		self.main()
 	
@@ -174,7 +175,7 @@ class proxychecker:
 				self._proxys.append(proxy[0])
 		self.proxys			=	self._proxys
 		self._proxys			=	[]	
-		self.invalid_line_counter	=	self.invalid_line_counter - len(self.proxys)
+		self.invalid_line_counter	=	str(self.invalid_line_counter - len(self.proxys))
 	
 	def __check_for_old_files(self,out_file):
 		"""Checks if the path "out_file" exists, if true, then compress it to a gzipped archive with the next number."""
@@ -211,13 +212,13 @@ class proxychecker:
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_all[randint(0,len(useragent_all)-1)]),('Cookie',self.cookie)]
 		try:
 			starttime	=	time()
-			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
-			content	=	fd.read()
-			endtime	=	time()
+			fd		=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
+			content		=	fd.read()
+			endtime		=	time()
 			contenttype	=	fd.getheader("Content-Type")
-			content	=	content.decode("utf-8","ignore")
+			content		=	content.decode("utf-8","ignore")
 			fd.close()
-			endtime	=	(endtime-starttime).__round__(3)
+			endtime		=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
 				print(GREEN,"[OK]\t=>",YELLOW+"("+GREEN+str(self.cnt+1)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+GREEN,proxy,"\t-->",endtime,"sec.",NOCOLOR)
 				self.save_proxy(proxy)	# write proxy to file
