@@ -54,7 +54,7 @@ Options:
   -r REFERER, --referer=REFERER
                         Use this site as referer, default None
   -b TYPE, --browser-string=TYPE
-                        mobile or desktop, default desktop
+                        mobile,desktop or both, default desktop
   -P DATA, --post-data=DATA
                         Data for postrequests, (eg. foo=bar&info=false),
                         default None
