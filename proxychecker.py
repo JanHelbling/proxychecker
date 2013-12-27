@@ -106,6 +106,16 @@ class proxychecker:
 		except IOError as e:
 			stderr.write("Could not open "+e.filename+": "+e.strerror+"\n")
 			exit(1)
+		try:
+			# Remove empty lines
+			self.proxys.remove(b"\n")
+			self.proxys.remove(b" \n")
+			self.proxys.remove(b"  \n")
+			self.proxys.remove(b"\r\n")
+			self.proxys.remove(b" \r\n")
+			self.proxys.remove(b"  \r\n")
+		except ValueError as e:
+			pass
 		self.totalproxys	=	len(self.proxys)
 		# Calling the Main-Function
 		self.main()
