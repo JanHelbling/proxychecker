@@ -107,19 +107,32 @@ class proxychecker:
 		except IOError as e:
 			stderr.write("Could not open "+e.filename+": "+e.strerror+"\n")
 			exit(1)
-		try:
-			# Remove empty lines
-			self.proxys.remove(b"\n")
-			self.proxys.remove(b" \n")
-			self.proxys.remove(b"  \n")
-			self.proxys.remove(b"\r\n")
-			self.proxys.remove(b" \r\n")
-			self.proxys.remove(b"  \r\n")
-		except ValueError as e:
-			pass
+		self.__remove_empty_lines()
 		self.totalproxys	=	len(self.proxys)
 		# Calling the Main-Function
 		self.main()
+	
+	def __remove_empty_lines(self):
+		try:
+			self.proxys.remove(b"\n")
+		except ValueError as e:
+			pass
+		try:
+			self.proxys.remove(b"  \n")
+		except ValueError as e:
+			pass
+		try:
+			self.proxys.remove(b"\r\n")
+		except ValueError as e:
+			pass
+		try:
+			self.proxys.remove(b" \r\n")
+		except ValueError as e:
+			pass
+		try:
+			self.proxys.remove(b"  \r\n")
+		except ValueError as e:
+			pass
 	
 	def __check_for_old_files(self,out_file):
 		"""Checks if the path "out_file" exists, if true, then compress it to a gzipped archive with the next number."""
@@ -164,28 +177,28 @@ class proxychecker:
 			fd.close()
 			endtime	=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,"[OK]\t=> ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",endtime,"sec.\t",proxy,NOCOLOR)
+				print(GREEN,"[OK]\t=> ("+GREEN+str(self.cnt+1)+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",endtime,"sec.\t",proxy,NOCOLOR)
 				self.save_proxy(proxy) # write proxy to file
 				return True
 		except IOError as e:
 			if e.strerror != None:
-				print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
+				print(RED,"[FAIL] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
 			else:
 				try:
 					if type(e.reason) == str:
-						print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason,NOCOLOR)
+						print(RED,"[FAIL] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason,NOCOLOR)
 					elif e.reason.args[0] == "timed out":
-						print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
+						print(RED,"[FAIL] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
 					else:
-						print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason.strerror,NOCOLOR)
+						print(RED,"[FAIL] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.reason.strerror,NOCOLOR)
 				except AttributeError:
-					print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
+					print(RED,"[FAIL] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> Timed Out",NOCOLOR)
 		except BadStatusLine as e:
-			print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> BadStatusLine",NOCOLOR)
+			print(RED,"[FAIL] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> BadStatusLine",NOCOLOR)
 		except IncompleteRead as e:
-			print(RED,"[FAIL] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> IncompleteRead",NOCOLOR)
+			print(RED,"[FAIL] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> IncompleteRead",NOCOLOR)
 		except KeyboardInterrupt:
-			print(RED,"[ABORTED CTRL+C] ("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy, "\t--> Interrupted by User",NOCOLOR)
+			print(RED,"[ABORTED CTRL+C] ("+GREEN+str(self.cnt)+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy, "\t--> Interrupted by User",NOCOLOR)
 		return False
 	
 	def save_proxy(self,proxy):
