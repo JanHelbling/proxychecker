@@ -100,7 +100,7 @@ class proxychecker:
 			NOCOLOR		= ""
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
-			if in_file not in ["-","/dev/stdin"]:
+			if in_file not in ["-","/dev/stdin"] and not in_file.startswith("http://"):
 				print(YELLOW,"[INFO] reading proxylist",in_file+"...",end="")
 				if in_file.lower().endswith(".gz"):
 					self.in_file	=	gzip.open(in_file,"rb")
@@ -109,6 +109,13 @@ class proxychecker:
 				self.proxys	=	self.in_file.readlines()
 				self.in_file.close()
 				print("..."+GREEN+"[DONE]",NOCOLOR)
+			elif in_file.startswith("http://"):
+				print(YELLOW,"[INFO] gather proxys from url...",end="")
+				self.fd		=	urllib.request.urlopen(in_file)
+				self.content	=	(self.fd.read()).decode("utf-8","ignore")
+				self.fd.close()
+				self.proxys	=	proxyregex.findall(self.content)
+				print("..."+GREEN+"[DONE,"+str(len(self.proxys))+" found]",NOCOLOR)
 			else:
 				self.proxys	=	sys.stdin.readlines()
 			if out_file not in [devnull,"/dev/stdout","/dev/stderr","/dev/stdin"]:
@@ -270,7 +277,7 @@ if __name__ == "__main__":
 		print("Invalid number of arguments! Use -h for options.")
 		sys.exit(0)
 	# Parse options and run the proxychecker
-	parser = OptionParser(usage="usage: %prog -i proxylist[.gz] [options...]",version="Version: git - master: https://github.com/JanHelbling/ProxyChecker.git\nContact: (c) 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]")
+	parser = OptionParser(usage="usage: %prog -i proxylist[.gz]|URL [options...]",version="Version: git - master: https://github.com/JanHelbling/ProxyChecker.git\nContact: (c) 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]")
 	parser.add_option("-i", "--input", dest="input",help="read proxys from file (or from stdin), gz format supported", metavar="FILE")
 	parser.add_option("-o", "--output", dest="output",help="write proxys to file (or to a stream), default: checked_proxys", metavar="FILE",default="checked_proxys")
 	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
