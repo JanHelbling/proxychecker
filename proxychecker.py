@@ -120,14 +120,19 @@ class proxychecker:
 		self.totalproxys	=	len(self.proxys)
 		print(YELLOW,"[TOTAL:",self.totalproxys,"Proxys]")
 		
-		print(YELLOW,"[INFO] ("+GREEN+"working"+YELLOW+")=(current/total)")
+		print(YELLOW,"[INFO] ("+GREEN+"working"+YELLOW+")=(current/total)",NOCOLOR)
 		# Calling the Main-Function
 		self.main()
 	
 	def __remove_empty_lines(self):
+		"""Remove empty lines from a list, eg. b"\n"."""
 		self.invalid_line_counter	=	len(self.proxys)
 		try:
 			self.proxys.remove(b"\n")
+		except ValueError as e:
+			pass
+		try:
+			self.proxys.remove(b" \n")
 		except ValueError as e:
 			pass
 		try:
@@ -177,7 +182,7 @@ class proxychecker:
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or both, add the Cookie if set
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent and Cookies
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent (and Cookies if set)
 		elif self.browserstring == "mobile":
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
 		else:
@@ -213,7 +218,7 @@ class proxychecker:
 			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> BadStatusLine",NOCOLOR)
 		except IncompleteRead as e:
 			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> IncompleteRead",NOCOLOR)
-		except KeyboardInterrupt:
+		except KeyboardInterrupt:	# [CTRL] + [C]
 			print(RED,"[ABORTED CTRL+C] =>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy, "\t--> Interrupted by User",NOCOLOR)
 		return False
 	
@@ -223,7 +228,7 @@ class proxychecker:
 		self.out_file.flush()
 	
 	def main(self):
-		"""Main"""
+		"""Main, the main-programm"""
 		cnt = 0
 		pid = []
 		for proxy in self.proxys:
@@ -251,9 +256,15 @@ class proxychecker:
 				exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working...",NOCOLOR)
+			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working... removing the output-file...",NOCOLOR,end="")
+			try:
+				unlink(self.out_file.name)
+				print(GREEN+"[OK]",NOCOLOR)
+			except IOError as e:
+				print(RED+"[FAIL]",NOCOLOR)
 		else:
 			print(GREENBOLD,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
+			print(GREEN,"[New Proxylist saved =>",self.out_file.name+"]",NOCOLOR)
 		exit(0)
 
 if __name__ == "__main__":
