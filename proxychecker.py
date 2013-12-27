@@ -78,7 +78,7 @@ class proxychecker:
 		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
 		self.color		=	color.lower()
 		self.cookie             =       cookie
-		self.postdata           =       postdata.encode("utf-8")
+		self.postdata           =       postdata.encode("utf-8","ignore")
 		self.browserstring      =       browserstring.lower()
 		self.referer            =       referer
 		self.to                 =       to
