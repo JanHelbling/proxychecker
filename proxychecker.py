@@ -19,18 +19,18 @@
 #
 
 import urllib.request
-import gzip
+import gzip,sys
+
 from http.client import IncompleteRead,BadStatusLine
-from sys import exit,argv,stderr,stdin
 
 try:
 	from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
 except ImportError as e:
 	if e.msg == "cannot import name fork":
-		stderr.write("[ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n")
-		stderr.write("        (Windows has no syscall named fork()...)\n")
-		stderr.write("        You must Upgrade to Linux to use this ;)\n")
-		exit(1)
+		sys.stderr.write("[ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n")
+		sys.stderr.write("        (Windows has no syscall named fork()...)\n")
+		sys.stderr.write("        You must Upgrade to Linux to use this ;)\n")
+		sys.exit(1)
 
 from optparse import OptionParser
 from socket import timeout
@@ -90,11 +90,11 @@ class proxychecker:
 		self.cnt                =       0
 		self.totalcnt		=	0
 		if self.browserstring not in ["mobile","desktop","both"]:
-                        stderr.write("[ERROR] Invalid Browserstring, use \"mobile\",\"desktop\" or \"both\"!\n")
-                        exit(1)
+                        sys.stderr.write("[ERROR] Invalid Browserstring, use \"mobile\",\"desktop\" or \"both\"!\n")
+                        sys.exit(1)
 		if self.color not in ["yes","none"]:
-			stderr.write("[ERROR] Invalid value for color, use \"yes\" or \"none\"!\n")
-			exit(1)
+			sys.stderr.write("[ERROR] Invalid value for color, use \"yes\" or \"none\"!\n")
+			sys.exit(1)
 		if self.color == "none":
 			RED 		= ""
 			REDBOLD		= ""
@@ -104,7 +104,7 @@ class proxychecker:
 			NOCOLOR		= ""
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
-			if in_file != "-":
+			if in_file not in ["-","/dev/stdin"]:
 				if in_file.lower().endswith(".gz"):
 					self.in_file	=	gzip.open(in_file,"rb")
 				else:
@@ -112,13 +112,19 @@ class proxychecker:
 				self.proxys	=	self.in_file.readlines()
 				self.in_file.close()
 			else:
-				self.proxys	=	stdin.readlines()
-			if out_file != devnull:
+				self.proxys	=	sys.stdin.readlines()
+			if out_file not in [devnull,"/dev/stdout","/dev/stderr","/dev/stdin"]:
 				self.__check_for_old_files(out_file) 	# check if the out_file already exists
-			self.out_file	=	open(out_file,"w")
+			if out_file in ["/dev/stdout","-"]:
+				self.out_file	=	open("/dev/stdout","w")
+				self.devnull	=	open(devnull,"w")
+				sys.stdout	=	self.devnull
+				sys.stdin	=	self.out_file
+			else:
+				self.out_file	=	open(out_file,"w")
 		except IOError as e:
-			stderr.write("[ERROR] Could not open "+e.filename+": "+e.strerror+"\n")
-			exit(1)
+			sys.stderr.write("[ERROR] Could not open "+e.filename+": "+e.strerror+"\n")
+			sys.exit(1)
 		print(YELLOW,"[INFO] Remove empty lines from list...",end="")
 		self.__remove_empty_lines()
 		print("..."+GREEN+"["+str(self.invalid_line_counter),"lines removed]",NOCOLOR)
@@ -133,28 +139,68 @@ class proxychecker:
 	def __remove_empty_lines(self):
 		"""Remove empty lines from a list, eg. b"\n"."""
 		self.invalid_line_counter	=	len(self.proxys)
+		lf 	= "\n".encode("utf-8","ignore")
+		lfd	= "\n"
+		crlf	= "\r\n".encode("utf-8","ignore")
+		crlfd	= "\r\n"
 		try:
-			self.proxys.remove(b"\n")
+			for i in range(100000):
+				self.proxys.remove(lf)
 		except ValueError as e:
 			pass
 		try:
-			self.proxys.remove(b" \n")
+			for i in range(100000):
+				self.proxys.remove(lfd)
 		except ValueError as e:
 			pass
 		try:
-			self.proxys.remove(b"  \n")
+			for i in range(100000):
+				self.proxys.remove(" {0}".format(lfd).encode("utf-8"))
 		except ValueError as e:
 			pass
 		try:
-			self.proxys.remove(b"\r\n")
+			for i in range(100000):
+				self.proxys.remove("  {0}".format(lfd).encode("utf-8"))
 		except ValueError as e:
 			pass
 		try:
-			self.proxys.remove(b" \r\n")
+			for i in range(100000):
+				self.proxys.remove(" {0}".format(lfd))
 		except ValueError as e:
 			pass
 		try:
-			self.proxys.remove(b"  \r\n")
+			for i in range(100000):
+				self.proxys.remove("  {0}".format(lfd))
+		except ValueError as e:
+			pass
+		try:
+			for i in range(100000):
+				self.proxys.remove(crlf)
+		except ValueError as e:
+			pass
+		try:
+			for i in range(100000):
+				self.proxys.remove(crlfd)
+		except ValueError as e:
+			pass
+		try:
+			for i in range(100000):
+				self.proxys.remove(" {0}".format(crlfd).encode("utf-8"))
+		except ValueError as e:
+			pass
+		try:
+			for i in range(100000):
+				self.proxys.remove("  {0}".format(crlfd).encode("utf-8"))
+		except ValueError as e:
+			pass
+		try:
+			for i in range(100000):
+	                        self.proxys.remove(" {0}".format(crlfd))
+		except ValueError as e:
+			pass
+		try:
+			for i in range(100000):
+				self.proxys.remove("  {0}".format(crlfd))
 		except ValueError as e:
 			pass
 		self.invalid_line_counter	=	self.invalid_line_counter - len(self.proxys)
@@ -178,8 +224,8 @@ class proxychecker:
 							break
 						except IOError as e:
 							print(RED,"[FAIL]",NOCOLOR)
-							stderr.write("[ERROR] with file "+e.filename+": "+e.strerror+"\n")
-							exit(1)
+							sys.stderr.write("[ERROR] with file "+e.filename+": "+e.strerror+"\n")
+							sys.exit(1)
 					self.i          =       self.i + 1
 	
 	def check_proxy(self,proxy):
@@ -200,6 +246,7 @@ class proxychecker:
 			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
 			content	=	fd.read()
 			endtime	=	time()
+			contenttype	=	fd.getheader("Content-Type")
 			content	=	content.decode("utf-8","ignore")
 			fd.close()
 			endtime	=	(endtime-starttime).__round__(3)
@@ -208,7 +255,10 @@ class proxychecker:
 				self.save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
-				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> String not matched",NOCOLOR)
+				if (contenttype == "text/plain" or contenttype == "text/html") and len(content) < 30:
+					print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> String doesnt match: ",content,NOCOLOR)
+				else:
+					print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> String doesnt match!",NOCOLOR)
 		except IOError as e:
 			if e.strerror != None:
 				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.strerror,NOCOLOR)
@@ -244,8 +294,8 @@ class proxychecker:
 			pid.append(fork()) # man fork
 			if not pid[-1]:
 				if self.check_proxy(proxy):
-					exit(0)
-				exit(1)
+					sys.exit(0)
+				sys.exit(1)
 			if len(pid) == self.process_num:
 				for i in pid:
 					try:
@@ -253,7 +303,7 @@ class proxychecker:
 						if WEXITSTATUS(st) == 0:
 							self.cnt=	self.cnt + 1
 					except KeyboardInterrupt:
-						exit(1)
+						sys.exit(1)
 				pid = []
 		for i in pid:
 			try:
@@ -261,7 +311,7 @@ class proxychecker:
 				if WEXITSTATUS(st) == 0:		# if it's 0, check_proxy has returned true
 					self.cnt=       self.cnt + 1 	# incerase the counter
 			except KeyboardInterrupt:
-				exit(1)
+				sys.exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
 			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working... removing the output-file...",NOCOLOR,end="")
@@ -273,16 +323,16 @@ class proxychecker:
 		else:
 			print(GREENBOLD,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
 			print(GREEN,"[New Proxylist saved =>",self.out_file.name+"]",NOCOLOR)
-		exit(0)
+		sys.exit(0)
 
 if __name__ == "__main__":
-	if len(argv) < 2 or ("-i" not in argv and "--input" not in argv and "-h" not in argv and "--help" not in argv):
+	if len(sys.argv) < 2 or ("-i" not in sys.argv and "--input" not in sys.argv and "-h" not in sys.argv and "--help" not in sys.argv):
 		print("Invalid number of arguments! Use -h for options.")
-		exit(0)
+		sys.exit(0)
 	# Parse options and run the proxychecker
 	parser = OptionParser()
-	parser.add_option("-i", "--input", dest="input",help="read proxys from file (gz format supported)", metavar="FILE")
-	parser.add_option("-o", "--output", dest="output",help="write proxys to file, default: checked_proxys", metavar="FILE",default="checked_proxys")
+	parser.add_option("-i", "--input", dest="input",help="read proxys from file (or from stdin), gz format supported", metavar="FILE")
+	parser.add_option("-o", "--output", dest="output",help="write proxys to file (or to a stream), default: checked_proxys", metavar="FILE",default="checked_proxys")
 	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
 	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
