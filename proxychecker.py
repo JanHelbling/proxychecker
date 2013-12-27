@@ -101,12 +101,14 @@ class proxychecker:
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
 			if in_file not in ["-","/dev/stdin"]:
+				print(YELLOW,"[INFO] reading proxylist",in_file+"...",end="")
 				if in_file.lower().endswith(".gz"):
 					self.in_file	=	gzip.open(in_file,"rb")
 				else:
 					self.in_file	=	open(in_file,"rb")
 				self.proxys	=	self.in_file.readlines()
 				self.in_file.close()
+				print("..."+GREEN+"[DONE]",NOCOLOR)
 			else:
 				self.proxys	=	sys.stdin.readlines()
 			if out_file not in [devnull,"/dev/stdout","/dev/stderr","/dev/stdin"]:
@@ -123,7 +125,7 @@ class proxychecker:
 			sys.exit(1)
 		print(YELLOW,"[INFO] Remove empty lines from list...",end="")
 		self.__remove_empty_lines()
-		print("..."+GREEN+"["+str(self.invalid_line_counter),"lines removed]",NOCOLOR)
+		print("..."+GREEN+"[DONE, "+str(self.invalid_line_counter),"lines removed]",NOCOLOR)
 		
 		self.totalproxys	=	len(self.proxys)
 		print(YELLOW,"[TOTAL:",self.totalproxys,"Proxys]")
