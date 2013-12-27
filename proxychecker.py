@@ -27,9 +27,9 @@ try:
 	from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
 except ImportError as e:
 	if e.msg == "cannot import name fork":
-		stderr.write("Error: fork could not be imported from os, this programm is not for Windows-Users!!\n")
-		stderr.write("(Windows has no syscall named fork()...)\n")
-		stderr.write("You must Upgrade to Linux to use this ;)\n")
+		stderr.write("[ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n")
+		stderr.write("        (Windows has no syscall named fork()...)\n")
+		stderr.write("        You must Upgrade to Linux to use this ;)\n")
 		exit(1)
 
 from optparse import OptionParser
@@ -37,10 +37,12 @@ from socket import timeout
 from random import randint
 from time import time
 
-RED	= "\x1b\x5b\x33\x31\x6d"
-GREEN	= "\x1b\x5b\x33\x32\x6d"
-YELLOW	= "\x1b\x5b\x30\x3b\x33\x33\x6d"
-NOCOLOR	= "\x1b\x5b\x30\x6d"
+RED		= "\x1b\x5b\x33\x31\x6d"
+REDBOLD		= "\x1b\x5b\x31\x3b\x33\x31\x6d"
+GREEN		= "\x1b\x5b\x33\x32\x6d"
+GREENBOLD	= "\x1b\x5b\x31\x3b\x33\x32\x6d"
+YELLOW		= "\x1b\x5b\x30\x3b\x33\x33\x6d"
+NOCOLOR		= "\x1b\x5b\x30\x6d"
 
 useragent = ["Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)",
 	"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; SLCC1; .NET CLR 1.1.4322)",
@@ -73,7 +75,7 @@ class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
 	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color):
 		"""Run's the program"""
-		global RED,GREEN,YELLOW,NOCOLOR
+		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
 		self.color		=	color.lower()
 		self.cookie             =       cookie
 		self.postdata           =       postdata.encode("utf-8")
@@ -88,15 +90,18 @@ class proxychecker:
 		self.cnt                =       0
 		self.totalcnt		=	0
 		if self.browserstring not in ["mobile","desktop","both"]:
-                        stderr.write("Invalid Browserstring, use \"mobile\",\"desktop\" or \"both\"!\n")
+                        stderr.write("[ERROR] Invalid Browserstring, use \"mobile\",\"desktop\" or \"both\"!\n")
                         exit(1)
 		if self.color not in ["yes","none"]:
-			stderr.write("Invalid value for color, use \"yes\" or \"none\"!\n")
+			stderr.write("[ERROR] Invalid value for color, use \"yes\" or \"none\"!\n")
 			exit(1)
 		if self.color == "none":
-			RED 	= ""
-			GREEN 	= ""
-			NOCOLOR	= ""
+			RED 		= ""
+			REDBOLD		= ""
+			GREEN 		= ""
+			GREENBOLD	= ""
+			YELLOW		= ""
+			NOCOLOR		= ""
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
 			self.in_file	=	open(in_file,"rb")
@@ -106,7 +111,7 @@ class proxychecker:
 				self.__check_for_old_files(out_file) 	# check if the out_file already exists
 			self.out_file	=	open(out_file,"w")
 		except IOError as e:
-			stderr.write("Could not open "+e.filename+": "+e.strerror+"\n")
+			stderr.write("[ERROR] Could not open "+e.filename+": "+e.strerror+"\n")
 			exit(1)
 		print(YELLOW,"[INFO] Remove empty lines from list...",end="")
 		self.__remove_empty_lines()
@@ -162,7 +167,7 @@ class proxychecker:
 							break
 						except IOError as e:
 							print(RED,"[FAIL]",NOCOLOR)
-							stderr.write("Error with file "+e.filename+": "+e.strerror+"\n")
+							stderr.write("[ERROR] with file "+e.filename+": "+e.strerror+"\n")
 							exit(1)
 					self.i          =       self.i + 1
 	
@@ -190,10 +195,10 @@ class proxychecker:
 				self.save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
-				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> String not matched",NOCOLOR)
+				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t--> String not matched",NOCOLOR)
 		except IOError as e:
 			if e.strerror != None:
-				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
+				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")"+RED+"=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")",proxy,"\t-->",e.strerror,NOCOLOR)
 			else:
 				try:
 					if type(e.reason) == str:
@@ -246,9 +251,9 @@ class proxychecker:
 				exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(RED,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working...",NOCOLOR)
+			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys," proxys we checked are working...",NOCOLOR)
 		else:
-			print(GREEN,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
+			print(GREENBOLD,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
 		exit(0)
 
 if __name__ == "__main__":
