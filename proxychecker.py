@@ -27,7 +27,7 @@ try:
 	from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
 except ImportError as e:
 	if e.msg == "cannot import name fork":
-		sys.stderr.write("[ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n")
+		sys.stderr.write(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n")
 		sys.stderr.write("        (Windows has no syscall named fork()...)\n")
 		sys.stderr.write("        You must Upgrade to Linux to use this ;)\n")
 		sys.exit(1)
@@ -101,14 +101,12 @@ class proxychecker:
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
 			if in_file not in ["-","/dev/stdin"] and not in_file.startswith("http://"):
-				print(YELLOW,"[INFO] reading proxylist",in_file+"...",end="")
 				if in_file.lower().endswith(".gz"):
 					self.in_file	=	gzip.open(in_file,"rb")
 				else:
 					self.in_file	=	open(in_file,"rb")
 				self.proxys	=	self.in_file.readlines()
 				self.in_file.close()
-				print("..."+GREEN+"[DONE]",NOCOLOR)
 			elif in_file.startswith("http://"):
 				print(YELLOW,"[INFO] gather proxys from url...",end="")
 				self.fd		=	urllib.request.urlopen(in_file)
@@ -127,8 +125,18 @@ class proxychecker:
 				sys.stdin	=	self.out_file
 			else:
 				self.out_file	=	open(out_file,"w")
+		except urllib.error.URLError as e:
+			print("..."+RED+"[FAIL]",NOCOLOR)
+			if type(e.args[0]) == str:
+				sys.stderr.write(" [ERROR] couldn\'t open "+in_file+": "+e.args[0]+"\n")
+			else:
+				sys.stderr.write(" [ERROR] couldn\'t open "+in_file+": "+e.args[0].strerror+"\n")
+			sys.exit(1)
 		except IOError as e:
-			sys.stderr.write("[ERROR] Could not open "+e.filename+": "+e.strerror+"\n")
+			if type(e.args[0]) == str:
+				sys.stderr.write(" [ERROR] "+e.args[0])
+			else:
+				sys.stderr.write(" [ERROR] "+e.filename+": "+e.strerror+"\n")
 			sys.exit(1)
 		print(YELLOW,"[INFO] Remove empty lines from list...",end="")
 		self.__remove_empty_lines()
@@ -136,6 +144,19 @@ class proxychecker:
 		
 		self.totalproxys	=	len(self.proxys)
 		print(YELLOW,"[TOTAL:",self.totalproxys,"Proxys]")
+		
+		if self.totalproxys == 0:
+			sys.stderr.write(RED+" [ERROR] no proxys found...\n"+NOCOLOR)
+			if out_file == devnull:
+				exit(1)
+			sys.stderr.write(YELLOW+" [Remove outputfile]...")
+			try:
+				unlink(out_file)
+				sys.stderr.write("..."+GREEN+"[DONE]\n"+NOCOLOR)
+			except IOError as e:
+				sys.stderr.write("..."+RED+"[FAIL]\n"+NOCOLOR)
+				sys.stderr.write(" [ERROR] While removing "+e.filename+": "+e.strerror+"\n")
+			sys.exit(1)
 		
 		print(YELLOW,"[INFO] ("+GREEN+"working"+YELLOW+")=(current/total)",NOCOLOR)
 		# Calling the Main-Function
@@ -174,7 +195,7 @@ class proxychecker:
 							break
 						except IOError as e:
 							print(RED,"[FAIL]",NOCOLOR)
-							sys.stderr.write("[ERROR] with file "+e.filename+": "+e.strerror+"\n")
+							sys.stderr.write(" [ERROR] with file "+e.filename+": "+e.strerror+"\n")
 							sys.exit(1)
 					self.i          =       self.i + 1
 	
@@ -219,9 +240,9 @@ class proxychecker:
 						print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.reason.strerror,NOCOLOR)
 				except AttributeError:
 					print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> Timed Out",NOCOLOR)
-		except BadStatusLine as e:
+		except BadStatusLine:
 			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> BadStatusLine",NOCOLOR)
-		except IncompleteRead as e:
+		except IncompleteRead:
 			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> IncompleteRead",NOCOLOR)
 		except KeyboardInterrupt:	# [CTRL] + [C]
 			print(RED,"[ABORTED CTRL+C] =>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy, "\t--> Interrupted by User",NOCOLOR)
@@ -261,12 +282,14 @@ class proxychecker:
 				sys.exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys,"proxys we checked are working... removing the output-file...",NOCOLOR,end="")
+			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys,"proxys we checked are working...\n removing the output-file..."+NOCOLOR,end="")
 			try:
 				unlink(self.out_file.name)
-				print(GREEN+"[OK]",NOCOLOR)
+				print(REDBOLD+"..."+GREEN+"[OK]",NOCOLOR)
 			except IOError as e:
-				print(RED+"[FAIL]",NOCOLOR)
+				print("..."+RED+"[FAIL]",NOCOLOR)
+				sys.stderr.write(" [ERROR] Couldn\'t remove "+e.filename+": "+e.strerror+"\n")
+				sys.exit(1)
 		else:
 			print(GREENBOLD,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
 			print(GREEN,"[New Proxylist saved to =>",self.out_file.name+"]",NOCOLOR)
