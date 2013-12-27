@@ -65,7 +65,8 @@ useragent_mobile = ["Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build
 	"Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)",
 	"Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.1.0.346 Mobile Safari/534.11+",
 	"Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02"]
-	
+
+useragent_both	= useragent + useragent_mobile
 
 class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
@@ -84,8 +85,8 @@ class proxychecker:
 		self.contains           =       contains
 		self.process_num        =       process_num
 		self.cnt                =       0
-		if self.browserstring not in ["mobile","desktop"]:
-                        stderr.write("Invalid Browserstring, use \"mobile\" or \"desktop\"!\n")
+		if self.browserstring not in ["mobile","desktop","both"]:
+                        stderr.write("Invalid Browserstring, use \"mobile\",\"desktop\" or \"both\"!\n")
                         exit(1)
 		if self.color not in ["yes","none"]:
 			stderr.write("Invalid value for color, use \"yes\" or \"none\"!\n")
@@ -137,10 +138,12 @@ class proxychecker:
 		proxy		=	proxy.decode("utf-8","ignore").rstrip("\r\n ") # decode it and remove \r\n from the line
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
-		if self.browserstring == "desktop": #check if browserstring is desktop or mobile
+		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or both, add the Cookie if set
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent and Cookies
-		else:
+		elif self.browserstring == "mobile":
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
+		else:
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_both[randint(0,len(useragent_both)-1)]),('Cookie',self.cookie)]
 		try:
 			starttime	=	time()
 			fd	=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
@@ -224,10 +227,10 @@ if __name__ == "__main__":
 	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
 	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", type="int",metavar="NUM",default=10)
-	parser.add_option("-r", "--referer", dest="referer",help="Use this site as referer, default None",metavar="REFERER",default="")
-	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile or desktop, default desktop", metavar="TYPE",default="desktop")
-	parser.add_option("-P", "--post-data", dest="postdata", help="Data for postrequests, (eg. foo=bar&info=false), default None",metavar="DATA",default="")
-	parser.add_option("-C", "--cookie", dest="cookie", help="Cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
-	parser.add_option("-e", "--color", dest="color", help="Colored output, none or yes, default yes",metavar="COLOR",default="yes")
+	parser.add_option("-r", "--referer", dest="referer",help="use this site as referer, default None",metavar="REFERER",default="")
+	parser.add_option("-b", "--browser-string", dest="browserstring", help="mobile,desktop or both, default desktop", metavar="TYPE",default="desktop")
+	parser.add_option("-P", "--post-data", dest="postdata", help="data for postrequests, (eg. foo=bar\&info=false), default None",metavar="DATA",default="")
+	parser.add_option("-C", "--cookie", dest="cookie", help="cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
+	parser.add_option("-e", "--color", dest="color", help="colored output, none or yes, default yes",metavar="COLOR",default="yes")
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color)
