@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
     name="proxychecker.py",
-    version = "1.0",
+    version = "git",
     description = "ProxyChecker and Hitfaker",
     author = "Jan Helbling",
     author_email = "jan.helbling@gmail.com",
@@ -10,16 +10,7 @@ setup(
     keywords = ["Proxy","Hitfaker"],
     scripts=["bin/proxychecker.py"],
     license="LGPL-3+",
-    classifiers = [
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Development Status :: 4 - Beta",
-        "Environment :: Other Environment",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)",
-        "Operating System :: OS Independent",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        ],
+    platforms=["linux"],
     long_description = """\
  Fetaures:
 	- Multithreaded ( with fork)
