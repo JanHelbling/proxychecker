@@ -7,7 +7,7 @@ setup(
     author_email = "jan.helbling@gmail.com",
     url = "http://jan-helbling.no-ip.biz",
     download_url = "https://github.com/JanHelbling/ProxyChecker/archive/master.zip",
-    keywords = ["Proxy","Hitfaker"],
+    keywords = ["Proxychecker","Hitfaker"],
     scripts=["bin/proxychecker.py"],
     license="LGPL-3+",
     platforms=["linux"],
