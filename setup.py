@@ -3,7 +3,7 @@
 from distutils.core import setup
 setup(
     name="proxychecker.py",
-    version = "git",
+    version = "1.0",
     description = "ProxyChecker and Hitfaker",
     author = "Jan Helbling",
     author_email = "jan.helbling@gmail.com",
