@@ -75,9 +75,16 @@ useragent_all	= useragent + useragent_mobile
 
 class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color,header):
 		"""Run's the program"""
 		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
+		if header != "":
+			if header.count(":") != 1 or header.count(":") == 0:
+				stderr.write("Error, --header should exactly contains one \":\" !!!")
+				exit(1)
+			self.header		=	(header.split(":")[0],header.split(":")[1])
+		else:
+			self.header		=	("","")
 		self.color		=	color.lower()
 		self.cookie             =       cookie
 		self.postdata           =       postdata.encode("utf-8","ignore")
@@ -205,11 +212,11 @@ class proxychecker:
 		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
 		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or all, add the Cookie if set
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie)] #Add User-Agent (and Cookies if set)
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie),(self.header[0],self.header[1])] #Add User-Agent (and Headers/Cookies if set)
 		elif self.browserstring == "mobile":
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie)]
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_mobile[randint(0,len(useragent_mobile)-1)]),('Cookie',self.cookie),(self.header[0],self.header[1])]
 		else:
-			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_all[randint(0,len(useragent_all)-1)]),('Cookie',self.cookie)]
+			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_all[randint(0,len(useragent_all)-1)]),('Cookie',self.cookie),(self.header[0],self.header[1])]
 		try:
 			starttime	=	time()
 			fd		=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
@@ -312,6 +319,7 @@ if __name__ == "__main__":
 	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help="mobile,desktop or all, default desktop", metavar="TYPE",default="desktop")
 	parser.add_option("-P", "--post-data", dest="postdata", help="data for postrequests, (eg. \"foo=bar&info=false\"), default None",metavar="DATA",default="")
 	parser.add_option("-C", "--cookie", dest="cookie", help="cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
+	parser.add_option("-h", "--header", dest="header", help="add a header, splitted by : (eg. \"Range:bytes=500-999\")",default="")
 	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help="colored output, none or yes, default yes",metavar="COLOR",default="yes")
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.header)
