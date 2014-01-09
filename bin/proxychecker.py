@@ -79,7 +79,7 @@ class proxychecker:
 		"""Run's the program"""
 		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
 		if header != "":
-			if header.count(":") != 1 or header.count(":") == 0:
+			if header.count(":") != 1:
 				stderr.write("Error, --header should exactly contains one \":\" !!!")
 				exit(1)
 			self.header		=	(header.split(":")[0],header.split(":")[1])
