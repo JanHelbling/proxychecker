@@ -25,11 +25,11 @@ msgstr " [FEHLER] fork kann von os nicht importiert werden, dieses Programm ist 
 
 #: ../bin/proxychecker.py:37
 msgid "        (Windows has no syscall named fork()...\n"
-msgstr "         (Windows hatt keinen Syscall namens fork()...\n"
+msgstr "        (Windows hatt keinen Syscall namens fork()...\n"
 
 #: ../bin/proxychecker.py:38
 msgid "        You must Upgrade to Linux to use this ;)\n"
-msgstr "         Du must auf Linux upgraden um dies zu benutzen ;)\n"
+msgstr "        Du must auf Linux upgraden um dies zu benutzen ;)\n"
 
 #: ../bin/proxychecker.py:96
 #, python-brace-format
@@ -140,24 +140,24 @@ msgstr "{0}[OK]\t=>{1}({0}{2}{1})=({3}/{4}){0} {5}\t-->{6}sek.{7}"
 #: ../bin/proxychecker.py:248
 #, python-brace-format
 msgid ""
-"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match: {7}{8}"
-msgstr "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String nicht enthalten: {7}{8}"
+"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> Doesnt contain the String: {7}{8}"
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String nicht enthalten: {7}{8}"
 
 #: ../bin/proxychecker.py:250
 #, python-brace-format
 msgid ""
-"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match!{7}"
-msgstr ""
+"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> Doesnt contain the String!{7}"
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String nicht enthalten!{7}"
 
 #: ../bin/proxychecker.py:253
 #, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->{7}{8}"
-msgstr ""
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->{7}{8}"
 
 #: ../bin/proxychecker.py:258
 #, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})={4}/{5}) {0}{6}\t-->{7}{8}"
-msgstr ""
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})={4}/{5}) {0}{6}\t-->{7}{8}"
 
 #: ../bin/proxychecker.py:260
 #, python-brace-format
@@ -167,22 +167,22 @@ msgstr ""
 #: ../bin/proxychecker.py:262
 #, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->{7}{8}"
-msgstr ""
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->{7}{8}"
 
 #: ../bin/proxychecker.py:264 ../bin/proxychecker.py:266
 #, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->Timed Out{7}"
-msgstr ""
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->Zeitüberschreitung{7}"
 
 #: ../bin/proxychecker.py:268
 #, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->BadStatusLine{7}"
-msgstr ""
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Schlechte Status Linie{7}"
 
 #: ../bin/proxychecker.py:270
 #, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->IncompleteRead{7}"
-msgstr ""
+msgstr "{0}[FEHLSCHLAG]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Nicht komplett gelesen{7}"
 
 #. [CTRL] + [C]
 #: ../bin/proxychecker.py:272
@@ -197,36 +197,37 @@ msgstr "{0}[ABGEBROCHEN CTRL+C] =>{1}({2}{3}{1})={4}/{5}) {0}{6}\t-->Unterbroche
 msgid ""
 "{0}[!!!EPIC FAIL!!!] None of {1} proxys we have checked are working...\n"
 "removing the output-file...{2}"
-msgstr ""
+msgstr "{0}[!!!EPISCHER FEHLSCHLAG!!!] Keiner von den {1} geprüften Proxys funktionieren...\n"
+"Lösche Ausgabedatei...{2}"
 
 #: ../bin/proxychecker.py:312
 #, python-brace-format
 msgid "{0}...{1}[OK]{2}"
-msgstr ""
+msgstr "{0}...{1}[OK]{2}"
 
 #: ../bin/proxychecker.py:314
 #, python-brace-format
 msgid "{0}...[FAIL]{1}"
-msgstr ""
+msgstr "{0}...[FAIL]{1}"
 
 #: ../bin/proxychecker.py:315
 #, python-brace-format
 msgid " [ERROR] Couldn't remove {0}: {1}\n"
-msgstr ""
+msgstr " [FEHLER] Kann Datei {0} nicht entfernen: {1}\n"
 
 #: ../bin/proxychecker.py:318
 #, python-brace-format
 msgid "{0}[!!!DONE!!!] {1} of {2} proxys we have checked are working!{3}"
-msgstr ""
+msgstr "{0}[!!!FERTIG!!!] {1} von {2} Proxys die wir geprüft haben funktionieren!{3}"
 
 #: ../bin/proxychecker.py:319
 #, python-brace-format
 msgid "{0}[New Proxylist saved to => {1}]{2}"
-msgstr ""
+msgstr "{0}[Neue Proxylist gespeichert unter =>{1}]{2}"
 
 #: ../bin/proxychecker.py:324
 msgid "Invalid number of arguments! Use -h for options."
-msgstr ""
+msgstr "Falsche Anzahl von Argumenten! Benutze -h für Optionen."
 
 #. Parse options and run the proxychecker
 #: ../bin/proxychecker.py:327
@@ -238,52 +239,54 @@ msgid ""
 "Version: 1.0\n"
 "Contact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 msgstr ""
+"Version: 1.0\n"
+"Kontakt & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 
 #: ../bin/proxychecker.py:328
 msgid "read proxys from file (or from stdin), gz format supported"
-msgstr ""
+msgstr "Lese Proxys aus Datei (oder von stdin), gz-Format unterstützt"
 
 #: ../bin/proxychecker.py:329
 msgid "write proxys to file (or to a stream), default: checked_proxys"
-msgstr ""
+msgstr "Schreibe Proxys in Datei (oder in ein Stream), Standart: checked_proxys"
 
 #: ../bin/proxychecker.py:330
 msgid "use this site for requests, default: http://www.gnu.org"
-msgstr ""
+msgstr "Benutze diese Seite für Requests, Standart: http://www.gnu.org"
 
 #: ../bin/proxychecker.py:331
 msgid "good hit must contains ..., default: GNU"
-msgstr ""
+msgstr "Ein guter Treffer muss beinhalten ..., Standart: GNU"
 
 #: ../bin/proxychecker.py:332
 msgid "timeout, default: 5.0"
-msgstr ""
+msgstr "Timeout, Standart: 5.0"
 
 #: ../bin/proxychecker.py:333
 msgid "number of processes, default: 10"
-msgstr ""
+msgstr "Anzahl der Prozesse, Standart: 10"
 
 #: ../bin/proxychecker.py:334
 msgid "use this site as referer, default: None"
-msgstr ""
+msgstr "Benutze diese Seite als Referer, Standart: Keine"
 
 #: ../bin/proxychecker.py:335
 msgid "mobile,desktop or all, default: desktop"
-msgstr ""
+msgstr "mobile,desktop oder all, Standart: desktop"
 
 #: ../bin/proxychecker.py:336
-msgid "data for postrequests, (eg. \"foo=bar&info=false\"), default: None"
-msgstr ""
+msgid "data for post-requests, (eg. \"foo=bar&info=false\"), default: None"
+msgstr "Daten für POST-Requests, (z.B. \"foo=bar&info=false\"), Standart: Keine"
 
 #: ../bin/proxychecker.py:337
-msgid "cookies, seperated by ; (eg. \"abc=123; def=456;\"), default: None"
-msgstr ""
+msgid "cookies, separated by ; (eg. \"abc=123; def=456;\"), default: None"
+msgstr "Kekse, getrennt mit ; (z.B. \"abc=123; def=456;\"), Standart: Keine"
 
 #: ../bin/proxychecker.py:338
 msgid ""
 "add a header, splitted by : (eg. \"Range:bytes=500-999\"), default: None"
-msgstr ""
+msgstr "Füge einen Header hinzu, gesplitted mit : (z.B. \"Range:bytes=500-999\"), Standart: Keiner"
 
 #: ../bin/proxychecker.py:339
 msgid "colored output, none or yes, default: yes"
-msgstr ""
+msgstr "Farbige ausgabe, none oder yes, Standart: yes"

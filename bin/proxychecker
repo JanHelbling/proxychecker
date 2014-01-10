@@ -247,7 +247,7 @@ class proxychecker:
 				if (contenttype == "text/plain" or contenttype == "text/html") and len(content) < 30:
 					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match: {7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,content,NOCOLOR))
 				else:
-					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match!{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> Doesnt contain the String{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except IOError as e:
 			if e.strerror != None:
 				print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->{7}{8}")
@@ -333,7 +333,7 @@ if __name__ == "__main__":
 	parser.add_option("-p", "--process", dest="numproc",help=_("number of processes, default: 10"), type="int",metavar="NUM",default=10)
 	parser.add_option("-r", "--referer", dest="referer",help=_("use this site as referer, default: None"),metavar="REFERER",default="")
 	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help=_("mobile,desktop or all, default: desktop"), metavar="TYPE",default="desktop")
-	parser.add_option("-P", "--post-data", dest="postdata", help=_("data for postrequests, (eg. \"foo=bar&info=false\"), default: None"),metavar="DATA",default="")
+	parser.add_option("-P", "--post-data", dest="postdata", help=_("data for post-requests, (eg. \"foo=bar&info=false\"), default: None"),metavar="DATA",default="")
 	parser.add_option("-C", "--cookie", dest="cookie", help=_("cookies, seperated by ; (eg. \"abc=123; def=456;\"), default: None"),metavar="COOKIE",default="")
 	parser.add_option("-H", "--header", dest="header", help=_("add a header, splitted by : (eg. \"Range:bytes=500-999\"), default: None") ,default="")
 	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help=_("colored output, none or yes, default: yes"),metavar="COLOR",default="yes")
