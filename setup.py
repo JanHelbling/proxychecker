@@ -1,12 +1,16 @@
 #!/usr/bin/python3
 
+from sys import executable,stderr,exit
+import subprocess
+
 try:
 	from DistUtilsExtra.auto import setup
 except ImportError:
-	print("You need python-distutils-extra to compile the gettext po => mo files")
-	print("ArchLinux: sudo pacman -S python-distutils-extra")
-	print("Ubuntu:    sudo apt-get install python-distutils-extra")
-	print("Fedora:    sudo yum install python-distutils-extra")
+	stderr.write("You need python-distutils-extra to compile the gettext .po to .mo files!")
+	stderr.write("ArchLinux: sudo pacman -S python-distutils-extra")
+	stderr.write("Ubuntu:    sudo apt-get install python-distutils-extra")
+	stderr.write("Fedora:    sudo yum install python-distutils-extra")
+	exit(1)
 
 from distutils.core import Command
 
@@ -17,8 +21,7 @@ class proxychecker_test(Command):
     def finalize_options(self):
         pass
     def run(self):
-        import sys,subprocess
-        errno = subprocess.call([sys.executable, 'test/'])
+        errno = subprocess.call([executable, 'test/'])
         raise SystemExit(errno)
 
 setup(
