@@ -159,7 +159,7 @@ class proxychecker:
 			else:
 				sys.stderr.write(_(" [ERROR] ")+e.filename+": "+e.strerror+"\n")
 			sys.exit(1)
-		print(YELLOW,_("[INFO] Remove empty lines from list..."),end="")
+		print(YELLOW,_("[INFO] Remove invalid lines from list..."),end="")
 		self.__remove_empty_lines()
 		print("..."+GREEN+_("[DONE, ")+self.invalid_line_counter,_("lines removed]"),NOCOLOR)
 		

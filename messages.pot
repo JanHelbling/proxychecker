@@ -41,11 +41,11 @@ msgstr " [FEHLER] Kann nicht öffnen"
 
 #: bin/proxychecker.py:150 bin/proxychecker.py:152
 msgid " [ERROR] "
-msgstr ""
+msgstr " [FEHLER] "
 
 #: bin/proxychecker.py:154
-msgid "[INFO] Remove empty lines from list..."
-msgstr ""
+msgid "[INFO] Remove invalid lines from list..."
+msgstr "[INFO] Lösche ungültige Linien von der Liste..."
 
 #: bin/proxychecker.py:156
 msgid "[DONE, "
