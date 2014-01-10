@@ -38,7 +38,12 @@ if system() == "Windows":
 	sys.stderr.write(_("        You must Upgrade to Linux to use this ;)")+"\n")
 	sys.exit(1)
 
-from os import fork,waitpid,unlink,devnull,WEXITSTATUS
+if sys.platform in ["unixware7"]:
+	from os import fork1 as fork
+else:
+	from os import fork
+
+from os import waitpid,unlink,devnull,WEXITSTATUS
 
 from optparse import OptionParser
 from socket import timeout
