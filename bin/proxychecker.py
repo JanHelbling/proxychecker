@@ -238,7 +238,7 @@ class proxychecker:
 				return True
 			else:				# else, fail
 				if (contenttype == "text/plain" or contenttype == "text/html") and len(content) < 30:
-					print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_(+"String doesnt match: "),content,NOCOLOR)
+					print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_("String doesnt match: "),content,NOCOLOR)
 				else:
 					print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_("String doesnt match!"),NOCOLOR)
 		except IOError as e:
