@@ -16,23 +16,20 @@ msgstr ""
 
 
 #: bin/proxychecker:36
-msgid ""
-" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"
-msgstr ""
+msgid " [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"
+msgstr " [FEHLER] fork kann von os nicht importiert werden, dieses Programm ist nicht für Windows-Benutzer!!\n"
 
 #: bin/proxychecker:37
-msgid ""
-"        (Windows has no syscall named fork()...\n"
-msgstr ""
+msgid "        (Windows has no syscall named fork()...\n"
+msgstr "        (Windows hat keinen Syscall namens fork()...\n"
 
 #: bin/proxychecker:38
-msgid ""
-"        You must Upgrade to Linux to use this ;)\n"
-msgstr ""
+msgid "        You must Upgrade to Linux to use this ;)\n"
+msgstr "Du musst auf Linux upgraden um dies zu benutzen ;)"
 
 #: bin/proxychecker:96
 msgid "Error, --header should exactly contains one \":\" !!!"
-msgstr ""
+msgstr "Fehler, --header muss genau ein \":\" beinhalten !!!"
 
 #: bin/proxychecker:131
 msgid "%s[INFO] gather proxys from url..."
