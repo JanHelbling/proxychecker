@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-10 17:16+0000\n"
+"POT-Creation-Date: 2014-01-10 18:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,8 @@ msgstr ""
 #: ../bin/proxychecker.py:250
 #, python-brace-format
 msgid ""
-"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match!{7}"
+"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> Doesnt contain the "
+"String{7}"
 msgstr ""
 
 #: ../bin/proxychecker.py:253
@@ -277,7 +278,7 @@ msgid "mobile,desktop or all, default: desktop"
 msgstr ""
 
 #: ../bin/proxychecker.py:336
-msgid "data for postrequests, (eg. \"foo=bar&info=false\"), default: None"
+msgid "data for post-requests, (eg. \"foo=bar&info=false\"), default: None"
 msgstr ""
 
 #: ../bin/proxychecker.py:337
