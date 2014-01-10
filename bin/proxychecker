@@ -240,7 +240,7 @@ class proxychecker:
 			fd.close()
 			endtime		=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(_("%s[OK]\t=> %s(%s%d%s)=(%d/%d)%s%s\t-->%.3fsec.%s") % (GREEN,YELLOW,GREEN,self.cnt+1,YELLOW,self.totalcnt,self.totalproxys,GREEN,proxy,endtime,NOCOLOR))
+				print(_("%s[OK]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%.3fsec.%s") % (GREEN,YELLOW,GREEN,self.cnt+1,YELLOW,self.totalcnt,self.totalproxys,GREEN,proxy,endtime,NOCOLOR))
 				self.save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
@@ -254,19 +254,19 @@ class proxychecker:
 			else:
 				try:
 					if type(e.reason) == str:
-						print(_("[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,e.reason,NOCOLOR))
+						print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,e.reason,NOCOLOR))
 					elif e.reason.args[0] == "timed out":
-						print(_("[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+						print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
 					else:
-						print(_("[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,e.reason.strerror,NOCOLOR))
+						print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,e.reason.strerror,NOCOLOR))
 				except AttributeError:
-					print(_("[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+					print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
 		except BadStatusLine:
-			print(_("[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->BadStatusLine%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+			print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->BadStatusLine%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
 		except IncompleteRead:
-			print(_("[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->IncompleteRead%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+			print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->IncompleteRead%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
 		except KeyboardInterrupt:	# [CTRL] + [C]
-			print(_("[ABORTED CTRL+C] =>%s(%s%d%s)=(%d/%d)%s%s\t-->Interrupted by User%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+			print(_("%s[ABORTED CTRL+C] =>%s(%s%d%s)=(%d/%d)%s%s\t-->Interrupted by User%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
 		return False
 	
 	def save_proxy(self,proxy):
