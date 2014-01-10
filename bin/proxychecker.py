@@ -19,17 +19,23 @@
 #
 
 import urllib.request
+
 import gzip,sys,re
 
 from http.client import IncompleteRead,BadStatusLine
+from os import path
+
+if path.exists("/usr/share/locale/de/LC_MESSAGES/proxychecker.mo"):
+	t = gettext.translation("proxychecker", "/usr/share/locale", ["de"])
+	t.install()
 
 try:
-	from os import fork,waitpid,path,unlink,devnull,WEXITSTATUS
+	from os import fork,waitpid,unlink,devnull,WEXITSTATUS
 except ImportError as e:
 	if e.msg == "cannot import name fork":
-		sys.stderr.write(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n")
-		sys.stderr.write("        (Windows has no syscall named fork()...)\n")
-		sys.stderr.write("        You must Upgrade to Linux to use this ;)\n")
+		sys.stderr.write(_(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"))
+		sys.stderr.write(_("        (Windows has no syscall named fork()...)\n"))
+		sys.stderr.write(_("        You must Upgrade to Linux to use this ;)\n"))
 		sys.exit(1)
 
 from optparse import OptionParser
@@ -80,7 +86,7 @@ class proxychecker:
 		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
 		if header != "":
 			if header.count(":") != 1:
-				stderr.write("Error, --header should exactly contains one \":\" !!!")
+				stderr.write(_("Error, --header should exactly contains one \":\" !!!"))
 				exit(1)
 			self.header		=	(header.split(":")[0],header.split(":")[1])
 		else:
@@ -115,7 +121,7 @@ class proxychecker:
 				self.proxys	=	self.in_file.readlines()
 				self.in_file.close()
 			elif in_file.startswith("http://"):
-				print(YELLOW,"[INFO] gather proxys from url...",end="")
+				print(YELLOW,_("[INFO] gather proxys from url..."),end="")
 				self.fd		=	urllib.request.urlopen(in_file)
 				self.content	=	(self.fd.read()).decode("utf-8","ignore")
 				self.fd.close()
@@ -135,37 +141,37 @@ class proxychecker:
 		except urllib.error.URLError as e:
 			print("..."+RED+"[FAIL]",NOCOLOR)
 			if type(e.args[0]) == str:
-				sys.stderr.write(" [ERROR] couldn\'t open "+in_file+": "+e.args[0]+"\n")
+				sys.stderr.write(_(" [ERROR] couldn\'t open ")+in_file+": "+e.args[0]+"\n")
 			else:
-				sys.stderr.write(" [ERROR] couldn\'t open "+in_file+": "+e.args[0].strerror+"\n")
+				sys.stderr.write(_(" [ERROR] couldn\'t open ")+in_file+": "+e.args[0].strerror+"\n")
 			sys.exit(1)
 		except IOError as e:
 			if type(e.args[0]) == str:
-				sys.stderr.write(" [ERROR] "+e.args[0])
+				sys.stderr.write(_(" [ERROR] ")+e.args[0])
 			else:
-				sys.stderr.write(" [ERROR] "+e.filename+": "+e.strerror+"\n")
+				sys.stderr.write(_(" [ERROR] ")+e.filename+": "+e.strerror+"\n")
 			sys.exit(1)
-		print(YELLOW,"[INFO] Remove empty lines from list...",end="")
+		print(YELLOW,_("[INFO] Remove empty lines from list..."),end="")
 		self.__remove_empty_lines()
-		print("..."+GREEN+"[DONE, "+self.invalid_line_counter,"lines removed]",NOCOLOR)
+		print("..."+GREEN+_("[DONE, ")+self.invalid_line_counter,_("lines removed]"),NOCOLOR)
 		
 		self.totalproxys	=	len(self.proxys)
-		print(YELLOW,"[TOTAL:",self.totalproxys,"Proxys]")
+		print(YELLOW,_("[TOTAL:"),self.totalproxys,"Proxys]")
 		
 		if self.totalproxys == 0:
-			sys.stderr.write(RED+" [ERROR] no proxys found...\n"+NOCOLOR)
+			sys.stderr.write(RED+_(" [ERROR] no proxys found...\n")+NOCOLOR)
 			if out_file == devnull:
 				exit(1)
-			sys.stderr.write(YELLOW+" [Remove outputfile]...")
+			sys.stderr.write(YELLOW+_(" [Remove outputfile]..."))
 			try:
 				unlink(out_file)
-				sys.stderr.write("..."+GREEN+"[DONE]\n"+NOCOLOR)
+				sys.stderr.write("..."+GREEN+_("[DONE]\n")+NOCOLOR)
 			except IOError as e:
-				sys.stderr.write("..."+RED+"[FAIL]\n"+NOCOLOR)
-				sys.stderr.write(" [ERROR] While removing "+e.filename+": "+e.strerror+"\n")
+				sys.stderr.write("..."+RED+_("[FAIL]\n")+NOCOLOR)
+				sys.stderr.write(_(" [ERROR] While removing ")+e.filename+": "+e.strerror+"\n")
 			sys.exit(1)
 		
-		print(YELLOW,"[INFO] ("+GREEN+"working"+YELLOW+")=(current/total)",NOCOLOR)
+		print(YELLOW,_("[INFO] (")+GREEN+_("working")+YELLOW+_(")=(current/total)"),NOCOLOR)
 		
 		# Calling the Main-Function
 		self.main()
@@ -191,7 +197,7 @@ class proxychecker:
 				while True:
 					self.filename   =       out_file+"."+str(self.i)+".gz"
 					if not path.exists(self.filename):
-						print(YELLOW,"[INFO] Compressing ",out_file,"in",self.filename+" => ",end="")
+						print(YELLOW,_("[INFO] Compressing "),out_file,"in",self.filename+" => ",end="")
 						try:
 							self.gzfd       =       gzip.open(self.filename,"wb",9)
 							self.fd         =       open(out_file,"rb")
@@ -199,11 +205,11 @@ class proxychecker:
 							self.gzfd.close()
 							self.fd.close()
 							unlink(out_file)
-							print(GREEN,"[DONE]",NOCOLOR)
+							print(GREEN,_("[DONE]"),NOCOLOR)
 							break
 						except IOError as e:
-							print(RED,"[FAIL]",NOCOLOR)
-							sys.stderr.write(" [ERROR] with file "+e.filename+": "+e.strerror+"\n")
+							print(RED,_("[FAIL]"),NOCOLOR)
+							sys.stderr.write(_(" [ERROR] with file ")+e.filename+": "+e.strerror+"\n")
 							sys.exit(1)
 					self.i          =       self.i + 1
 	
@@ -227,33 +233,33 @@ class proxychecker:
 			fd.close()
 			endtime		=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,"[OK]\t=>",YELLOW+"("+GREEN+str(self.cnt+1)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+GREEN,proxy,"\t-->",endtime,"sec.",NOCOLOR)
+				print(GREEN,_("[OK]\t=>"),YELLOW+"("+GREEN+str(self.cnt+1)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+GREEN,proxy,"\t-->",endtime,"sec.",NOCOLOR)
 				self.save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
 				if (contenttype == "text/plain" or contenttype == "text/html") and len(content) < 30:
-					print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> String doesnt match: ",content,NOCOLOR)
+					print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_(+"String doesnt match: "),content,NOCOLOR)
 				else:
-					print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> String doesnt match!",NOCOLOR)
+					print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_("String doesnt match!"),NOCOLOR)
 		except IOError as e:
 			if e.strerror != None:
-				print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.strerror,NOCOLOR)
+				print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.strerror,NOCOLOR)
 			else:
 				try:
 					if type(e.reason) == str:
-						print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.reason,NOCOLOR)
+						print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.reason,NOCOLOR)
 					elif e.reason.args[0] == "timed out":
-						print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> Timed Out",NOCOLOR)
+						print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_("Timed Out"),NOCOLOR)
 					else:
-						print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.reason.strerror,NOCOLOR)
+						print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t-->",e.reason.strerror,NOCOLOR)
 				except AttributeError:
-					print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> Timed Out",NOCOLOR)
+					print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_("Timed Out"),NOCOLOR)
 		except BadStatusLine:
-			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> BadStatusLine",NOCOLOR)
+			print(RED,_("[FAIL]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_("BadStatusLine"),NOCOLOR)
 		except IncompleteRead:
-			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> IncompleteRead",NOCOLOR)
+			print(RED,"[FAIL]\t=>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy,"\t--> "+_("IncompleteRead"),NOCOLOR)
 		except KeyboardInterrupt:	# [CTRL] + [C]
-			print(RED,"[ABORTED CTRL+C] =>",YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy, "\t--> Interrupted by User",NOCOLOR)
+			print(RED,_("[ABORTED CTRL+C] =>"),YELLOW+"("+GREEN+str(self.cnt)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+RED,proxy, "\t--> "+_("Interrupted by User"),NOCOLOR)
 		return False
 	
 	def save_proxy(self,proxy):
@@ -290,36 +296,36 @@ class proxychecker:
 				sys.exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(REDBOLD,"[!!!EPIC FAIL!!!] None of",self.totalproxys,"proxys we checked are working...\n removing the output-file..."+NOCOLOR,end="")
+			print(REDBOLD,_("[!!!EPIC FAIL!!!] None of"),self.totalproxys,_("proxys we checked are working..."),"\n ",_("removing the output-file...")+NOCOLOR,end="")
 			try:
 				unlink(self.out_file.name)
-				print(REDBOLD+"..."+GREEN+"[OK]",NOCOLOR)
+				print(REDBOLD+"..."+GREEN+_("[OK]"),NOCOLOR)
 			except IOError as e:
-				print("..."+RED+"[FAIL]",NOCOLOR)
-				sys.stderr.write(" [ERROR] Couldn\'t remove "+e.filename+": "+e.strerror+"\n")
+				print("..."+RED+_("[FAIL]"),NOCOLOR)
+				sys.stderr.write(_(" [ERROR] Couldn\'t remove ")+e.filename+": "+e.strerror+"\n")
 				sys.exit(1)
 		else:
-			print(GREENBOLD,"[!!!DONE!!!]",self.cnt,"of",self.totalproxys," proxys we checked are working!",NOCOLOR)
-			print(GREEN,"[New Proxylist saved to =>",self.out_file.name+"]",NOCOLOR)
+			print(GREENBOLD,_("[!!!DONE!!!]"),self.cnt,_("of"),self.totalproxys,_(" proxys we checked are working!"),NOCOLOR)
+			print(GREEN,_("[New Proxylist saved to =>"),self.out_file.name+"]",NOCOLOR)
 		sys.exit(0)
 
 if __name__ == "__main__":
 	if len(sys.argv) < 2 or ("--version" not in sys.argv and "-i" not in sys.argv and "--input" not in sys.argv and "-h" not in sys.argv and "--help" not in sys.argv):
-		print("Invalid number of arguments! Use -h for options.")
+		print(_("Invalid number of arguments! Use -h for options."))
 		sys.exit(0)
 	# Parse options and run the proxychecker
-	parser = OptionParser(usage="usage: %prog -i <proxylist[.gz]|URL> [options...]",version="Version: 1.0\nContact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]")
-	parser.add_option("-i", "--input", dest="input",help="read proxys from file (or from stdin), gz format supported", metavar="FILE")
-	parser.add_option("-o", "--output", dest="output",help="write proxys to file (or to a stream), default: checked_proxys", metavar="FILE",default="checked_proxys")
-	parser.add_option("-u", "--testsite", dest="testsite",help="use this site for requests, default http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
-	parser.add_option("-c", "--contains", dest="contains",help="good hit must contains, default GNU", metavar="STRING",default="GNU")
-	parser.add_option("-t", "--timeout", dest="to",help="timeout, default 5.0", metavar="TIMEOUT",type="float",default=5.0)
-	parser.add_option("-p", "--process", dest="numproc",help="number of processes, default 10", type="int",metavar="NUM",default=10)
-	parser.add_option("-r", "--referer", dest="referer",help="use this site as referer, default None",metavar="REFERER",default="")
-	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help="mobile,desktop or all, default desktop", metavar="TYPE",default="desktop")
-	parser.add_option("-P", "--post-data", dest="postdata", help="data for postrequests, (eg. \"foo=bar&info=false\"), default None",metavar="DATA",default="")
-	parser.add_option("-C", "--cookie", dest="cookie", help="cookies, seperated by ; (eg. \"abc=123; def=456;\"), default None",metavar="COOKIE",default="")
-	parser.add_option("-h", "--header", dest="header", help="add a header, splitted by : (eg. \"Range:bytes=500-999\")",default="")
-	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help="colored output, none or yes, default yes",metavar="COLOR",default="yes")
+	parser = OptionParser(usage=_("usage: %prog -i <proxylist[.gz]|URL> [options...]"),version=_("Version: 1.0")+"\n"+_("Contact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"))
+	parser.add_option("-i", "--input", dest="input",help=_("read proxys from file (or from stdin), gz format supported"), metavar="FILE")
+	parser.add_option("-o", "--output", dest="output",help=_("write proxys to file (or to a stream), default: ")+"checked_proxys", metavar="FILE",default="checked_proxys")
+	parser.add_option("-u", "--testsite", dest="testsite",help=_("use this site for requests, default: ")+"http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
+	parser.add_option("-c", "--contains", dest="contains",help=_("good hit must contains ..., default GNU"), metavar="STRING",default="GNU")
+	parser.add_option("-t", "--timeout", dest="to",help=_("timeout, default ")+"5.0", metavar="TIMEOUT",type="float",default=5.0)
+	parser.add_option("-p", "--process", dest="numproc",help=_("number of processes, default ")+"10", type="int",metavar="NUM",default=10)
+	parser.add_option("-r", "--referer", dest="referer",help=_("use this site as referer, default None"),metavar="REFERER",default="")
+	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help="mobile,desktop "+_("or")+" all, "+_("default")+" desktop", metavar="TYPE",default="desktop")
+	parser.add_option("-P", "--post-data", dest="postdata", help=_("data for postrequests, (eg.")+" \"foo=bar&info=false\"), default None",metavar="DATA",default="")
+	parser.add_option("-C", "--cookie", dest="cookie", help=_("cookies, seperated by ; (eg. ")+"\"abc=123; def=456;\"), "+_("default: None"),metavar="COOKIE",default="")
+	parser.add_option("-h", "--header", dest="header", help=_("add a header, splitted by : (eg. ")+"\"Range:bytes=500-999\")"+_("default: None") ,default="")
+	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help=_("colored output")+", none "+_("or")+" yes, "+_("default")+" yes",metavar="COLOR",default="yes")
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.header)
