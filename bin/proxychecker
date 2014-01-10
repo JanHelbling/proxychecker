@@ -93,7 +93,7 @@ class proxychecker:
 		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
 		if header != "":
 			if header.count(":") != 1:
-				stderr.write(_("Error, --header should exactly contains one \":\" !!!"))
+				stderr.write(_("{0}[ERROR] --header should exactly contains one \":\" !!!{1}").format(RED,NOCOLOR))
 				exit(1)
 			self.header		=	(header.split(":")[0],header.split(":")[1])
 		else:
@@ -128,12 +128,12 @@ class proxychecker:
 				self.proxys	=	self.in_file.readlines()
 				self.in_file.close()
 			elif in_file.startswith("http://"):
-				print(_("%s[INFO] gather proxys from url...") % (YELLOW),end="")
+				print(_("{0}[INFO] gather proxys from url...").format(YELLOW),end="")
 				self.fd		=	urllib.request.urlopen(in_file)
 				self.content	=	(self.fd.read()).decode("utf-8","ignore")
 				self.fd.close()
 				self.proxys	=	proxyregex.findall(self.content)
-				print(_("...%s[DONE, %d proxys found]%s") %(GREEN,len(self.proxys),NOCOLOR))
+				print(_("...{0}[DONE, {1} proxys found]{2}").format(GREEN,len(self.proxys),NOCOLOR))
 			else:
 				self.proxys	=	sys.stdin.readlines()
 			if out_file not in [devnull,"/dev/stdout","/dev/stderr","/dev/stdin"]:
@@ -146,39 +146,39 @@ class proxychecker:
 			else:
 				self.out_file	=	open(out_file,"w")
 		except urllib.error.URLError as e:
-			print(_("...%s[FAIL]%s") % (RED,NOCOLOR))
+			print(_("...{0}[FAIL]{1}").format(RED,NOCOLOR))
 			if type(e.args[0]) == str:
-				sys.stderr.write(_(" [ERROR] couldn\'t open %s: %s\n") % (in_file,e.args[0]))
+				sys.stderr.write(_("{0} [ERROR] couldn\'t open {1}: {2}{3}\n").format(RED,in_file,e.args[0],NOCOLOR))
 			else:
-				sys.stderr.write(_(" [ERROR] couldn\'t open %s:  %s\n") % (in_file,e.args[0].strerror))
+				sys.stderr.write(_("{0} [ERROR] couldn\'t open {1}:  {2}{3}\n").format(RED,in_file,e.args[0].strerror,NOCOLOR))
 			sys.exit(1)
 		except IOError as e:
 			if type(e.args[0]) == str:
-				sys.stderr.write(_(" [ERROR] %s") % (e.args[0]))
+				sys.stderr.write(_("{0} [ERROR] {1}").format(RED,e.args[0]))
 			else:
-				sys.stderr.write(_(" [ERROR] %s: %s\n") % (e.filename,e.strerror))
+				sys.stderr.write(_("{0} [ERROR] {1}: {2}\n").format(RED,e.filename,e.strerror))
 			sys.exit(1)
-		print(_("%s[INFO] Remove invalid lines from list...") % (YELLOW),end="")
+		print(_("{0}[INFO] Remove invalid lines from list...").format(YELLOW),end="")
 		self.__remove_empty_lines()
-		print(_("%s..[DONE, %d lines removed]%s") % (GREEN,self.invalid_line_counter,NOCOLOR))
+		print(_("{0}..[DONE, {1} lines removed]{2}").format(GREEN,self.invalid_line_counter,NOCOLOR))
 		
 		self.totalproxys	=	len(self.proxys)
-		print(_("%s[TOTAL: %d Proxys]") % (YELLOW,self.totalproxys))
+		print(_("{0}[TOTAL: {1} Proxys]{2}").format(YELLOW,self.totalproxys,NOCOLOR))
 		
 		if self.totalproxys == 0:
-			sys.stderr.write(_("%s [ERROR] no proxys found...%s\n") % (RED,NOCOLOR))
+			sys.stderr.write(_("{0} [ERROR] no proxys found...{1}\n").format(RED,NOCOLOR))
 			if out_file == devnull:
 				exit(1)
-			sys.stderr.write(_("%s [Remove outputfile]...") % (YELLOW))
+			sys.stderr.write(_("{0} [Remove outputfile]...").format(YELLOW))
 			try:
 				unlink(out_file)
-				sys.stderr.write(_("...%s[DONE]%s\n") % (GREEN,NOCOLOR))
+				sys.stderr.write(_("...{0}[DONE]{1}\n").format(GREEN,NOCOLOR))
 			except IOError as e:
-				sys.stderr.write(_("...%s[FAIL]%s\n") % (RED,NOCOLOR))
-				sys.stderr.write(_("%s [ERROR] While removing %s: %s%s\n") %(RED,e.filename,e.strerror,NOCOLOR))
+				sys.stderr.write(_("...{0}[FAIL]{1}\n").format(RED,NOCOLOR))
+				sys.stderr.write(_("{0} [ERROR] While removing {1}: {2}{3}\n").format(RED,e.filename,e.strerror,NOCOLOR))
 			sys.exit(1)
 		
-		print(_("%s[INFO] (%sworking%s)=(current/total)%s") % (YELLOW,GREEN,YELLOW,NOCOLOR))
+		print(_("{0}[INFO] ({1}working{0})=(current/total){2}").format(YELLOW,GREEN,NOCOLOR))
 		
 		# Calling the Main-Function
 		self.main()
@@ -204,7 +204,7 @@ class proxychecker:
 				while True:
 					self.filename   =       out_file+"."+str(self.i)+".gz"
 					if not path.exists(self.filename):
-						print(_("%s[INFO] Compressing %s in %s => ") % (YELLOW,out_file,self.filename),end="")
+						print(_("{0}[INFO] Compressing {1} in {2} => ").format(YELLOW,out_file,self.filename),end="")
 						try:
 							self.gzfd       =       gzip.open(self.filename,"wb",9)
 							self.fd         =       open(out_file,"rb")
@@ -212,11 +212,11 @@ class proxychecker:
 							self.gzfd.close()
 							self.fd.close()
 							unlink(out_file)
-							print(_("%s[DONE]%s") % (GREEN,NOCOLOR))
+							print(_("{0}[DONE]{1}").format(GREEN,NOCOLOR))
 							break
 						except IOError as e:
-							print(_("%s[FAIL]%s") % (RED,NOCOLOR))
-							sys.stderr.write(_("%s [ERROR] with file %s: %s\n") % (RED,e.filename,e.strerror))
+							print(_("{0}[FAIL]{1}").format(RED,NOCOLOR))
+							sys.stderr.write(_("{0} [ERROR] with file {1}: {2}\n").format(RED,e.filename,e.strerror))
 							sys.exit(1)
 					self.i          =       self.i + 1
 	
@@ -240,33 +240,36 @@ class proxychecker:
 			fd.close()
 			endtime		=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(_("%s[OK]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%.3fsec.%s") % (GREEN,YELLOW,GREEN,self.cnt+1,YELLOW,self.totalcnt,self.totalproxys,GREEN,proxy,endtime,NOCOLOR))
+				print(_("{0}[OK]\t=>{1}({0}{2}{1})=({3}/{4}){0} {5}\t-->{6}sec.{7}").format(GREEN,YELLOW,self.cnt+1,self.totalcnt,self.totalproxys,proxy,endtime,NOCOLOR))
 				self.save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
 				if (contenttype == "text/plain" or contenttype == "text/html") and len(content) < 30:
-					print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t--> String doesnt match: %s%s")%(RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,content,NOCOLOR))
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match: {7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,content,NOCOLOR))
 				else:
-					print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t--> String doesnt match!")%(RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match!{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except IOError as e:
 			if e.strerror != None:
-				print(_("%s[FAIL]\t=>%s%d%s)=(%d/%d)%s%s\t-->%s%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,e.strerror,NOCOLOR))
+				print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->{7}{8}")
+				(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.strerror,NOCOLOR))
 			else:
 				try:
 					if type(e.reason) == str:
-						print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,e.reason,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})={4}/{5}) {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason,NOCOLOR))
 					elif e.reason.args[0] == "timed out":
-						print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 					else:
-						print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,e.reason.strerror,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason.strerror,NOCOLOR))
 				except AttributeError:
-					print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+				except TypeError:
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except BadStatusLine:
-			print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->BadStatusLine%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->BadStatusLine{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except IncompleteRead:
-			print(_("%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->IncompleteRead%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->IncompleteRead{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except KeyboardInterrupt:	# [CTRL] + [C]
-			print(_("%s[ABORTED CTRL+C] =>%s(%s%d%s)=(%d/%d)%s%s\t-->Interrupted by User%s") % (RED,YELLOW,GREEN,self.cnt,YELLOW,self.totalcnt,self.totalproxys,RED,proxy,NOCOLOR))
+			print(_("{0}[ABORTED CTRL+C] =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by User{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		return False
 	
 	def save_proxy(self,proxy):
@@ -303,17 +306,17 @@ class proxychecker:
 				sys.exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(_("%s[!!!EPIC FAIL!!!] None of %d proxys we have checked are working...\nremoving the output-file...%s") %(REDBOLD,self.totalproxys,NOCOLOR),end="")
+			print(_("{0}[!!!EPIC FAIL!!!] None of {1} proxys we have checked are working...\nremoving the output-file...{2}").format(REDBOLD,self.totalproxys,NOCOLOR),end="")
 			try:
 				unlink(self.out_file.name)
-				print(_("%s...%s[OK]%s") % (REDBOLD,GREEN,NOCOLOR))
+				print(_("{0}...{1}[OK]{2}").format(REDBOLD,GREEN,NOCOLOR))
 			except IOError as e:
-				print(_("%s...[FAIL]%s") % (RED,NOCOLOR))
-				sys.stderr.write(_(" [ERROR] Couldn\'t remove %s: %s\n") %(e.filename,e.strerror))
+				print(_("{0}...[FAIL]{1}").format(RED,NOCOLOR))
+				sys.stderr.write(_(" [ERROR] Couldn\'t remove {0}: {1}\n").format(e.filename,e.strerror))
 				sys.exit(1)
 		else:
-			print(_("%s[!!!DONE!!!] %d of %d proxys we have checked are working!%s") %(GREENBOLD,self.cnt,self.totalproxys,NOCOLOR))
-			print(_("%s[New Proxylist saved to => %s]%s") % (GREEN,self.out_file.name,NOCOLOR))
+			print(_("{0}[!!!DONE!!!] {1} of {2} proxys we have checked are working!{3}").format(GREENBOLD,self.cnt,self.totalproxys,NOCOLOR))
+			print(_("{0}[New Proxylist saved to => {1}]{2}").format(GREEN,self.out_file.name,NOCOLOR))
 		sys.exit(0)
 
 if __name__ == "__main__":
@@ -323,7 +326,7 @@ if __name__ == "__main__":
 	# Parse options and run the proxychecker
 	parser = OptionParser(usage=_("usage: %prog -i <proxylist[.gz]|URL> [options...]"),version=_("Version: 1.0\nContact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"))
 	parser.add_option("-i", "--input", dest="input",help=_("read proxys from file (or from stdin), gz format supported"), metavar="FILE")
-	parser.add_option("-o", "--output", dest="output",help=_("write proxys to file (or to a stream), default: ")+"checked_proxys", metavar="FILE",default="checked_proxys")
+	parser.add_option("-o", "--output", dest="output",help=_("write proxys to file (or to a stream), default: checked_proxys"), metavar="FILE",default="checked_proxys")
 	parser.add_option("-u", "--testsite", dest="testsite",help=_("use this site for requests, default: http://www.gnu.org"), metavar="WEBSITE",default="http://www.gnu.org")
 	parser.add_option("-c", "--contains", dest="contains",help=_("good hit must contains ..., default: GNU"), metavar="STRING",default="GNU")
 	parser.add_option("-t", "--timeout", dest="to",help=_("timeout, default: 5.0"), metavar="TIMEOUT",type="float",default=5.0)

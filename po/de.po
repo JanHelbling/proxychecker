@@ -8,145 +8,140 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-10 17:06+0000\n"
+"POT-Creation-Date: 2014-01-10 16:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: German\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: UTF-8\n"
 
 #: ../bin/proxychecker.py:36
 msgid ""
 " [ERROR] fork could not be imported from os, this programm is not for "
 "Windows-Users!!\n"
-msgstr ""
+msgstr " [FEHLER] fork kann von os nicht importiert werden, dieses Programm ist nichts für Windows-Benutzer!!\n"
 
 #: ../bin/proxychecker.py:37
 msgid "        (Windows has no syscall named fork()...\n"
-msgstr ""
+msgstr "         (Windows hatt keinen Syscall namens fork()...\n"
 
 #: ../bin/proxychecker.py:38
 msgid "        You must Upgrade to Linux to use this ;)\n"
-msgstr ""
+msgstr "         Du must auf Linux upgraden um dies zu benutzen ;)\n"
 
 #: ../bin/proxychecker.py:96
 #, python-brace-format
 msgid "{0}[ERROR] --header should exactly contains one \":\" !!!{1}"
-msgstr ""
+msgstr "{0}[FEHLER] --header muss genau ein \":\" enthalten!!!{1}"
 
 #: ../bin/proxychecker.py:131
 #, python-brace-format
 msgid "{0}[INFO] gather proxys from url..."
-msgstr ""
+msgstr "{0}[INFO] Grabbe Proxys von url..."
 
 #: ../bin/proxychecker.py:136
 #, python-brace-format
 msgid "...{0}[DONE, {1} proxys found]{2}"
-msgstr ""
+msgstr "...{0}[FERTIG, {1} Proxys gefunden]{2}"
 
 #: ../bin/proxychecker.py:149
 #, python-brace-format
 msgid "...{0}[FAIL]{1}"
-msgstr ""
+msgstr "...{0}[FEHLGESCHLAGEN]{1}"
 
-#: ../bin/proxychecker.py:151
+#: ../bin/proxychecker.py:151,153
 #, python-brace-format
 msgid "{0} [ERROR] couldn't open {1}: {2}{3}\n"
-msgstr ""
-
-#: ../bin/proxychecker.py:153
-#, python-brace-format
-msgid "{0} [ERROR] couldn't open {1}:  {2}{3}\n"
-msgstr ""
+msgstr "{0} [FEHLER] Kann {1} nicht öffnen: {2}{3}\n"
 
 #: ../bin/proxychecker.py:157
 #, python-brace-format
 msgid "{0} [ERROR] {1}"
-msgstr ""
+msgstr "{0} [FEHLER] {1}"
 
 #: ../bin/proxychecker.py:159
 #, python-brace-format
 msgid "{0} [ERROR] {1}: {2}\n"
-msgstr ""
+msgstr "{0} [FEHLER] {1}: {2}\n"
 
 #: ../bin/proxychecker.py:161
 #, python-brace-format
 msgid "{0}[INFO] Remove invalid lines from list..."
-msgstr ""
+msgstr "{0}[INFO] Entferne unnütze Linien von der Liste..."
 
 #: ../bin/proxychecker.py:163
 #, python-brace-format
 msgid "{0}..[DONE, {1} lines removed]{2}"
-msgstr ""
+msgstr "{0}...[FERTIG, {1} Linien entfernt]{2}"
 
 #: ../bin/proxychecker.py:166
 #, python-brace-format
 msgid "{0}[TOTAL: {1} Proxys]{2}"
-msgstr ""
+msgstr "{0}[TOTAL: {1} Proxys]{2}"
 
 #: ../bin/proxychecker.py:169
 #, python-brace-format
 msgid "{0} [ERROR] no proxys found...{1}\n"
-msgstr ""
+msgstr "{0} [FEHLER] Keine Proxys gefunden...{1}\n"
 
 #: ../bin/proxychecker.py:172
 #, python-brace-format
 msgid "{0} [Remove outputfile]..."
-msgstr ""
+msgstr "{0} [Entferne Ausgabedatei]..."
 
 #: ../bin/proxychecker.py:175
 #, python-brace-format
 msgid "...{0}[DONE]{1}\n"
-msgstr ""
+msgstr "...{0}[FERTIG]{1}\n"
 
 #: ../bin/proxychecker.py:177
 #, python-brace-format
 msgid "...{0}[FAIL]{1}\n"
-msgstr ""
+msgstr "...{0}[FEHLGESCHLAGEN]{1}\n"
 
 #: ../bin/proxychecker.py:178
 #, python-brace-format
 msgid "{0} [ERROR] While removing {1}: {2}{3}\n"
-msgstr ""
+msgstr "{0} [FEHLER] Während dem entfernen von {1}: {2}{3}\n"
 
 #: ../bin/proxychecker.py:181
 #, python-brace-format
 msgid "{0}[INFO] ({1}working{0})=(current/total){2}"
-msgstr ""
+msgstr "{0}[INFO] ({1}funktioniert{0})=(aktueller/gesamt){2}"
 
 #: ../bin/proxychecker.py:207
 #, python-brace-format
 msgid "{0}[INFO] Compressing {1} in {2} => "
-msgstr ""
+msgstr "{0}[INFO] Komprimiere {1} zu {2} => "
 
 #: ../bin/proxychecker.py:215
 #, python-brace-format
 msgid "{0}[DONE]{1}"
-msgstr ""
+msgstr "{0}[FERTIG]{1}"
 
 #: ../bin/proxychecker.py:218
 #, python-brace-format
 msgid "{0}[FAIL]{1}"
-msgstr ""
+msgstr "{0}[FEHLGESCHLAGEN]{1}"
 
 #: ../bin/proxychecker.py:219
 #, python-brace-format
 msgid "{0} [ERROR] with file {1}: {2}\n"
-msgstr ""
+msgstr "{0} [FEHLER] mit Datei {1}: {2}\n"
 
 #. Check if the string contains is in content, if true
 #: ../bin/proxychecker.py:243
 #, python-brace-format
 msgid "{0}[OK]\t=>{1}({0}{2}{1})=({3}/{4}){0} {5}\t-->{6}sec.{7}"
-msgstr ""
+msgstr "{0}[OK]\t=>{1}({0}{2}{1})=({3}/{4}){0} {5}\t-->{6}sek.{7}"
 
 #: ../bin/proxychecker.py:248
 #, python-brace-format
 msgid ""
 "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match: {7}{8}"
-msgstr ""
+msgstr "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String nicht enthalten: {7}{8}"
 
 #: ../bin/proxychecker.py:250
 #, python-brace-format
@@ -195,7 +190,7 @@ msgstr ""
 msgid ""
 "{0}[ABORTED CTRL+C] =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by "
 "User{7}"
-msgstr ""
+msgstr "{0}[ABGEBROCHEN CTRL+C] =>{1}({2}{3}{1})={4}/{5}) {0}{6}\t-->Unterbrochen vom Benutzer{7}"
 
 #: ../bin/proxychecker.py:309
 #, python-brace-format
