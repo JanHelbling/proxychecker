@@ -20,23 +20,31 @@
 
 import urllib.request
 
-import gzip,sys,re
+import gzip,sys,re,gettext,locale
 
 from http.client import IncompleteRead,BadStatusLine
 from os import path
+from platform import system
 
-if path.exists("/usr/share/locale/de/LC_MESSAGES/proxychecker.mo"):
-	t = gettext.translation("proxychecker", "/usr/share/locale", ["de"])
-	t.install()
+_		= gettext.gettext
 
-try:
-	from os import fork,waitpid,unlink,devnull,WEXITSTATUS
-except ImportError as e:
-	if e.msg == "cannot import name fork":
-		sys.stderr.write(_(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!")+"\n")
-		sys.stderr.write(_("        (Windows has no syscall named fork()...")+"\n")
-		sys.stderr.write(_("        You must Upgrade to Linux to use this ;)")+"\n")
-		sys.exit(1)
+language= locale.getdefaultlocale()
+
+if path.exists("/usr/share/locale/"+language[0]+"/LC_MESSAGES/proxychecker.mo"):
+	if language[0] is None:
+		locale.setlocale(locale.LC_ALL, '')
+		language	=	locale.getdefaultlocale()
+	if language[0]:
+		t = gettext.translation("proxychecker", "/usr/share/locale", [language[0]])
+		t.install()	#unicode=True
+
+if system() == "Windows":
+	sys.stderr.write(_(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!")+"\n")
+	sys.stderr.write(_("        (Windows has no syscall named fork()...")+"\n")
+	sys.stderr.write(_("        You must Upgrade to Linux to use this ;)")+"\n")
+	sys.exit(1)
+
+from os import fork,waitpid,unlink,devnull,WEXITSTATUS
 
 from optparse import OptionParser
 from socket import timeout
