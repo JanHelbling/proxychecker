@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
-from distutils.core import setup
+from DistUtilsExtra.auto import setup
+
+
 setup(
-    name="proxychecker.py",
+    name="proxychecker",
     version = "1.0",
     description = "ProxyChecker and Hitfaker",
     author = "Jan Helbling",
@@ -10,7 +12,7 @@ setup(
     url = "http://jan-helbling.no-ip.biz",
     download_url = "https://github.com/JanHelbling/ProxyChecker/archive/master.zip",
     keywords = ["Proxychecker","Hitfaker"],
-    scripts=["bin/proxychecker.py"],
+    scripts=["bin/proxychecker"],
     license="LGPL-3+",
     platforms=["linux"],
     long_description = """\
