@@ -1,23 +1,23 @@
-# German translation for proxychecker.py
+ï»¿# German translation for proxychecker.py
 # Copyright (C) 2013 by Jan Helbling
 # Author: Jan Helbling <jan.helbling@gmail.com>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2\n"
-"POT-Creation-Date: 2014-01-10 01:38+Mitteleuropäische Zeit\n"
+"POT-Creation-Date: 2014-01-10 01:38+MitteleuropÃ¤ische Zeit\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jan Helbling <jan.helbling@gmail.com>\n"
-"Language-Team:\n"
+"Language-Team: None\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
 
 #: bin/proxychecker.py:36
 msgid " [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!"
-msgstr " [FEHLER] fork von os kann nicht importiert werden, dieses Programm ist nicht für Windows-Benutzer!!"
+msgstr " [FEHLER] fork von os kann nicht importiert werden, dieses Programm ist nicht fÃ¼r Windows-Benutzer!!"
 
 #: bin/proxychecker.py:37
 msgid "        (Windows has no syscall named fork()..."
@@ -37,7 +37,7 @@ msgstr "[INFO] Sammle Proxys von url..."
 
 #: bin/proxychecker.py:144 bin/proxychecker.py:146
 msgid " [ERROR] couldn't open "
-msgstr " [FEHLER] Kann nicht öffnen"
+msgstr " [FEHLER] Kann nicht Ã¶ffnen"
 
 #: bin/proxychecker.py:150 bin/proxychecker.py:152
 msgid " [ERROR] "
@@ -70,7 +70,7 @@ msgstr " [Entferne Ausgabedatei"
 
 #: bin/proxychecker.py:171
 msgid " [ERROR] While removing "
-msgstr " [FEHLER] Während dem löschen von "
+msgstr " [FEHLER] WÃ¤hrend dem lÃ¶schen von "
 
 #: bin/proxychecker.py:174
 msgid ")=(current/total)"
@@ -107,15 +107,15 @@ msgstr " [FEHLER] Mit Datei "
 
 #: bin/proxychecker.py:241
 msgid "String doesnt match: "
-msgstr "String stimmt nicht überein: "
+msgstr "String stimmt nicht Ã¼berein: "
 
 #: bin/proxychecker.py:243
 msgid "String doesnt match!"
-msgstr "String stimmt nicht überein!"
+msgstr "String stimmt nicht Ã¼berein!"
 
 #: bin/proxychecker.py:252 bin/proxychecker.py:256
 msgid "Timed Out"
-msgstr "Zeitüberschreitung"
+msgstr "ZeitÃ¼berschreitung"
 
 #: bin/proxychecker.py:258
 msgid "BadStatusLine"
@@ -139,11 +139,11 @@ msgstr "[!!!EPISCHER FEHLSCHLAG!!!] Keine von"
 
 #: bin/proxychecker.py:299
 msgid "proxys we checked are working..."
-msgstr "Proxys die wir geprüft haben funktioniern"
+msgstr "Proxys die wir geprÃ¼ft haben funktioniern"
 
 #: bin/proxychecker.py:299
 msgid "removing the output-file..."
-msgstr "Lösche die Ausgabedatei..."
+msgstr "LÃ¶sche die Ausgabedatei..."
 
 #: bin/proxychecker.py:236
 #: bin/proxychecker.py:302
@@ -156,7 +156,7 @@ msgstr " [FEHLER] Kann nicht entfernen "
 
 #: bin/proxychecker.py:308
 msgid " proxys we checked are working!"
-msgstr " Proxys die wir geprüft haben funktionieren!"
+msgstr " Proxys die wir geprÃ¼ft haben funktionieren!"
 
 #: bin/proxychecker.py:308
 msgid "[!!!DONE!!!]"
@@ -172,7 +172,7 @@ msgstr "[Neue Proxylist gespeichert unter =>"
 
 #: bin/proxychecker.py:314
 msgid "Invalid number of arguments! Use -h for options."
-msgstr "Falsche Anzahl von Argumenten! Benutze -h für Optionen."
+msgstr "Falsche Anzahl von Argumenten! Benutze -h fÃ¼r Optionen."
 
 #: bin/proxychecker.py:317
 msgid "Contact & (C): 2013 by Jan Helbling <jan.helblifzng@gmail.com> [GNU/GPLv3+]"
@@ -188,7 +188,7 @@ msgstr "usage: %prog -i <proxylist[.gz]|URL> [options...]"
 
 #: bin/proxychecker.py:318
 msgid "read proxys from file (or from stdin), gz format supported"
-msgstr "Lese Proxys aus Datei (oder von stdin), das GZ-Format wird unterstützt"
+msgstr "Lese Proxys aus Datei (oder von stdin), das GZ-Format wird unterstÃ¼tzt"
 
 #: bin/proxychecker.py:319
 msgid "write proxys to file (or to a stream), default: "
@@ -196,11 +196,11 @@ msgstr "Schreibe Proxys in Datei (oder in einen Stream), Standart: "
 
 #: bin/proxychecker.py:320
 msgid "use this site for requests, default: "
-msgstr "Benutze diese Seite für Anfragen, Standart: "
+msgstr "Benutze diese Seite fÃ¼r Anfragen, Standart: "
 
 #: bin/proxychecker.py:321
 msgid "good hit must contains ..., default: GNU"
-msgstr "Gute Treffer müssen beinhalten ..., Standart: GNU"
+msgstr "Gute Treffer mÃ¼ssen beinhalten ..., Standart: GNU"
 
 #: bin/proxychecker.py:322
 msgid "timeout, default: "
@@ -224,7 +224,7 @@ msgstr "oder"
 
 #: bin/proxychecker.py:326
 msgid "data for postrequests, (eg."
-msgstr "Daten für Postanfragen, (z.B."
+msgstr "Daten fÃ¼r Postanfragen, (z.B."
 
 #: bin/proxychecker.py:327
 msgid "cookies, seperated by ; (eg. "
@@ -236,7 +236,7 @@ msgstr "Standart: Keine"
 
 #: bin/proxychecker.py:328
 msgid "add a header, splitted by : (eg. "
-msgstr "Einen Header hinzufügen, auseinandergehalten durch ein : (z.B. "
+msgstr "Einen Header hinzufÃ¼gen, auseinandergehalten durch ein : (z.B. "
 
 #: bin/proxychecker.py:329
 msgid "colored output"
