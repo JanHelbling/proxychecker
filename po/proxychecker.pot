@@ -1,0 +1,249 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-10 08:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../bin/proxychecker.py:36
+msgid ""
+" [ERROR] fork could not be imported from os, this programm is not for "
+"Windows-Users!!"
+msgstr ""
+
+#: ../bin/proxychecker.py:37
+msgid "        (Windows has no syscall named fork()..."
+msgstr ""
+
+#: ../bin/proxychecker.py:38
+msgid "        You must Upgrade to Linux to use this ;)"
+msgstr ""
+
+#: ../bin/proxychecker.py:96
+msgid "Error, --header should exactly contains one \":\" !!!"
+msgstr ""
+
+#: ../bin/proxychecker.py:131
+msgid "[INFO] gather proxys from url..."
+msgstr ""
+
+#: ../bin/proxychecker.py:151 ../bin/proxychecker.py:153
+msgid " [ERROR] couldn't open "
+msgstr ""
+
+#: ../bin/proxychecker.py:157 ../bin/proxychecker.py:159
+msgid " [ERROR] "
+msgstr ""
+
+#: ../bin/proxychecker.py:161
+msgid "[INFO] Remove invalid lines from list..."
+msgstr ""
+
+#: ../bin/proxychecker.py:163
+msgid "[DONE, "
+msgstr ""
+
+#: ../bin/proxychecker.py:163
+msgid "lines removed]"
+msgstr ""
+
+#: ../bin/proxychecker.py:166
+msgid "[TOTAL:"
+msgstr ""
+
+#: ../bin/proxychecker.py:169
+msgid " [ERROR] no proxys found..."
+msgstr ""
+
+#: ../bin/proxychecker.py:172
+msgid " [Remove outputfile]..."
+msgstr ""
+
+#: ../bin/proxychecker.py:175 ../bin/proxychecker.py:215
+msgid "[DONE]"
+msgstr ""
+
+#: ../bin/proxychecker.py:177 ../bin/proxychecker.py:218
+#: ../bin/proxychecker.py:248 ../bin/proxychecker.py:250
+#: ../bin/proxychecker.py:253 ../bin/proxychecker.py:257
+#: ../bin/proxychecker.py:259 ../bin/proxychecker.py:261
+#: ../bin/proxychecker.py:263 ../bin/proxychecker.py:265
+#: ../bin/proxychecker.py:311
+msgid "[FAIL]"
+msgstr ""
+
+#: ../bin/proxychecker.py:178
+msgid " [ERROR] While removing "
+msgstr ""
+
+#: ../bin/proxychecker.py:181
+msgid "[INFO] ("
+msgstr ""
+
+#: ../bin/proxychecker.py:181
+msgid "working"
+msgstr ""
+
+#: ../bin/proxychecker.py:181
+msgid ")=(current/total)"
+msgstr ""
+
+#: ../bin/proxychecker.py:207
+msgid "[INFO] Compressing "
+msgstr ""
+
+#: ../bin/proxychecker.py:219
+msgid " [ERROR] with file "
+msgstr ""
+
+#. Check if the string contains is in content, if true
+#: ../bin/proxychecker.py:243 ../bin/proxychecker.py:309
+msgid "[OK]"
+msgstr ""
+
+#: ../bin/proxychecker.py:248
+msgid "String doesnt match: "
+msgstr ""
+
+#: ../bin/proxychecker.py:250
+msgid "String doesnt match!"
+msgstr ""
+
+#: ../bin/proxychecker.py:259 ../bin/proxychecker.py:263
+msgid "Timed Out"
+msgstr ""
+
+#: ../bin/proxychecker.py:265
+msgid "BadStatusLine"
+msgstr ""
+
+#: ../bin/proxychecker.py:267
+msgid "IncompleteRead"
+msgstr ""
+
+#. [CTRL] + [C]
+#: ../bin/proxychecker.py:269
+msgid "[ABORTED CTRL+C] =>"
+msgstr ""
+
+#: ../bin/proxychecker.py:269
+msgid "Interrupted by User"
+msgstr ""
+
+#: ../bin/proxychecker.py:306
+msgid "[!!!EPIC FAIL!!!] None of"
+msgstr ""
+
+#: ../bin/proxychecker.py:306
+msgid "proxys we checked are working..."
+msgstr ""
+
+#: ../bin/proxychecker.py:306
+msgid "removing the output-file..."
+msgstr ""
+
+#: ../bin/proxychecker.py:312
+msgid " [ERROR] Couldn't remove "
+msgstr ""
+
+#: ../bin/proxychecker.py:315
+msgid "[!!!DONE!!!]"
+msgstr ""
+
+#: ../bin/proxychecker.py:315
+msgid "of"
+msgstr ""
+
+#: ../bin/proxychecker.py:315
+msgid " proxys we checked are working!"
+msgstr ""
+
+#: ../bin/proxychecker.py:316
+msgid "[New Proxylist saved to =>"
+msgstr ""
+
+#: ../bin/proxychecker.py:321
+msgid "Invalid number of arguments! Use -h for options."
+msgstr ""
+
+#. Parse options and run the proxychecker
+#: ../bin/proxychecker.py:324
+msgid "usage: %prog -i <proxylist[.gz]|URL> [options...]"
+msgstr ""
+
+#: ../bin/proxychecker.py:324
+msgid "Version: 1.0"
+msgstr ""
+
+#: ../bin/proxychecker.py:324
+msgid ""
+"Contact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
+msgstr ""
+
+#: ../bin/proxychecker.py:325
+msgid "read proxys from file (or from stdin), gz format supported"
+msgstr ""
+
+#: ../bin/proxychecker.py:326
+msgid "write proxys to file (or to a stream), default: "
+msgstr ""
+
+#: ../bin/proxychecker.py:327
+msgid "use this site for requests, default: "
+msgstr ""
+
+#: ../bin/proxychecker.py:328
+msgid "good hit must contains ..., default: GNU"
+msgstr ""
+
+#: ../bin/proxychecker.py:329
+msgid "timeout, default: "
+msgstr ""
+
+#: ../bin/proxychecker.py:330
+msgid "number of processes, default: "
+msgstr ""
+
+#: ../bin/proxychecker.py:331
+msgid "use this site as referer, default: None"
+msgstr ""
+
+#: ../bin/proxychecker.py:332 ../bin/proxychecker.py:336
+msgid "or"
+msgstr ""
+
+#: ../bin/proxychecker.py:332 ../bin/proxychecker.py:336
+msgid "default:"
+msgstr ""
+
+#: ../bin/proxychecker.py:333
+msgid "data for postrequests, (eg."
+msgstr ""
+
+#: ../bin/proxychecker.py:334
+msgid "cookies, seperated by ; (eg. "
+msgstr ""
+
+#: ../bin/proxychecker.py:334 ../bin/proxychecker.py:335
+msgid "default: None"
+msgstr ""
+
+#: ../bin/proxychecker.py:335
+msgid "add a header, splitted by : (eg. "
+msgstr ""
+
+#: ../bin/proxychecker.py:336
+msgid "colored output"
+msgstr ""
