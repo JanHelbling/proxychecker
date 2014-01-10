@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 
-from DistUtilsExtra.auto import setup
+try:
+	from DistUtilsExtra.auto import setup
+except ImportError:
+	print("You need python-distutils-extra to compile the gettext po => mo files")
+	print("ArchLinux: sudo pacman -S python-distutils-extra")
+	print("Ubuntu:    sudo apt-get install python-distutils-extra")
+	print("Fedora:    sudo yum install python-distutils-extra")
+
 from distutils.core import Command
 
 class proxychecker_test(Command):
@@ -37,6 +44,7 @@ setup(
 	- Add a HTTP_REFERER
 	- Send POST-Requests
 	- Send Cookies
+        - Send a HTTP-Header
 	- Colored Output
 	- gzip support
 	- Open website to regex for proxys
