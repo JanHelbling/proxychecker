@@ -1,279 +1,249 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR ORGANIZATION
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-10 13:28+0000\n"
+"POT-Creation-Date: 2014-01-10 13:36+UTC\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
 
-#: ../bin/proxychecker.py:36
+
+#: bin/proxychecker:36
 msgid ""
-" [ERROR] fork could not be imported from os, this programm is not for "
-"Windows-Users!!\n"
+" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:37
-msgid "        (Windows has no syscall named fork()...\n"
+#: bin/proxychecker:37
+msgid ""
+"        (Windows has no syscall named fork()...\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:38
-msgid "        You must Upgrade to Linux to use this ;)\n"
+#: bin/proxychecker:38
+msgid ""
+"        You must Upgrade to Linux to use this ;)\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:96
+#: bin/proxychecker:96
 msgid "Error, --header should exactly contains one \":\" !!!"
 msgstr ""
 
-#: ../bin/proxychecker.py:131
-#, python-format
+#: bin/proxychecker:131
 msgid "%s[INFO] gather proxys from url..."
 msgstr ""
 
-#: ../bin/proxychecker.py:136
-#, python-format
+#: bin/proxychecker:136
 msgid "...%s[DONE, %d proxys found]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:149
-#, python-format
+#: bin/proxychecker:149
 msgid "...%s[FAIL]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:151
-#, python-format
-msgid " [ERROR] couldn't open %s: %s\n"
+#: bin/proxychecker:151
+msgid ""
+" [ERROR] couldn't open %s: %s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:153
-#, python-format
-msgid " [ERROR] couldn't open %s:  %s\n"
+#: bin/proxychecker:153
+msgid ""
+" [ERROR] couldn't open %s:  %s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:157
-#, python-format
+#: bin/proxychecker:157
 msgid " [ERROR] %s"
 msgstr ""
 
-#: ../bin/proxychecker.py:159
-#, python-format
-msgid " [ERROR] %s: %s\n"
+#: bin/proxychecker:159
+msgid ""
+" [ERROR] %s: %s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:161
-#, python-format
+#: bin/proxychecker:161
 msgid "%s[INFO] Remove invalid lines from list..."
 msgstr ""
 
-#: ../bin/proxychecker.py:163
-#, python-format
+#: bin/proxychecker:163
 msgid "%s..[DONE, %d lines removed]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:166
-#, python-format
+#: bin/proxychecker:166
 msgid "%s[TOTAL: %d Proxys]"
 msgstr ""
 
-#: ../bin/proxychecker.py:169
-#, python-format
-msgid "%s [ERROR] no proxys found...%s\n"
+#: bin/proxychecker:169
+msgid ""
+"%s [ERROR] no proxys found...%s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:172
-#, python-format
+#: bin/proxychecker:172
 msgid "%s [Remove outputfile]..."
 msgstr ""
 
-#: ../bin/proxychecker.py:175
-#, python-format
-msgid "...%s[DONE]%s\n"
+#: bin/proxychecker:175
+msgid ""
+"...%s[DONE]%s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:177
-#, python-format
-msgid "...%s[FAIL]%s\n"
+#: bin/proxychecker:177
+msgid ""
+"...%s[FAIL]%s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:178
-#, python-format
-msgid "%s [ERROR] While removing %s: %s%s\n"
+#: bin/proxychecker:178
+msgid ""
+"%s [ERROR] While removing %s: %s%s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:181
-#, python-format
+#: bin/proxychecker:181
 msgid "%s[INFO] (%sworking%s)=(current/total)%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:207
-#, python-format
+#: bin/proxychecker:207
 msgid "%s[INFO] Compressing %s in %s => "
 msgstr ""
 
-#: ../bin/proxychecker.py:215
-#, python-format
+#: bin/proxychecker:215
 msgid "%s[DONE]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:218
-#, python-format
+#: bin/proxychecker:218
 msgid "%s[FAIL]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:219
-#, python-format
-msgid "%s [ERROR] with file %s: %s\n"
+#: bin/proxychecker:219
+msgid ""
+"%s [ERROR] with file %s: %s\n"
 msgstr ""
 
-#. Check if the string contains is in content, if true
-#: ../bin/proxychecker.py:243
-#, python-format
-msgid "%s[OK]\t=> %s(%s%d%s)=(%d/%d)%s%s\t-->%.3fsec.%s"
+#: bin/proxychecker:243
+msgid "%s[OK]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%.3fsec.%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:248
-#, python-format
+#: bin/proxychecker:248
 msgid "%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t--> String doesnt match: %s%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:250
-#, python-format
+#: bin/proxychecker:250
 msgid "%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t--> String doesnt match!"
 msgstr ""
 
-#: ../bin/proxychecker.py:253
-#, python-format
+#: bin/proxychecker:253
 msgid "%s[FAIL]\t=>%s%d%s)=(%d/%d)%s%s\t-->%s%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:257 ../bin/proxychecker.py:261
-#, python-format
-msgid "[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s"
+#: bin/proxychecker:257 bin/proxychecker:261
+msgid "%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->%s%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:259 ../bin/proxychecker.py:263
-#, python-format
-msgid "[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s"
+#: bin/proxychecker:259 bin/proxychecker:263
+msgid "%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->Timed Out%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:265
-#, python-format
-msgid "[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->BadStatusLine%s"
+#: bin/proxychecker:265
+msgid "%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->BadStatusLine%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:267
-#, python-format
-msgid "[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->IncompleteRead%s"
+#: bin/proxychecker:267
+msgid "%s[FAIL]\t=>%s(%s%d%s)=(%d/%d)%s%s\t-->IncompleteRead%s"
 msgstr ""
 
-#. [CTRL] + [C]
-#: ../bin/proxychecker.py:269
-#, python-format
-msgid "[ABORTED CTRL+C] =>%s(%s%d%s)=(%d/%d)%s%s\t-->Interrupted by User%s"
+#: bin/proxychecker:269
+msgid "%s[ABORTED CTRL+C] =>%s(%s%d%s)=(%d/%d)%s%s\t-->Interrupted by User%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:306
-#, python-format
+#: bin/proxychecker:306
 msgid ""
 "%s[!!!EPIC FAIL!!!] None of %d proxys we have checked are working...\n"
 "removing the output-file...%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:309
-#, python-format
+#: bin/proxychecker:309
 msgid "%s...%s[OK]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:311
-#, python-format
+#: bin/proxychecker:311
 msgid "%s...[FAIL]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:312
-#, python-format
-msgid " [ERROR] Couldn't remove %s: %s\n"
+#: bin/proxychecker:312
+msgid ""
+" [ERROR] Couldn't remove %s: %s\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:315
-#, python-format
+#: bin/proxychecker:315
 msgid "%s[!!!DONE!!!] %d of %d proxys we have checked are working!%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:316
-#, python-format
+#: bin/proxychecker:316
 msgid "%s[New Proxylist saved to => %s]%s"
 msgstr ""
 
-#: ../bin/proxychecker.py:321
+#: bin/proxychecker:321
 msgid "Invalid number of arguments! Use -h for options."
 msgstr ""
 
-#. Parse options and run the proxychecker
-#: ../bin/proxychecker.py:324
-msgid "usage: %prog -i <proxylist[.gz]|URL> [options...]"
-msgstr ""
-
-#: ../bin/proxychecker.py:324
+#: bin/proxychecker:324
 msgid ""
 "Version: 1.0\n"
 "Contact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 msgstr ""
 
-#: ../bin/proxychecker.py:325
+#: bin/proxychecker:324
+msgid "usage: %prog -i <proxylist[.gz]|URL> [options...]"
+msgstr ""
+
+#: bin/proxychecker:325
 msgid "read proxys from file (or from stdin), gz format supported"
 msgstr ""
 
-#: ../bin/proxychecker.py:326
+#: bin/proxychecker:326
 msgid "write proxys to file (or to a stream), default: "
 msgstr ""
 
-#: ../bin/proxychecker.py:327
+#: bin/proxychecker:327
 msgid "use this site for requests, default: http://www.gnu.org"
 msgstr ""
 
-#: ../bin/proxychecker.py:328
+#: bin/proxychecker:328
 msgid "good hit must contains ..., default: GNU"
 msgstr ""
 
-#: ../bin/proxychecker.py:329
+#: bin/proxychecker:329
 msgid "timeout, default: 5.0"
 msgstr ""
 
-#: ../bin/proxychecker.py:330
+#: bin/proxychecker:330
 msgid "number of processes, default: 10"
 msgstr ""
 
-#: ../bin/proxychecker.py:331
+#: bin/proxychecker:331
 msgid "use this site as referer, default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:332
+#: bin/proxychecker:332
 msgid "mobile,desktop or all, default: desktop"
 msgstr ""
 
-#: ../bin/proxychecker.py:333
+#: bin/proxychecker:333
 msgid "data for postrequests, (eg. \"foo=bar&info=false\"), default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:334
+#: bin/proxychecker:334
 msgid "cookies, seperated by ; (eg. \"abc=123; def=456;\"), default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:335
-msgid ""
-"add a header, splitted by : (eg. \"Range:bytes=500-999\"), default: None"
+#: bin/proxychecker:335
+msgid "add a header, splitted by : (eg. \"Range:bytes=500-999\"), default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:336
+#: bin/proxychecker:336
 msgid "colored output, none or yes, default: yes"
 msgstr ""
+

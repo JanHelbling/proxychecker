@@ -133,7 +133,7 @@ class proxychecker:
 				self.content	=	(self.fd.read()).decode("utf-8","ignore")
 				self.fd.close()
 				self.proxys	=	proxyregex.findall(self.content)
-				print(_("...%s[DONE, %d proxys found]%s" %(GREEN,len(self.proxys),NOCOLOR)))
+				print(_("...%s[DONE, %d proxys found]%s") %(GREEN,len(self.proxys),NOCOLOR))
 			else:
 				self.proxys	=	sys.stdin.readlines()
 			if out_file not in [devnull,"/dev/stdout","/dev/stderr","/dev/stdin"]:
