@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+<<<<<<< HEAD
 #: ../bin/proxychecker.py:36
 msgid ""
 " [ERROR] fork could not be imported from os, this programm is not for "
@@ -35,6 +36,24 @@ msgstr ""
 #, python-brace-format
 msgid "{0}[ERROR] --header should exactly contains one \":\" !!!{1}"
 msgstr ""
+=======
+
+#: bin/proxychecker:36
+msgid " [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"
+msgstr " [FEHLER] fork kann von os nicht importiert werden, dieses Programm ist nicht für Windows-Benutzer!!\n"
+
+#: bin/proxychecker:37
+msgid "        (Windows has no syscall named fork()...\n"
+msgstr "        (Windows hat keinen Syscall namens fork()...\n"
+
+#: bin/proxychecker:38
+msgid "        You must Upgrade to Linux to use this ;)\n"
+msgstr "Du musst auf Linux upgraden um dies zu benutzen ;)"
+
+#: bin/proxychecker:96
+msgid "Error, --header should exactly contains one \":\" !!!"
+msgstr "Fehler, --header muss genau ein \":\" beinhalten !!!"
+>>>>>>> 2fab08237062dd5a87ddd34ac80e1434fca196a7
 
 #: ../bin/proxychecker.py:131
 #, python-brace-format
