@@ -26,7 +26,7 @@ setup(
     scripts=["bin/proxychecker"],
     cmdclass={"test" : proxychecker_test},
     license="LGPL-3+",
-    platforms=["linux"],
+    platforms=["linux","darwin","freebsd","netbsd","unixware7"],
     long_description = """\
  Fetaures:
 	- Multithreaded ( with fork)
