@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-01-10 01:20+Mitteleuropäische Zeit\n"
+"POT-Creation-Date: 2014-01-10 01:38+Mitteleuropäische Zeit\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,18 +16,15 @@ msgstr ""
 
 
 #: bin/proxychecker.py:36
-msgid ""
-" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"
+msgid " [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!"
 msgstr ""
 
 #: bin/proxychecker.py:37
-msgid ""
-"        (Windows has no syscall named fork()...)\n"
+msgid "        (Windows has no syscall named fork()..."
 msgstr ""
 
 #: bin/proxychecker.py:38
-msgid ""
-"        You must Upgrade to Linux to use this ;)\n"
+msgid "        You must Upgrade to Linux to use this ;)"
 msgstr ""
 
 #: bin/proxychecker.py:89
