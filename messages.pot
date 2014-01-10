@@ -10,7 +10,7 @@ msgstr ""
 "Last-Translator: Jan Helbling <jan.helbling@gmail.com>\n"
 "Language-Team:\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=cp1252\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
@@ -68,14 +68,6 @@ msgstr " [FEHLER] Kein Proxy gefunden..."
 msgid " [Remove outputfile]..."
 msgstr " [Entferne Ausgabedatei"
 
-#: bin/proxychecker.py:168
-msgid "[DONE]"
-msgstr "[FERTIG]"
-
-#: bin/proxychecker.py:170
-msgid "[FAIL]"
-msgstr "[FEHLGESCHLAGEN]"
-
 #: bin/proxychecker.py:171
 msgid " [ERROR] While removing "
 msgstr " [FEHLER] Während dem löschen von "
@@ -96,10 +88,12 @@ msgstr "arbeiten"
 msgid "[INFO] Compressing "
 msgstr "[INFO] Komprimiere "
 
+#: bin/proxychecker.py:168
 #: bin/proxychecker.py:208
 msgid "[DONE]"
 msgstr "[FERTIG]"
 
+#: bin/proxychecker.py:170
 #: bin/proxychecker.py:211 bin/proxychecker.py:241 bin/proxychecker.py:243
 #: bin/proxychecker.py:246 bin/proxychecker.py:250 bin/proxychecker.py:252
 #: bin/proxychecker.py:254 bin/proxychecker.py:256 bin/proxychecker.py:258
@@ -111,10 +105,6 @@ msgstr "[FEHLGESCHLAGEN]"
 msgid " [ERROR] with file "
 msgstr " [FEHLER] Mit Datei "
 
-#: bin/proxychecker.py:236
-msgid "[OK]"
-msgstr "[OK]"
-
 #: bin/proxychecker.py:241
 msgid "String doesnt match: "
 msgstr "String stimmt nicht überein: "
@@ -125,7 +115,7 @@ msgstr "String stimmt nicht überein!"
 
 #: bin/proxychecker.py:252 bin/proxychecker.py:256
 msgid "Timed Out"
-msgstr "Zu lange gebraucht"
+msgstr "Zeitüberschreitung"
 
 #: bin/proxychecker.py:258
 msgid "BadStatusLine"
@@ -137,7 +127,7 @@ msgstr "Nicht ganz gelesen"
 
 #: bin/proxychecker.py:262
 msgid "Interrupted by User"
-msgstr "Abgebrochen vom Benutzer"
+msgstr "Abgebrochen durch Benutzer"
 
 #: bin/proxychecker.py:262
 msgid "[ABORTED CTRL+C] =>"
@@ -145,7 +135,7 @@ msgstr "[ABGEBROCHEN CTRL+C] =>"
 
 #: bin/proxychecker.py:299
 msgid "[!!!EPIC FAIL!!!] None of"
-msgstr "[!!!EPISCHER FEHLSCHLAG!!!] keine von"
+msgstr "[!!!EPISCHER FEHLSCHLAG!!!] Keine von"
 
 #: bin/proxychecker.py:299
 msgid "proxys we checked are working..."
@@ -155,6 +145,7 @@ msgstr "Proxys die wir geprüft haben funktioniern"
 msgid "removing the output-file..."
 msgstr "Lösche die Ausgabedatei..."
 
+#: bin/proxychecker.py:236
 #: bin/proxychecker.py:302
 msgid "[OK]"
 msgstr "[OK]"
@@ -184,7 +175,7 @@ msgid "Invalid number of arguments! Use -h for options."
 msgstr "Falsche Anzahl von Argumenten! Benutze -h für Optionen."
 
 #: bin/proxychecker.py:317
-msgid "Contact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
+msgid "Contact & (C): 2013 by Jan Helbling <jan.helblifzng@gmail.com> [GNU/GPLv3+]"
 msgstr "Kontakt & (C): 2013 von Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 
 #: bin/proxychecker.py:317
@@ -237,7 +228,7 @@ msgstr "Daten für Postanfragen, (z.B."
 
 #: bin/proxychecker.py:327
 msgid "cookies, seperated by ; (eg. "
-msgstr "Kekse, getrennt von ; (z.B. "
+msgstr "Kekse, getrennt durch ein ; (z.B. "
 
 #: bin/proxychecker.py:327 bin/proxychecker.py:328
 msgid "default: None"
@@ -249,5 +240,5 @@ msgstr "Einen Header hinzufügen, auseinandergehalten durch ein : (z.B. "
 
 #: bin/proxychecker.py:329
 msgid "colored output"
-msgstr "Farbige ausgabe"
+msgstr "Farbige Ausgabe"
 
