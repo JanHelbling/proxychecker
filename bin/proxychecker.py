@@ -333,7 +333,7 @@ if __name__ == "__main__":
 	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help="mobile,desktop "+_("or")+" all, "+_("default:")+" desktop", metavar="TYPE",default="desktop")
 	parser.add_option("-P", "--post-data", dest="postdata", help=_("data for postrequests, (eg.")+" \"foo=bar&info=false\"), default: None",metavar="DATA",default="")
 	parser.add_option("-C", "--cookie", dest="cookie", help=_("cookies, seperated by ; (eg. ")+"\"abc=123; def=456;\"), "+_("default: None"),metavar="COOKIE",default="")
-	parser.add_option("-h", "--header", dest="header", help=_("add a header, splitted by : (eg. ")+"\"Range:bytes=500-999\")"+_("default: None") ,default="")
+	parser.add_option("-H", "--header", dest="header", help=_("add a header, splitted by : (eg. ")+"\"Range:bytes=500-999\")"+_("default: None") ,default="")
 	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help=_("colored output")+", none "+_("or")+" yes, "+_("default:")+" yes",metavar="COLOR",default="yes")
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.header)
