@@ -159,15 +159,15 @@ class proxychecker:
 		print(YELLOW,_("[TOTAL:"),self.totalproxys,"Proxys]")
 		
 		if self.totalproxys == 0:
-			sys.stderr.write(RED+_(" [ERROR] no proxys found...\n")+NOCOLOR)
+			sys.stderr.write(RED+_(" [ERROR] no proxys found...")+"\n"+NOCOLOR)
 			if out_file == devnull:
 				exit(1)
 			sys.stderr.write(YELLOW+_(" [Remove outputfile]..."))
 			try:
 				unlink(out_file)
-				sys.stderr.write("..."+GREEN+_("[DONE]\n")+NOCOLOR)
+				sys.stderr.write("..."+GREEN+_("[DONE]")+"\n"+NOCOLOR)
 			except IOError as e:
-				sys.stderr.write("..."+RED+_("[FAIL]\n")+NOCOLOR)
+				sys.stderr.write("..."+RED+_("[FAIL]")+"\n"+NOCOLOR)
 				sys.stderr.write(_(" [ERROR] While removing ")+e.filename+": "+e.strerror+"\n")
 			sys.exit(1)
 		
@@ -233,7 +233,7 @@ class proxychecker:
 			fd.close()
 			endtime		=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(GREEN,_("[OK]\t=>"),YELLOW+"("+GREEN+str(self.cnt+1)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+GREEN,proxy,"\t-->",endtime,"sec.",NOCOLOR)
+				print(GREEN,_("[OK]")+"\t=>",YELLOW+"("+GREEN+str(self.cnt+1)+YELLOW+")=("+str(self.totalcnt)+"/"+str(self.totalproxys)+")"+GREEN,proxy,"\t-->",endtime,"sec.",NOCOLOR)
 				self.save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
@@ -318,14 +318,14 @@ if __name__ == "__main__":
 	parser.add_option("-i", "--input", dest="input",help=_("read proxys from file (or from stdin), gz format supported"), metavar="FILE")
 	parser.add_option("-o", "--output", dest="output",help=_("write proxys to file (or to a stream), default: ")+"checked_proxys", metavar="FILE",default="checked_proxys")
 	parser.add_option("-u", "--testsite", dest="testsite",help=_("use this site for requests, default: ")+"http://www.gnu.org", metavar="WEBSITE",default="http://www.gnu.org")
-	parser.add_option("-c", "--contains", dest="contains",help=_("good hit must contains ..., default GNU"), metavar="STRING",default="GNU")
-	parser.add_option("-t", "--timeout", dest="to",help=_("timeout, default ")+"5.0", metavar="TIMEOUT",type="float",default=5.0)
-	parser.add_option("-p", "--process", dest="numproc",help=_("number of processes, default ")+"10", type="int",metavar="NUM",default=10)
-	parser.add_option("-r", "--referer", dest="referer",help=_("use this site as referer, default None"),metavar="REFERER",default="")
-	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help="mobile,desktop "+_("or")+" all, "+_("default")+" desktop", metavar="TYPE",default="desktop")
-	parser.add_option("-P", "--post-data", dest="postdata", help=_("data for postrequests, (eg.")+" \"foo=bar&info=false\"), default None",metavar="DATA",default="")
+	parser.add_option("-c", "--contains", dest="contains",help=_("good hit must contains ..., default: GNU"), metavar="STRING",default="GNU")
+	parser.add_option("-t", "--timeout", dest="to",help=_("timeout, default: ")+"5.0", metavar="TIMEOUT",type="float",default=5.0)
+	parser.add_option("-p", "--process", dest="numproc",help=_("number of processes, default: ")+"10", type="int",metavar="NUM",default=10)
+	parser.add_option("-r", "--referer", dest="referer",help=_("use this site as referer, default: None"),metavar="REFERER",default="")
+	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help="mobile,desktop "+_("or")+" all, "+_("default:")+" desktop", metavar="TYPE",default="desktop")
+	parser.add_option("-P", "--post-data", dest="postdata", help=_("data for postrequests, (eg.")+" \"foo=bar&info=false\"), default: None",metavar="DATA",default="")
 	parser.add_option("-C", "--cookie", dest="cookie", help=_("cookies, seperated by ; (eg. ")+"\"abc=123; def=456;\"), "+_("default: None"),metavar="COOKIE",default="")
 	parser.add_option("-h", "--header", dest="header", help=_("add a header, splitted by : (eg. ")+"\"Range:bytes=500-999\")"+_("default: None") ,default="")
-	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help=_("colored output")+", none "+_("or")+" yes, "+_("default")+" yes",metavar="COLOR",default="yes")
+	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help=_("colored output")+", none "+_("or")+" yes, "+_("default:")+" yes",metavar="COLOR",default="yes")
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.header)
