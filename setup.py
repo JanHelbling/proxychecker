@@ -1,7 +1,18 @@
 #!/usr/bin/python3
 
 from DistUtilsExtra.auto import setup
+from distutils.core import Command
 
+class proxychecker_test(Command):
+    user_options = []
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        import sys,subprocess
+        errno = subprocess.call([sys.executable, 'test/'])
+        raise SystemExit(errno)
 
 setup(
     name="proxychecker",
@@ -13,6 +24,7 @@ setup(
     download_url = "https://github.com/JanHelbling/ProxyChecker/archive/master.zip",
     keywords = ["Proxychecker","Hitfaker"],
     scripts=["bin/proxychecker"],
+    cmdclass={"test" : proxychecker_test},
     license="LGPL-3+",
     platforms=["linux"],
     long_description = """\
