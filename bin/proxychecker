@@ -26,17 +26,11 @@ from http.client import IncompleteRead,BadStatusLine
 from os import path
 from platform import system
 
-_		= gettext.gettext
+from gettext import gettext as _
 
-language= locale.getdefaultlocale()
-
-if path.exists("/usr/share/locale/"+language[0]+"/LC_MESSAGES/proxychecker.mo"):
-	if language[0] is None:
-		locale.setlocale(locale.LC_ALL, '')
-		language	=	locale.getdefaultlocale()
-	if language[0]:
-		t = gettext.translation("proxychecker", "/usr/share/locale", [language[0]])
-		t.install()	#unicode=True
+if path.exists("/usr/share/locale"):
+	gettext.bindtextdomain('proxychecker', '/usr/share/locale')
+	gettext.textdomain('proxychecker')
 
 if system() == "Windows":
 	sys.stderr.write(_(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!")+"\n")

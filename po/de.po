@@ -1,7 +1,3 @@
-﻿# German translation for proxychecker.py
-# Copyright (C) 2013 by Jan Helbling
-# Author: Jan Helbling <jan.helbling@gmail.com>, 2014.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2\n"
