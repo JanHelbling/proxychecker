@@ -1,3 +1,4 @@
 TODO:
  - localisation with gettext
  - es,it,fr,ru,cn,in,tr,tn,...
+ - Threadsafe counter

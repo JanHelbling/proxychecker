@@ -211,8 +211,8 @@ msgid "use this site as referer, default: None"
 msgstr "Benutze diese Seite als Referer, Standart: Keine"
 
 #: bin/proxychecker.py:325 bin/proxychecker.py:329
-msgid "default"
-msgstr "Standart"
+msgid "default:"
+msgstr "Standart:"
 
 #: bin/proxychecker.py:325 bin/proxychecker.py:329
 msgid "or"
