@@ -33,9 +33,9 @@ try:
 	from os import fork,waitpid,unlink,devnull,WEXITSTATUS
 except ImportError as e:
 	if e.msg == "cannot import name fork":
-		sys.stderr.write(_(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"))
-		sys.stderr.write(_("        (Windows has no syscall named fork()...)\n"))
-		sys.stderr.write(_("        You must Upgrade to Linux to use this ;)\n"))
+		sys.stderr.write(_(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!")+"\n")
+		sys.stderr.write(_("        (Windows has no syscall named fork()...")+"\n")
+		sys.stderr.write(_("        You must Upgrade to Linux to use this ;)")+"\n")
 		sys.exit(1)
 
 from optparse import OptionParser
