@@ -34,7 +34,7 @@ class proxychecker_test(Command):
 
 setup(
     name="proxychecker",
-    version = "git",
+    version = "1.2",
     description = "A Advanced, Multithreaded ProxyChecker and Hitfaker",
     author = "Jan Helbling",
     author_email = "jan.helbling@gmail.com",

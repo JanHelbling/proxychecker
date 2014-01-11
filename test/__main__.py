@@ -1,7 +1,12 @@
 #!/usr/bin/python3
 
-from os import execvp,fork,waitpid,WEXITSTATUS
+from os import execvp,waitpid,WEXITSTATUS
 from sys import stderr,exit
+
+if sys.platform in ["unixware7"]:
+        from os import fork1 as fork
+else:
+        from os import fork
 
 if __name__ == "__main__":
 	pid	=	0
@@ -9,7 +14,7 @@ if __name__ == "__main__":
 		pid	=	fork()
 		if not pid:
 			print("./bin/proxychecker.py -i data/proxys.lst -o /dev/null -p 10 -t 2")
-			execvp("bin/proxychecker",["bin/proxychecker","-i","data/proxys.lst","-o","/dev/null","-p","10","-t","2"])
+			execvp("bin/proxychecker",["bin/proxychecker","-i","data/proxys.lst","-o","/dev/null","-p","16","-t","2"])
 	except KeyboardInterrupt as e:
 		stderr.write("[CTRL+C , KeyboardInterrupt!]")
 		exit(1)
