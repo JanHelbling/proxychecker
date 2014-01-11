@@ -3,10 +3,10 @@
 from sys import executable,stderr,exit,version
 
 if version < "3":
-	stderr.write("You need python3 to run this!")
-	stderr.write("ArchLinux:     sudo pacman -S python3")
-	stderr.write("Ubuntu/Debian: sudo apt-get install python3")
-	stderr.write("Fedora:        sudo yum install python3")
+	stderr.write("You need python3 to run this!\n")
+	stderr.write("ArchLinux:     sudo pacman -S python3\n")
+	stderr.write("Ubuntu/Debian: sudo apt-get install python3\n")
+	stderr.write("Fedora:        sudo yum install python3\n")
 	exit(1)
 
 import subprocess
@@ -14,10 +14,10 @@ import subprocess
 try:
 	from DistUtilsExtra.auto import setup
 except ImportError:
-	stderr.write("You need python-distutils-extra to compile the gettext .po to .mo files!")
-	stderr.write("ArchLinux:      sudo pacman -S python-distutils-extra")
-	stderr.write("Ubuntu/Debian:  sudo apt-get install python-distutils-extra")
-	stderr.write("Fedora:         sudo yum install python-distutils-extra")
+	stderr.write("You need python-distutils-extra to compile the gettext .po to .mo files!\n")
+	stderr.write("ArchLinux:      sudo pacman -S python-distutils-extra\n")
+	stderr.write("Ubuntu/Debian:  sudo apt-get install python-distutils-extra\n")
+	stderr.write("Fedora:         sudo yum install python-distutils-extra\n")
 	exit(1)
 
 from distutils.core import Command
