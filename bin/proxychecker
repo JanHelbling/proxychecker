@@ -20,7 +20,7 @@
 
 import urllib.request
 
-import gzip,sys,re,gettext,locale
+import gzip,sys,re,gettext
 
 from http.client import IncompleteRead,BadStatusLine
 from os import path
