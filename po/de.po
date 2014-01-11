@@ -1,17 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# German Translation for proxychecker.
+# Copyright (C) 2014 Jan Helbling <jan.helbling@gmail.com>
+# This file is distributed under the same license as the PACKAGE package
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: 1.2\n"
+"Report-Msgid-Bugs-To: <jan.helbling@gmail.com>\n"
 "POT-Creation-Date: 2014-01-10 16:40+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2014-01-11 02:14+0000\n"
+"Last-Translator: Jan Helbling <jan.helbling@gmail.com>\n"
+"Language-Team:\n"
 "Language: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
