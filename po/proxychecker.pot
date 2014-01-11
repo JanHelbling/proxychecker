@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-11 07:23+0000\n"
+"POT-Creation-Date: 2014-01-11 12:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,125 +32,101 @@ msgid "        You must Upgrade to Linux to use this ;)\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:96
-#, python-brace-format
 msgid "{0}[ERROR] --header should exactly contains one \":\" !!!{1}"
 msgstr ""
 
 #: ../bin/proxychecker.py:131
-#, python-brace-format
 msgid "{0}[INFO] gather proxys from url..."
 msgstr ""
 
 #: ../bin/proxychecker.py:136
-#, python-brace-format
 msgid "...{0}[DONE, {1} proxys found]{2}"
 msgstr ""
 
 #: ../bin/proxychecker.py:149
-#, python-brace-format
 msgid "...{0}[FAIL]{1}"
 msgstr ""
 
 #: ../bin/proxychecker.py:151
-#, python-brace-format
 msgid "{0} [ERROR] couldn't open {1}: {2}{3}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:153
-#, python-brace-format
 msgid "{0} [ERROR] couldn't open {1}:  {2}{3}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:157
-#, python-brace-format
 msgid "{0} [ERROR] {1}"
 msgstr ""
 
 #: ../bin/proxychecker.py:159
-#, python-brace-format
 msgid "{0} [ERROR] {1}: {2}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:161
-#, python-brace-format
 msgid "{0}[INFO] Remove invalid lines from list..."
 msgstr ""
 
 #: ../bin/proxychecker.py:163
-#, python-brace-format
 msgid "{0}..[DONE, {1} lines removed]{2}"
 msgstr ""
 
 #: ../bin/proxychecker.py:166
-#, python-brace-format
 msgid "{0}[TOTAL: {1} Proxys]{2}"
 msgstr ""
 
 #: ../bin/proxychecker.py:169
-#, python-brace-format
 msgid "{0} [ERROR] no proxys found...{1}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:172
-#, python-brace-format
 msgid "{0} [Remove outputfile]..."
 msgstr ""
 
 #: ../bin/proxychecker.py:175
-#, python-brace-format
 msgid "...{0}[DONE]{1}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:177
-#, python-brace-format
 msgid "...{0}[FAIL]{1}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:178
-#, python-brace-format
 msgid "{0} [ERROR] While removing {1}: {2}{3}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:181
-#, python-brace-format
 msgid "{0}[INFO] ({1}working{0})=(current/total){2}"
 msgstr ""
 
 #: ../bin/proxychecker.py:207
-#, python-brace-format
 msgid "{0}[INFO] Compressing {1} in {2} => "
 msgstr ""
 
 #: ../bin/proxychecker.py:215
-#, python-brace-format
 msgid "{0}[DONE]{1}"
 msgstr ""
 
 #: ../bin/proxychecker.py:218
-#, python-brace-format
 msgid "{0}[FAIL]{1}"
 msgstr ""
 
 #: ../bin/proxychecker.py:219
-#, python-brace-format
 msgid "{0} [ERROR] with file {1}: {2}\n"
 msgstr ""
 
 #. Check if the string contains is in content, if true
 #: ../bin/proxychecker.py:243
-#, python-brace-format
 msgid "{0}[OK]  \t=>{1}({0}{2}{1})=({3}/{4})          {0}{5}\t-->{6}sec.{7}"
 msgstr ""
 
 #: ../bin/proxychecker.py:248
-#, python-brace-format
 msgid ""
 "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Doesnt contain the "
 "String: {7}{8}"
 msgstr ""
 
 #: ../bin/proxychecker.py:250
-#, python-brace-format
 msgid ""
 "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Doesnt contain the "
 "String!{7}"
@@ -158,65 +134,54 @@ msgstr ""
 
 #: ../bin/proxychecker.py:253 ../bin/proxychecker.py:257
 #: ../bin/proxychecker.py:261
-#, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}"
 msgstr ""
 
 #: ../bin/proxychecker.py:259 ../bin/proxychecker.py:263
 #: ../bin/proxychecker.py:265
-#, python-brace-format
 msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}"
 msgstr ""
 
 #: ../bin/proxychecker.py:267
-#, python-brace-format
 msgid ""
 "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->BadStatusLine{7}"
 msgstr ""
 
 #: ../bin/proxychecker.py:269
-#, python-brace-format
 msgid ""
 "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->IncompleteRead{7}"
 msgstr ""
 
 #. [CTRL] + [C]
 #: ../bin/proxychecker.py:271
-#, python-brace-format
 msgid ""
 "{0}[ABORTED CTRL+C]     =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by "
 "User{7}"
 msgstr ""
 
 #: ../bin/proxychecker.py:308
-#, python-brace-format
 msgid ""
 "{0}[!!!EPIC FAIL!!!] None of {1} proxys we have checked are working...\n"
 "removing the output-file...{2}"
 msgstr ""
 
 #: ../bin/proxychecker.py:311
-#, python-brace-format
 msgid "{0}...{1}[OK]{2}"
 msgstr ""
 
 #: ../bin/proxychecker.py:313
-#, python-brace-format
 msgid "{0}...[FAIL]{1}"
 msgstr ""
 
 #: ../bin/proxychecker.py:314
-#, python-brace-format
 msgid " [ERROR] Couldn't remove {0}: {1}\n"
 msgstr ""
 
 #: ../bin/proxychecker.py:317
-#, python-brace-format
 msgid "{0}[!!!DONE!!!] {1} of {2} proxys we have checked are working!{3}"
 msgstr ""
 
 #: ../bin/proxychecker.py:318
-#, python-brace-format
 msgid "{0}[New Proxylist saved to => {1}]{2}"
 msgstr ""
 
