@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-11 01:32+0000\n"
+"POT-Creation-Date: 2014-01-11 02:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -242,7 +242,7 @@ msgstr ""
 #: ../bin/proxychecker.py:327
 msgid ""
 "Version: 1.0\n"
-"Contact & (C): 2013 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
+"Contact & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 msgstr ""
 
 #: ../bin/proxychecker.py:328
