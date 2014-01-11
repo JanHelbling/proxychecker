@@ -1,5 +1,5 @@
-# Maintainer: Sam Stuewe <halosghost at archlinux dot info>
-# Contributor: Themaister <maister@archlinux.us>
+# Maintainer: Jan Helbling <jan.helbling@gmail.com>
+# Contributor: Jan Helbling <jan.helbling@gmail.com>
 _name=ProxyChecker
 pkgname="${_name}-git"
 pkgver=1.2
