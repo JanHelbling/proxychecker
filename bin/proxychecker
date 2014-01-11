@@ -240,36 +240,35 @@ class proxychecker:
 			fd.close()
 			endtime		=	(endtime-starttime).__round__(3)
 			if self.contains in content: #Check if the string contains is in content, if true
-				print(_("{0}[OK]\t=>{1}({0}{2}{1})=({3}/{4}){0} {5}\t-->{6}sec.{7}").format(GREEN,YELLOW,self.cnt+1,self.totalcnt,self.totalproxys,proxy,endtime,NOCOLOR))
+				print(_("{0}[OK]  \t=>{1}({0}{2}{1})=({3}/{4})          {0}{5}\t-->{6}sec.{7}").format(GREEN,YELLOW,self.cnt+1,self.totalcnt,self.totalproxys,proxy,endtime,NOCOLOR))
 				self.__save_proxy(proxy)	# write proxy to file
 				return True
 			else:				# else, fail
 				if (contenttype == "text/plain" or contenttype == "text/html") and len(content) < 30:
-					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match: {7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,content,NOCOLOR))
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Doesnt contain the String: {7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,content,NOCOLOR))
 				else:
-					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> Doesnt contain the String{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Doesnt contain the String!{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except IOError as e:
 			if e.strerror != None:
-				print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->{7}{8}")
-				(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.strerror,NOCOLOR))
+				print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.strerror,NOCOLOR))
 			else:
 				try:
 					if type(e.reason) == str:
-						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})={4}/{5}) {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason,NOCOLOR))
 					elif e.reason.args[0] == "timed out":
-						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 					else:
-						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason.strerror,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason.strerror,NOCOLOR))
 				except AttributeError:
-					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 				except TypeError:
-					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except BadStatusLine:
-			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->BadStatusLine{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->BadStatusLine{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except IncompleteRead:
-			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->IncompleteRead{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->IncompleteRead{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except KeyboardInterrupt:	# [CTRL] + [C]
-			print(_("{0}[ABORTED CTRL+C] =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by User{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+			print(_("{0}[ABORTED CTRL+C]     =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by User{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		return False
 	
 	def __save_proxy(self,proxy):

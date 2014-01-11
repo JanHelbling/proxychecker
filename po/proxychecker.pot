@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-11 02:30+0000\n"
+"POT-Creation-Date: 2014-01-11 07:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,157 +139,147 @@ msgstr ""
 #. Check if the string contains is in content, if true
 #: ../bin/proxychecker.py:243
 #, python-brace-format
-msgid "{0}[OK]\t=>{1}({0}{2}{1})=({3}/{4}){0} {5}\t-->{6}sec.{7}"
+msgid "{0}[OK]  \t=>{1}({0}{2}{1})=({3}/{4})          {0}{5}\t-->{6}sec.{7}"
 msgstr ""
 
 #: ../bin/proxychecker.py:248
 #, python-brace-format
 msgid ""
-"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> String doesnt match: {7}{8}"
+"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Doesnt contain the "
+"String: {7}{8}"
 msgstr ""
 
 #: ../bin/proxychecker.py:250
 #, python-brace-format
 msgid ""
-"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t--> Doesnt contain the "
-"String{7}"
+"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Doesnt contain the "
+"String!{7}"
 msgstr ""
 
-#: ../bin/proxychecker.py:253
+#: ../bin/proxychecker.py:253 ../bin/proxychecker.py:257
+#: ../bin/proxychecker.py:261
 #, python-brace-format
-msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->{7}{8}"
+msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}"
 msgstr ""
 
-#: ../bin/proxychecker.py:258
+#: ../bin/proxychecker.py:259 ../bin/proxychecker.py:263
+#: ../bin/proxychecker.py:265
 #, python-brace-format
-msgid "{0}[FAIL]\t=>{1}({2}{3}{1})={4}/{5}) {0}{6}\t-->{7}{8}"
+msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}"
 msgstr ""
 
-#: ../bin/proxychecker.py:260
+#: ../bin/proxychecker.py:267
 #, python-brace-format
-msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Timed Out{7}"
+msgid ""
+"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->BadStatusLine{7}"
 msgstr ""
 
-#: ../bin/proxychecker.py:262
+#: ../bin/proxychecker.py:269
 #, python-brace-format
-msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->{7}{8}"
-msgstr ""
-
-#: ../bin/proxychecker.py:264 ../bin/proxychecker.py:266
-#, python-brace-format
-msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}){0} {6}\t-->Timed Out{7}"
-msgstr ""
-
-#: ../bin/proxychecker.py:268
-#, python-brace-format
-msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->BadStatusLine{7}"
-msgstr ""
-
-#: ../bin/proxychecker.py:270
-#, python-brace-format
-msgid "{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->IncompleteRead{7}"
+msgid ""
+"{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->IncompleteRead{7}"
 msgstr ""
 
 #. [CTRL] + [C]
-#: ../bin/proxychecker.py:272
+#: ../bin/proxychecker.py:271
 #, python-brace-format
 msgid ""
-"{0}[ABORTED CTRL+C] =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by "
+"{0}[ABORTED CTRL+C]     =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by "
 "User{7}"
 msgstr ""
 
-#: ../bin/proxychecker.py:309
+#: ../bin/proxychecker.py:308
 #, python-brace-format
 msgid ""
 "{0}[!!!EPIC FAIL!!!] None of {1} proxys we have checked are working...\n"
 "removing the output-file...{2}"
 msgstr ""
 
-#: ../bin/proxychecker.py:312
+#: ../bin/proxychecker.py:311
 #, python-brace-format
 msgid "{0}...{1}[OK]{2}"
 msgstr ""
 
-#: ../bin/proxychecker.py:314
+#: ../bin/proxychecker.py:313
 #, python-brace-format
 msgid "{0}...[FAIL]{1}"
 msgstr ""
 
-#: ../bin/proxychecker.py:315
+#: ../bin/proxychecker.py:314
 #, python-brace-format
 msgid " [ERROR] Couldn't remove {0}: {1}\n"
 msgstr ""
 
-#: ../bin/proxychecker.py:318
+#: ../bin/proxychecker.py:317
 #, python-brace-format
 msgid "{0}[!!!DONE!!!] {1} of {2} proxys we have checked are working!{3}"
 msgstr ""
 
-#: ../bin/proxychecker.py:319
+#: ../bin/proxychecker.py:318
 #, python-brace-format
 msgid "{0}[New Proxylist saved to => {1}]{2}"
 msgstr ""
 
-#: ../bin/proxychecker.py:324
+#: ../bin/proxychecker.py:323
 msgid "Invalid number of arguments! Use -h for options."
 msgstr ""
 
 #. Parse options and run the proxychecker
-#: ../bin/proxychecker.py:327
+#: ../bin/proxychecker.py:326
 msgid "usage: %prog -i <proxylist[.gz]|URL> [options...]"
 msgstr ""
 
-#: ../bin/proxychecker.py:327
+#: ../bin/proxychecker.py:326
 msgid ""
 "Version: 1.0\n"
 "Contact & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 msgstr ""
 
-#: ../bin/proxychecker.py:328
+#: ../bin/proxychecker.py:327
 msgid "read proxys from file (or from stdin), gz format supported"
 msgstr ""
 
-#: ../bin/proxychecker.py:329
+#: ../bin/proxychecker.py:328
 msgid "write proxys to file (or to a stream), default: checked_proxys"
 msgstr ""
 
-#: ../bin/proxychecker.py:330
+#: ../bin/proxychecker.py:329
 msgid "use this site for requests, default: http://www.gnu.org"
 msgstr ""
 
-#: ../bin/proxychecker.py:331
+#: ../bin/proxychecker.py:330
 msgid "good hit must contains ..., default: GNU"
 msgstr ""
 
-#: ../bin/proxychecker.py:332
+#: ../bin/proxychecker.py:331
 msgid "timeout, default: 5.0"
 msgstr ""
 
-#: ../bin/proxychecker.py:333
+#: ../bin/proxychecker.py:332
 msgid "number of processes, default: 10"
 msgstr ""
 
-#: ../bin/proxychecker.py:334
+#: ../bin/proxychecker.py:333
 msgid "use this site as referer, default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:335
+#: ../bin/proxychecker.py:334
 msgid "mobile,desktop or all, default: desktop"
 msgstr ""
 
-#: ../bin/proxychecker.py:336
+#: ../bin/proxychecker.py:335
 msgid "data for post-requests, (eg. \"foo=bar&info=false\"), default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:337
+#: ../bin/proxychecker.py:336
 msgid "cookies, separated by ; (eg. \"abc=123; def=456;\"), default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:338
+#: ../bin/proxychecker.py:337
 msgid ""
 "add a header, splitted by : (eg. \"Range:bytes=500-999\"), default: None"
 msgstr ""
 
-#: ../bin/proxychecker.py:339
+#: ../bin/proxychecker.py:338
 msgid "colored output, none or yes, default: yes"
 msgstr ""
