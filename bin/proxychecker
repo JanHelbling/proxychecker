@@ -20,11 +20,10 @@
 
 import urllib.request
 import gettext
-
 import os ,os.path as os_path
 
+from optparse import OptionParser
 from sys import platform,stderr,exit,argv,path as sys_path
-
 from gettext import gettext as _
 
 if os_path.exists("/usr/share/locale"):
@@ -37,14 +36,21 @@ if "win" in platform:
 	stderr.write(_("        You must Upgrade to Linux to use this ;)\n"))
 	exit(1)
 
-from optparse import OptionParser
+#
+# For import ProxyChecker.proxychecker =>proxychecker
+#
 
-if os_path.exists("ProxyChecker"):
+if os_path.exists("ProxyChecker") and os.getcwd().split("/")[-1] == "ProxyChecker":
 	sys_path.append(".")
-
-dirname = os_path.dirname(os.__file__)
-sys_path.append(dirname)
-sys_path.append(dirname+"/site-packages/")
+else:
+	dirname = os_path.dirname(os.__file__)
+	sys_path.append(dirname+"/site-packages/")
+	sys_path.append("/usr/lib/python3.3/site-packages/")
+	sys_path.append("/usr/lib/python3/site-packages/")
+	sys_path.append("/usr/local/lib/python3.3/dist-packages/")
+	sys_path.append("/usr/local/lib/python3/dist-packages/")
+	sys_path.append("/home/"+os.getenv('USER')+"/lib/python3.3/site-packages/")
+	sys_path.append("/home/"+os.getenv('USER')+"/lib/python3/site-packages/")
 
 from ProxyChecker.proxychecker import proxychecker
 
