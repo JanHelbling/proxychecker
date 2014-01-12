@@ -214,7 +214,7 @@ class proxychecker:
 							break
 						except IOError as e:
 							print(_("{0}[FAIL]{1}").format(RED,NOCOLOR))
-							sys.stderr.write(_("{0} [ERROR] with file {1}: {2}\n").format(RED,e.filename,e.strerror))
+							sys.stderr.write(_("{0} [ERROR] with file {1}: {2}{3}\n").format(RED,e.filename,e.strerror,NOCOLOR))
 							sys.exit(1)
 					self.i          =       self.i + 1
 	

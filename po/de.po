@@ -127,8 +127,8 @@ msgstr "{0}[FEHLGESCHLAGEN]{1}"
 
 #: ../bin/proxychecker.py:219
 #, python-brace-format
-msgid "{0} [ERROR] with file {1}: {2}\n"
-msgstr "{0} [FEHLER] mit Datei {1}: {2}\n"
+msgid "{0} [ERROR] with file {1}: {2}{3}\n"
+msgstr "{0} [FEHLER] mit Datei {1}: {2}{3}\n"
 
 #. Check if the string contains is in content, if true
 #: ../bin/proxychecker.py:243
