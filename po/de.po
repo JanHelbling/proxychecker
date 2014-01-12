@@ -274,4 +274,4 @@ msgstr "Füge einen Header hinzu, gesplitted mit : (z.B. \"Range:bytes=500-999\"
 
 #: ../bin/proxychecker.py:339
 msgid "colored output, none or yes, default: yes"
-msgstr "Farbige ausgabe, none oder yes, Standart: yes"
+msgstr "Farbige Ausgabe, none oder yes, Standart: yes"
