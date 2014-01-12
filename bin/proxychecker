@@ -20,7 +20,7 @@
 
 import urllib.request
 import gettext
-import os ,os.path as os_path
+import os,os.path as os_path
 
 
 from optparse import OptionParser

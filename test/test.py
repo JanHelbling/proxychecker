@@ -18,18 +18,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from gettext import gettext as _
 from os import execvp
 from sys import stderr,exit
 
+import gettext
+
+if path.exists("/usr/share/locale"):
+	gettext.bindtextdomain('proxychecker_test', '/usr/share/locale')
+	gettext.textdomain('proxychecker_test')
+
 class test:
 	def __init__(self):
-		print("./bin/proxychecker.py -i data/proxys.lst -o /dev/null -p 10 -t 2")
+		print("./bin/proxychecker.py -i data/proxys.lst -o /dev/null -p 15 -t 2")
 		self.__run()
 	def __run(self):
 		try:
 			execvp("bin/proxychecker",["bin/proxychecker","-i","data/proxys.lst","-o","/dev/null","-p","16","-t","2"])
 		except KeyboardInterrupt as e:
-			stderr.write(_("[CTRL+C , KeyboardInterrupt!]\n"))
+			stderr.write(_("[CTRL+C, KeyboardInterrupt!]\n"))
 			exit(1)
 		except OSError as e:
 			stderr.write(e.filename+": "+e.strerror+"\n")
