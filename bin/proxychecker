@@ -20,7 +20,7 @@
 
 import urllib.request
 import gettext
-import os ,os.path as os_path
+import os ,os.path as os_path,getlogin as username
 
 from optparse import OptionParser
 from sys import platform,stderr,exit,argv,path as sys_path
@@ -49,8 +49,8 @@ else:
 	sys_path.append("/usr/lib/python3/site-packages/")
 	sys_path.append("/usr/local/lib/python3.3/dist-packages/")
 	sys_path.append("/usr/local/lib/python3/dist-packages/")
-	sys_path.append("/home/"+os.getenv('USER')+"/lib/python3.3/site-packages/")
-	sys_path.append("/home/"+os.getenv('USER')+"/lib/python3/site-packages/")
+	sys_path.append("/home/"+username()+"/lib/python3.3/site-packages/")
+	sys_path.append("/home/"+username()+"/lib/python3/site-packages/")
 
 from ProxyChecker.proxychecker import proxychecker
 
