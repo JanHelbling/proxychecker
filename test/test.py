@@ -19,7 +19,7 @@
 #
 
 from gettext import gettext as _
-from os import execvp
+from os import execvp,path
 from sys import stderr,exit
 
 import gettext
