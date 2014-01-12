@@ -20,10 +20,12 @@
 
 import urllib.request
 import gettext
-import os ,os.path as os_path,getlogin as username
+import os ,os.path as os_path
+
 
 from optparse import OptionParser
 from sys import platform,stderr,exit,argv,path as sys_path
+from os import getlogin as username
 from gettext import gettext as _
 
 if os_path.exists("/usr/share/locale"):

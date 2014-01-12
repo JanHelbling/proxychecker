@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-#    __main__.py, part of proxychecker, it starts the test
+#    __init__.py, part of proxychecker
 #
 #    Copyright (C) 2014 by Jan Helbling <jan.helbling@gmail.com>
 #
@@ -17,7 +17,4 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
-from test import test
-
-t	=	test()
+__all__ = ["test"]

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-#    __main__.py, part of proxychecker, it starts the test
+#    test.py, part of proxychecker (module to run the test)
 #
 #    Copyright (C) 2014 by Jan Helbling <jan.helbling@gmail.com>
 #
@@ -18,6 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from test import test
+from os import execvp
+from sys import stderr,exit
 
-t	=	test()
+class test:
+	def __init__(self):
+		print("./bin/proxychecker.py -i data/proxys.lst -o /dev/null -p 10 -t 2")
+		self.__run()
+	def __run(self):
+		try:
+			execvp("bin/proxychecker",["bin/proxychecker","-i","data/proxys.lst","-o","/dev/null","-p","16","-t","2"])
+		except KeyboardInterrupt as e:
+			stderr.write(_("[CTRL+C , KeyboardInterrupt!]\n"))
+			exit(1)
+		except OSError as e:
+			stderr.write(e.filename+": "+e.strerror+"\n")
+			exit(1)
+		exit(0)
