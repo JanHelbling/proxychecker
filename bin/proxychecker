@@ -21,12 +21,13 @@
 import urllib.request
 import gettext
 
-from os import path
+import os ,os.path as os_path
+
 from sys import platform,stderr,exit,argv,path as sys_path
 
 from gettext import gettext as _
 
-if path.exists("/usr/share/locale"):
+if os_path.exists("/usr/share/locale"):
 	gettext.bindtextdomain('proxychecker', '/usr/share/locale')
 	gettext.textdomain('proxychecker')
 
@@ -38,8 +39,12 @@ if "win" in platform:
 
 from optparse import OptionParser
 
-if path.exists("ProxyChecker"):
+if os_path.exists("ProxyChecker"):
 	sys_path.append(".")
+
+dirname = os_path.dirname(os.__file__)
+sys_path.append(dirname)
+sys_path.append(dirname+"/site-packages/")
 
 from ProxyChecker.proxychecker import proxychecker
 
