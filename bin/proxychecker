@@ -25,7 +25,7 @@ import os,os.path as os_path
 
 from optparse import OptionParser
 from sys import platform,stderr,exit,argv,path as sys_path
-from os import getlogin as username
+from os import getlogin as username,popen
 from gettext import gettext as _
 
 if os_path.exists("/usr/share/locale"):
@@ -42,19 +42,27 @@ if "win" in platform:
 # For import ProxyChecker.proxychecker =>proxychecker
 #
 
-if os_path.exists("ProxyChecker") and os.getcwd().split("/")[-1] == "ProxyChecker":
+if os_path.exists("ProxyChecker/proxychecker.py") and os.getcwd().split("/")[-1] == "ProxyChecker":
 	sys_path.append(".")
 else:
+	fd = popen("find / 2>/dev/null | grep -E \"(|site\-packages|dist\-packages)/ProxyChecker/proxychecker.py\"")
+	paths = (fd.read()).split("\n")
+	if paths != ['']:
+		for path in paths:
+			path = path.replace("/ProxyChecker/proxychecker.py","")
+			sys_path.append(path)
+			break
 	dirname = os_path.dirname(os.__file__)
-	sys_path.append(dirname+"/site-packages/")
-	sys_path.append("/usr/lib/python3.3/site-packages/")
-	sys_path.append("/usr/lib/python3/site-packages/")
-	sys_path.append("/usr/local/lib/python3.3/dist-packages/")
-	sys_path.append("/usr/local/lib/python3/dist-packages/")
-	sys_path.append("/home/"+username()+"/lib/python3.3/site-packages/")
-	sys_path.append("/home/"+username()+"/lib/python3/site-packages/")
-
-from ProxyChecker.proxychecker import proxychecker
+	paths = [dirname+"/site-packages/","/usr/lib/python3.3/site-packages/","/usr/lib/python3/site-packages/","/usr/local/lib/python3.3/dist-packages/","/usr/local/lib/python3/dist-packages/","/home/"+username()+"/lib/python3.3/site-packages/","/home/"+username()+"/lib/python3/site-packages/"]
+	for path in paths:
+		if os_path.exists(path+"/ProxyChecker/proxychecker.py"):
+			sys_path.append(path)
+			break
+try:
+	from ProxyChecker.proxychecker import proxychecker
+except ImportError as e:
+	print(_("Could not import \"from ProxyChecker.proxychecker import proxychecker\": {0}").format(e.msg))
+	exit(1)
 
 if __name__ == "__main__":
 	if len(argv) < 2 or ("--version" not in argv and "-i" not in argv and "--input" not in argv and "-h" not in argv and "--help" not in argv):

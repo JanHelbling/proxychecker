@@ -1,6 +1,8 @@
 build/
+build/*
 test/__pycache__/
 test/checked_proxy*
 checked_proxy*
 bin/checked_proxy*
-
+po/messages.pot
+ProxyChecker/__pycache__/
