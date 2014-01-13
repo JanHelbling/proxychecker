@@ -61,7 +61,7 @@ else:
 try:
 	from ProxyChecker.proxychecker import proxychecker
 except ImportError as e:
-	print(_("Could not import \"from ProxyChecker.proxychecker import proxychecker\": {0}").format(e.msg))
+	print(_("Could not import \"from ProxyChecker.proxychecker import proxychecker\": {0}.").format(e.msg))
 	exit(1)
 
 if __name__ == "__main__":
