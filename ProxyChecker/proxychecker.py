@@ -251,17 +251,24 @@ class proxychecker:
 			if e.strerror != None:
 				print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.strerror,NOCOLOR))
 			else:
-				try:
+				if hasattr(e,'reason'):
 					if type(e.reason) == str:
 						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason,NOCOLOR))
-					elif e.reason.args[0] == "timed out":
-						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+					elif type(e.reason.args) == tuple:
+						if e.reason.args[0] == "timed out":
+							print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+						elif hasattr(e.reason,'strerror'):
+							print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason.strerror,NOCOLOR))
+						else:
+							print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason.args[0],NOCOLOR))
 					else:
-						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason.strerror,NOCOLOR))
-				except AttributeError:
-						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
-				except TypeError:
-						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.reason,NOCOLOR))
+				elif type(e) == timeout:
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->Timed Out{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
+				elif hasattr(e,'args') and not hasattr(e,'reason'):
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.args[0],NOCOLOR))
+				else:
+					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,totalproxys,proxy,str(e),NOCOLOR))
 		except BadStatusLine:
 			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->BadStatusLine{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except IncompleteRead:
