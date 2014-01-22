@@ -110,6 +110,7 @@ class proxychecker:
 		self.process_num        =       process_num
 		self.cnt                =       0
 		self.totalcnt		=	0
+		self.from_url		=	False
 		if self.color == "none":
 			RED 		= ""
 			REDBOLD		= ""
@@ -128,6 +129,7 @@ class proxychecker:
 				self.in_file.close()
 			elif in_file.startswith("http://"):
 				print(_("{0}[INFO] gather proxys from url...").format(YELLOW),end="")
+				self.from_url	=	True
 				self.fd		=	urllib.request.urlopen(in_file)
 				self.content	=	(self.fd.read()).decode("utf-8","ignore")
 				self.fd.close()
@@ -157,9 +159,11 @@ class proxychecker:
 			else:
 				sys.stderr.write(_("{0} [ERROR] {1}: {2}\n").format(RED,e.filename,e.strerror))
 			sys.exit(1)
-		print(_("{0}[INFO] Remove invalid lines from list...").format(YELLOW),end="")
-		self.__remove_empty_lines()
-		print(_("{0}..[DONE, {1} lines removed]{2}").format(GREEN,self.invalid_line_counter,NOCOLOR))
+		
+		if not self.from_url:
+			print(_("{0}[INFO] Remove invalid lines from list...").format(YELLOW),end="")
+			self.__remove_empty_lines()
+			print(_("{0}..[DONE, {1} lines removed]{2}").format(GREEN,self.invalid_line_counter,NOCOLOR))
 		
 		self.totalproxys	=	len(self.proxys)
 		print(_("{0}[TOTAL: {1} Proxys]{2}").format(YELLOW,self.totalproxys,NOCOLOR))
@@ -193,7 +197,7 @@ class proxychecker:
 			if proxy != []:
 				self._proxys.append(proxy[0])
 		self.proxys			=	self._proxys
-		self._proxys			=	[]	
+		del self._proxys
 		self.invalid_line_counter	=	self.invalid_line_counter - len(self.proxys)
 	
 	def __check_for_old_files(self,out_file):
@@ -231,7 +235,10 @@ class proxychecker:
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent_all[randint(0,len(useragent_all)-1)]),('Cookie',self.cookie),(self.header[0],self.header[1])]
 		try:
 			starttime	=	time()
-			fd		=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
+			if self.postdata == b"":
+				fd	=	opener.open(self.testsite,timeout=self.to)
+			else:
+				fd		=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
 			content		=	fd.read()
 			endtime		=	time()
 			contenttype	=	fd.getheader("Content-Type")
@@ -284,7 +291,6 @@ class proxychecker:
 	
 	def __main(self):
 		"""Main, the main-programm"""
-		cnt = 0
 		pids = []
 		for proxy in self.proxys:
 			self.totalcnt	=	self.totalcnt + 1
@@ -311,7 +317,10 @@ class proxychecker:
 				sys.exit(1)
 		self.out_file.close()
 		if self.cnt == 0:
-			print(_("{0}[!!!EPIC FAIL!!!] None of {1} proxys we have checked are working...\nremoving the output-file...{2}").format(REDBOLD,self.totalproxys,NOCOLOR),end="")
+			print(_("{0}[!!!EPIC FAIL!!!] None of {1} proxys we have checked are working...{2}").format(REDBOLD,self.totalproxys,NOCOLOR))
+			if self.out_file.name == devnull:
+				sys.exit(0)
+			print(_("{0}removing the output-file...{2}").format(REDBOLD,NOCOLOR),end="")
 			try:
 				unlink(self.out_file.name)
 				print(_("{0}...{1}[OK]{2}").format(REDBOLD,GREEN,NOCOLOR))
