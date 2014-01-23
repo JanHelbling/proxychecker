@@ -53,9 +53,27 @@ except ImportError:
 	paths = (fd.read()).split("\n")
 	if paths != ['']:
 		for path in paths:
-			path = path.replace("/ProxyChecker/proxychecker.py","")
+			path	=	path.replace("/ProxyChecker/proxychecker.py","")
 			print(_("...[FOUND] in {0}").format(path))
 			sys_path.append(path)
+			if "SHELL" in os.environ:
+				if os.environ["SHELL"] == "/bin/bash":
+					rc = ".bashrc"
+				elif os.environ["SHELL"] == "/bin/zsh":
+					rc = ".zshrc"
+				else:
+					break
+				answer	=	input(_("Add path to PYTHONPATH in ~/{0}? (to prevent searching the modulepath anytimes) (y/n)").format(rc))
+				if answer.lower() in ["y","yes","j","ja"]:
+					print(_("[EDITING {0}]...").format(os.environ["HOME"]+"/"+rc),end="")
+					rc_file		=	open(os.environ["HOME"]+"/"+rc,"r")
+					rc_content	=	rc_file.read()
+					rc_file.close()
+					rc_file		=	open(os.environ["HOME"]+"/"+rc,"w")
+					rc_file.write(rc_content+"\nPYTHONPATH=\"{0}\"\n".format(path))
+					rc_file.close()
+					os.system(". {0}".format(os.environ["HOME"]+"/"+rc))
+					print(_("...[DONE]"))
 			break
 	else:
 		print(_("...[NOTHING FOUND]"))
