@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 #
 #    proxychecker.py is a multithreaded hitfaker and proxychecker
 #
@@ -18,7 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import urllib.request
+from __future__ import print_function
+
+import urllib
 import gettext
 import os,os.path as os_path
 
@@ -74,8 +76,8 @@ except ImportError:
 if 'ProxyChecker.proxychecker' not in modules:
 	try:
 		from ProxyChecker.proxychecker import proxychecker
-	except ImportError as e:
-		print(_("Could not import \"from ProxyChecker.proxychecker import proxychecker\": {0}.").format(e.msg))
+	except ImportError, e:
+		print(_("Could not import \"from ProxyChecker.proxychecker import proxychecker\": {0}.").format(e.message))
 		exit(1)
 
 if __name__ == "__main__":

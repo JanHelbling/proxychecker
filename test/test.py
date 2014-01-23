@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 #
 #    test.py, part of proxychecker (module to run the test)
 #

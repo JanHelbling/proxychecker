@@ -1,9 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 
 from sys import executable,stderr,exit,version
 from os import path as os_path
 
-if version < "3":
+if version >= "2.75":
 	stderr.write("You need python3 to run this!\n")
 	stderr.write("ArchLinux:     sudo pacman -S python3\n")
 	stderr.write("Ubuntu/Debian: sudo apt-get install python3\n")

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 #
 #    __main__.py, part of proxychecker, it starts the test
 #

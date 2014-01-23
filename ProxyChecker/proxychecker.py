@@ -18,11 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import urllib.request
+from __future__ import print_function
+import urllib2
 
 import gzip,sys,gettext
 
-from http.client import IncompleteRead,BadStatusLine
+from httplib import HTTPException
 from os import path
 from platform import system
 
@@ -128,7 +129,7 @@ class proxychecker:
                         elif in_file.startswith("http://"):
                                 print(_("{0}[INFO] gather proxys from url...").format(YELLOW),end="")
                                 self.from_url   =       True
-                                self.fd         =       urllib.request.urlopen(in_file)
+                                self.fd         =       urllib2.urlopen(in_file)
                                 self.content    =       (self.fd.read()).decode("utf-8","ignore")
                                 self.fd.close()
                                 self.proxys     =       proxyregex.findall(self.content)
@@ -144,7 +145,7 @@ class proxychecker:
                                 sys.stdin       =       self.out_file
                         else:
                                 self.out_file   =       open(out_file,"w")
-		except urllib.error.URLError as e:
+		except urllib2.error.URLError as e:
                         print(_("...{0}[FAIL]{1}").format(RED,NOCOLOR))
                         if type(e.args[0]) == str:
                                 sys.stderr.write(_("{0} [ERROR] couldn\'t open {1}: {2}{3}\n").format(RED,in_file,e.args[0],NOCOLOR))
@@ -197,8 +198,8 @@ class proxychecker:
 	
 	def __check_proxy(self,proxy):
 		"""Checks a proxy and save it to file, if the string "contains" is in content, returns true if Success,false on fail"""
-		proxyhdl	=	urllib.request.ProxyHandler({'http':proxy})
-		opener		=	urllib.request.build_opener(proxyhdl) # Build a opener with the proxy
+		proxyhdl	=	urllib2.ProxyHandler({'http':proxy})
+		opener		=	urllib2.build_opener(proxyhdl) # Build a opener with the proxy
 		if self.browserstring == "desktop": #check if browserstring is desktop,mobile or all, add the Cookie if set
 			opener.addheaders	=	[('Referer',self.referer),('User-Agent',useragent[randint(0,len(useragent)-1)]),('Cookie',self.cookie),(self.header[0],self.header[1])] #Add User-Agent (and Headers/Cookies if set)
 		elif self.browserstring == "mobile":
@@ -213,10 +214,10 @@ class proxychecker:
 				fd		=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
 			content		=	fd.read()
 			endtime		=	time()
-			contenttype	=	fd.getheader("Content-Type")
+			contenttype	=	fd.info().getheader("Content-Type")
 			content		=	content.decode("utf-8","ignore")
 			fd.close()
-			endtime		=	(endtime-starttime).__round__(3)
+			endtime		=	"%.3f" % (endtime-starttime)
 			if self.contains in content: #Check if the string contains is in content, if true
 				print(_("{0}[OK]  \t=>{1}({0}{2}{1})=({3}/{4})          {0}{5}\t-->{6}sec.{7}").format(GREEN,YELLOW,self.cnt+1,self.totalcnt,self.totalproxys,proxy,endtime,NOCOLOR))
 				self.__save_proxy(proxy)	# write proxy to file
@@ -251,10 +252,6 @@ class proxychecker:
 						print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,e.args[0].strerror,NOCOLOR))
 				else:
 					print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->{7}{8}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,totalproxys,proxy,str(e),NOCOLOR))
-		except BadStatusLine:
-			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->BadStatusLine{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
-		except IncompleteRead:
-			print(_("{0}[FAIL]\t=>{1}({2}{3}{1})=({4}/{5})          {0}{6}\t-->IncompleteRead{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		except KeyboardInterrupt:	# [CTRL] + [C]
 			print(_("{0}[ABORTED CTRL+C]     =>{1}({2}{3}{1})=({4}/{5}) {0}{6}\t-->Interrupted by User{7}").format(RED,YELLOW,GREEN,self.cnt,self.totalcnt,self.totalproxys,proxy,NOCOLOR))
 		return False
