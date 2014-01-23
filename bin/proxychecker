@@ -70,9 +70,8 @@ except ImportError:
 					rc_content	=	rc_file.read()
 					rc_file.close()
 					rc_file		=	open(os.environ["HOME"]+"/"+rc,"w")
-					rc_file.write(rc_content+"\nPYTHONPATH=\"{0}\"\n".format(path))
+					rc_file.write(rc_content+"\nexport PYTHONPATH=\"{0}\"\n".format(path))
 					rc_file.close()
-					os.system(". {0}".format(os.environ["HOME"]+"/"+rc))
 					print(_("...[DONE]"))
 			break
 	else:
