@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-#    __init__.py, part of proxychecker
+#    color.py, part of proxychecker
 #
 #    Copyright (C) 2014 by Jan Helbling <jan.helbling@gmail.com>
 #
@@ -17,4 +17,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-__all__ = ["proxychecker","color","useragent","regex"]
+
+RED             = "\x1b\x5b\x33\x31\x6d"
+REDBOLD         = "\x1b\x5b\x31\x3b\x33\x31\x6d"
+GREEN           = "\x1b\x5b\x33\x32\x6d"
+GREENBOLD       = "\x1b\x5b\x31\x3b\x33\x32\x6d"
+YELLOW          = "\x1b\x5b\x30\x3b\x33\x33\x6d"
+NOCOLOR         = "\x1b\x5b\x30\x6d"

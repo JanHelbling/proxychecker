@@ -43,7 +43,7 @@ setup(
     download_url = "https://github.com/JanHelbling/ProxyChecker/archive/master.zip",
     keywords = ["Proxychecker.proxychecker","Hitfaker"],
     py_modules = ["ProxyChecker.proxychecker"],
-    scripts=["bin/proxychecker"],
+    scripts=["bin/proxychecker","bin/proxychecker.py"],
     cmdclass={"test" : proxychecker_test},
     license="LGPL-3+",
     platforms=["linux","darwin","freebsd","netbsd","unixware7"],
