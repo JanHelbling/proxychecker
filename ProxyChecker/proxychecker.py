@@ -86,47 +86,8 @@ class proxychecker:
 			GREENBOLD	= ""
 			YELLOW		= ""
 			NOCOLOR		= ""
-		try:
-			# Open (and read) the proxylist to be checked and the outputfile
-			if in_file not in ["-","/dev/stdin"] and not in_file.startswith("http://"):
-				if in_file.lower().endswith(".gz"):
-					self.in_file	=	gzip.open(in_file,"rb")
-				else:
-					self.in_file	=	open(in_file,"rb")
-				self.proxys	=	self.in_file.readlines()
-				self.in_file.close()
-			elif in_file.startswith("http://"):
-				print(_("{0}[INFO] gather proxys from url...").format(YELLOW),end="")
-				self.from_url	=	True
-				self.fd		=	urllib.request.urlopen(in_file)
-				self.content	=	(self.fd.read()).decode("utf-8","ignore")
-				self.fd.close()
-				self.proxys	=	proxyregex.findall(self.content)
-				print(_("...{0}[DONE, {1} proxys found]{2}").format(GREEN,len(self.proxys),NOCOLOR))
-			else:
-				self.proxys	=	sys.stdin.readlines()
-			if out_file not in [devnull,"/dev/stdout","/dev/stderr","/dev/stdin"]:
-				self.__check_for_old_files(out_file) 	# check if the out_file already exists
-			if out_file in ["/dev/stdout","-"]:
-				self.out_file	=	open("/dev/stdout","w")
-				self.devnull	=	open(devnull,"w")
-				sys.stdout	=	self.devnull
-				sys.stdin	=	self.out_file
-			else:
-				self.out_file	=	open(out_file,"w")
-		except urllib.error.URLError as e:
-			print(_("...{0}[FAIL]{1}").format(RED,NOCOLOR))
-			if type(e.args[0]) == str:
-				sys.stderr.write(_("{0} [ERROR] couldn\'t open {1}: {2}{3}\n").format(RED,in_file,e.args[0],NOCOLOR))
-			else:
-				sys.stderr.write(_("{0} [ERROR] couldn\'t open {1}:  {2}{3}\n").format(RED,in_file,e.args[0].strerror,NOCOLOR))
-			sys.exit(1)
-		except IOError as e:
-			if type(e.args[0]) == str:
-				sys.stderr.write(_("{0} [ERROR] {1}").format(RED,e.args[0]))
-			else:
-				sys.stderr.write(_("{0} [ERROR] {1}: {2}\n").format(RED,e.filename,e.strerror))
-			sys.exit(1)
+		
+		self.__open_files(in_file,out_file)
 		
 		if not self.from_url:
 			print(_("{0}[INFO] Remove invalid lines from list...").format(YELLOW),end="")
@@ -153,6 +114,49 @@ class proxychecker:
 		
 		# Calling the Main-Function
 		self.__main()
+	
+	def __open_files(self,in_file,out_file):
+		try:
+                        # Open (and read) the proxylist to be checked and the outputfile
+                        if in_file not in ["-","/dev/stdin"] and not in_file.startswith("http://"):
+                                if in_file.lower().endswith(".gz"):
+                                        self.in_file    =       gzip.open(in_file,"rb")
+                                else:
+                                        self.in_file    =       open(in_file,"rb")
+                                self.proxys     =       self.in_file.readlines()
+                                self.in_file.close()
+                        elif in_file.startswith("http://"):
+                                print(_("{0}[INFO] gather proxys from url...").format(YELLOW),end="")
+                                self.from_url   =       True
+                                self.fd         =       urllib.request.urlopen(in_file)
+                                self.content    =       (self.fd.read()).decode("utf-8","ignore")
+                                self.fd.close()
+                                self.proxys     =       proxyregex.findall(self.content)
+                                print(_("...{0}[DONE, {1} proxys found]{2}").format(GREEN,len(self.proxys),NOCOLOR))
+                        else:
+                                self.proxys     =       sys.stdin.readlines()
+                        if out_file not in [devnull,"/dev/stdout","/dev/stderr","/dev/stdin"]:
+                                self.__check_for_old_files(out_file)    # check if the out_file already exists
+                        if out_file in ["/dev/stdout","-"]:
+                                self.out_file   =       open("/dev/stdout","w")
+                                self.devnull    =       open(devnull,"w")
+                                sys.stdout      =       self.devnull
+                                sys.stdin       =       self.out_file
+                        else:
+                                self.out_file   =       open(out_file,"w")
+		except urllib.error.URLError as e:
+                        print(_("...{0}[FAIL]{1}").format(RED,NOCOLOR))
+                        if type(e.args[0]) == str:
+                                sys.stderr.write(_("{0} [ERROR] couldn\'t open {1}: {2}{3}\n").format(RED,in_file,e.args[0],NOCOLOR))
+                        else:
+                                sys.stderr.write(_("{0} [ERROR] couldn\'t open {1}:  {2}{3}\n").format(RED,in_file,e.args[0].strerror,NOCOLOR))
+                        sys.exit(1)
+		except IOError as e:
+                        if type(e.args[0]) == str:
+                                sys.stderr.write(_("{0} [ERROR] {1}").format(RED,e.args[0]))
+                        else:
+                                sys.stderr.write(_("{0} [ERROR] {1}: {2}\n").format(RED,e.filename,e.strerror))
+                        sys.exit(1)
 	
 	def __remove_empty_lines(self):
 		"""Remove empty/invalid nonproxys from the list."""
