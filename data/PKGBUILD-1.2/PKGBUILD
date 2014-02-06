@@ -1,0 +1,24 @@
+# Maintainer: Jan Helbling <jan.helbling@gmail.com>
+# Contributor: Jan Helbling <jan.helbling@gmail.com>
+pkgname="ProxyChecker"
+pkgver=1.2
+pkgrel=2
+pkgdesc="A multithreaded,advanced ProxyChecker and Hitfaker, written in Python3"
+arch=('any')
+url="https://github.com/JanHelbling/ProxyChecker"
+license=('GPL3')
+provides=('proxychecker')
+source=("${url}/archive/${pkgver}.tar.gz")
+depends=('python>=3')
+md5sums=('6be3a97821b0df8f18d842369fd0aa7a')
+
+build() {
+   cd "${pkgname}-${pkgver}"
+   rm bin/proxychecker.py
+   python setup.py build
+}
+
+package() {
+   cd "${_name}-${pkgver}"
+   python setup.py install --prefix="${pkgdir}"
+}
