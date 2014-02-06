@@ -242,7 +242,7 @@ msgstr "...[NICHTS GEFUNDEN]"
 
 #: ../bin/proxychecker.py:80
 msgid "Searching in some custompaths..."
-msgstr "Suche in ein paar Pfaden..."
+msgstr "Suche in ein paar Standartpfaden..."
 
 #: ../bin/proxychecker.py:96
 msgid ""
@@ -274,8 +274,7 @@ msgstr "Lese Proxys aus Datei (oder von stdin), gz-Format unterstützt"
 
 #: ../bin/proxychecker.py:106
 msgid "write proxys to file (or to a stream), default: checked_proxys"
-msgstr ""
-"Schreibe Proxys in Datei (oder in ein Stream), Standart: checked_proxys"
+msgstr "Schreibe Proxys in Datei (oder in ein Stream), Standart: checked_proxys"
 
 #: ../bin/proxychecker.py:107
 msgid "use this site for requests, default: http://www.gnu.org"
