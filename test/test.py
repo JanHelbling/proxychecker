@@ -33,6 +33,6 @@ class test:
 			stderr.write("[CTRL+C, KeyboardInterrupt!]\n")
 			exit(1)
 		except OSError as e:
-			stderr.write(e.filename+": "+e.strerror+"\n")
+			stderr.write("{0}: {1}\n".format(e.filename,e.strerror))
 			exit(1)
 		exit(0)
