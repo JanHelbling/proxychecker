@@ -30,16 +30,10 @@ from gettext import gettext as _
 from locale import getlocale
 
 
-try:
-	lang	=	getlocale()[0].split("_")[0]
-except IndexError:
-	lang	=	'en'
-
-
-if os_path.exists("/usr/share/locale/{}/LC_MESSAGES/proxychecker.mo".format(lang)):
+if os_path.exists("/usr/share/locale/de/LC_MESSAGES/proxychecker.mo".format(lang)):
 	gettext.bindtextdomain('proxychecker', '/usr/share/locale')
 	gettext.textdomain('proxychecker')
-if os_path.exists("/share/locale/{}/LC_MESSAGES/proxychecker.mo".format(lang)):
+elif os_path.exists("/share/locale/de/LC_MESSAGES/proxychecker.mo".format(lang)):
 	gettext.bindtextdomain('proxychecker', '/share/locale')
 	gettext.textdomain('proxychecker')
 

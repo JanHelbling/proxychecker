@@ -25,18 +25,12 @@ import gzip,sys,gettext
 from http.client import IncompleteRead,BadStatusLine
 from os import path
 from platform import system
-from locale import getlocale
 from gettext import gettext as _
 
-try:
-	lang	=	getlocale()[0].split("_")[0]
-except IndexError:
-	lang	=	'en'
-
-if path.exists("/usr/share/locale/{}/LC_MESSAGES/proxychecker.mo".format(lang)):
+if path.exists("/usr/share/locale/de/LC_MESSAGES/proxychecker.mo".format(lang)):
 	gettext.bindtextdomain('proxychecker', '/usr/share/locale')
 	gettext.textdomain('proxychecker')
-elif path.exists("/share/locale/{}/LC_MESSAGES/proxychecker.mo".format(lang)):
+elif path.exists("/share/locale/de/LC_MESSAGES/proxychecker.mo".format(lang)):
 	gettext.bindtextdomain('proxychecker', '/share/locale')
 	gettext.textdomain('proxychecker')
 
