@@ -41,7 +41,7 @@ setup(
     author_email = "jan.helbling@gmail.com",
     url = "http://jan-helbling.no-ip.biz",
     download_url = "https://github.com/JanHelbling/ProxyChecker/archive/master.zip",
-    keywords = ["Proxychecker.proxychecker","Hitfaker"],
+    keywords = ["Proxychecker","Hitfaker"],
     py_modules = ["ProxyChecker.proxychecker"],
     scripts=["bin/proxychecker","bin/proxychecker.py"],
     cmdclass={"test" : proxychecker_test},
