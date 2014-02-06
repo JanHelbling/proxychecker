@@ -28,8 +28,11 @@ from platform import system
 
 from gettext import gettext as _
 
-if path.exists("/usr/share/locale"):
+if path.exists("/usr/share/locale/de/LC_MESSAGES/proxychecker.mo"):
 	gettext.bindtextdomain('proxychecker', '/usr/share/locale')
+	gettext.textdomain('proxychecker')
+elif path.exists("/share/locale/de/LC_MESSAGES/proxychecker.mo"):
+	gettext.bindtextdomain('proxychecker', '/share/locale')
 	gettext.textdomain('proxychecker')
 
 if system() == "Windows":
