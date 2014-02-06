@@ -11,7 +11,7 @@ license=('GPL-3+')
 provides=('proxychecker')
 source=("${url}")
 depends=('python>=3')
-md5sums=('SKIP')
+md5sums=('6be3a97821b0df8f18d842369fd0aa7a')
 
 build() {
    cd "${_name}-${pkgver}"
