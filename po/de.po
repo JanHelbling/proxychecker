@@ -69,7 +69,7 @@ msgstr "{0} [FEHLER] Während dem entfernen von {1}: {2}{3}\n"
 
 #: ../ProxyChecker/proxychecker.py:113
 msgid "{0}[INFO] ({1}working{0})=(current/total){2}"
-msgstr "{0}[INFO] ({1}funktioniert{0})=(aktueller/gesamt){2}"
+msgstr "{0}[INFO] ({1}funktionieren{0})=(aktueller/gesamt){2}"
 
 #: ../ProxyChecker/proxychecker.py:129
 msgid "{0}[INFO] gather proxys from url..."
