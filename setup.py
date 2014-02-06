@@ -5,7 +5,7 @@ from os import path as os_path
 
 if version < "3":
 	stderr.write("You need python3 to run this!\n")
-	stderr.write("ArchLinux:     sudo pacman -S python3\n")
+	stderr.write("ArchLinux:     sudo pacman -S python\n")
 	stderr.write("Ubuntu/Debian: sudo apt-get install python3\n")
 	stderr.write("Fedora:        sudo yum install python3\n")
 	exit(1)
@@ -45,7 +45,7 @@ setup(
     py_modules = ["ProxyChecker.proxychecker"],
     scripts=["bin/proxychecker","bin/proxychecker.py"],
     cmdclass={"test" : proxychecker_test},
-    license="LGPL-3+",
+    license="GPL3",
     platforms=["linux","darwin","freebsd","netbsd","unixware7"],
     long_description = """\
  Fetaures:
