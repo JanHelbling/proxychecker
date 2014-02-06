@@ -19,5 +19,5 @@ build() {
 
 package() {
    cd "${pkgname}-${pkgver}"
-   python setup.py install --prefix="${pkgdir}"
+   python setup.py install --optimize=1 --prefix="${pkgdir}"
 }
