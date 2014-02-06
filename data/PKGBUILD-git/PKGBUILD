@@ -10,7 +10,7 @@ license=('GPL3')
 provides=('proxychecker')
 source=("${url}/archive/master.tar.gz")
 depends=('python>=3')
-md5sums=('c21372ccbab0121078125e6efe587dc3')
+md5sums=('SKIP')
 
 build() {
    cd "${pkgname}-${pkgver}"
