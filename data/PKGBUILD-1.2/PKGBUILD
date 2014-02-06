@@ -10,6 +10,7 @@ license=('GPL3')
 provides=('proxychecker')
 source=("${url}/archive/${pkgver}.tar.gz")
 depends=('python>=3')
+makedepends=('python>=3 python-distutils-extra')
 md5sums=('6be3a97821b0df8f18d842369fd0aa7a')
 
 build() {
