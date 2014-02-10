@@ -11,7 +11,7 @@ provides=('proxychecker')
 source=("${url}/archive/${pkgver}.tar.gz")
 depends=('python>=3')
 makedepends=('python>=3 python-distutils-extra')
-md5sums=('3b31813121fd848701856a440dc44fcb')
+md5sums=('9e4e829c36ed80de5433529c9d9b6950')
 
 build() {
    cd "${pkgname}-${pkgver}"
