@@ -1,7 +1,7 @@
 # Maintainer: Jan Helbling <jan.helbling@gmail.com>
 # Contributor: Jan Helbling <jan.helbling@gmail.com>
 pkgname="ProxyChecker"
-pkgver=1.3
+pkgver=1.4
 pkgrel=1
 pkgdesc="A multithreaded,advanced ProxyChecker and Hitfaker, written in Python3"
 arch=('any')
