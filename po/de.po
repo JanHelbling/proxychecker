@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2\n"
+"Project-Id-Version: 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-24 00:18+0100\n"
 "PO-Revision-Date: 2014-01-11 02:14+0000\n"
@@ -262,10 +262,10 @@ msgstr "usage: %prog -i <proxylist[.gz]|URL> [Optionen...]"
 
 #: ../bin/proxychecker.py:104
 msgid ""
-"Version: 1.2\n"
+"Version: 1.3\n"
 "Contact & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 msgstr ""
-"Version: 1.2\n"
+"Version: 1.3\n"
 "Kontakt & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
 
 #: ../bin/proxychecker.py:105
