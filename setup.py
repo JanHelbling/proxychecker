@@ -42,7 +42,7 @@ setup(
     url = "http://jan-helbling.no-ip.biz",
     download_url = "https://github.com/JanHelbling/ProxyChecker/archive/master.zip",
     keywords = ["Proxychecker","Hitfaker"],
-    py_modules = ["ProxyChecker.proxychecker"],
+    py_modules = ["ProxyChecker.proxychecker","ProxyChecker.color","ProxyChecker.useragent","ProxyChecker.regex"],
     scripts=["bin/proxychecker","bin/proxychecker.py"],
     cmdclass={"test" : proxychecker_test},
     license="GPL3",
