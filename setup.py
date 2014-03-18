@@ -45,7 +45,7 @@ setup(
     py_modules = ["ProxyChecker.proxychecker","ProxyChecker.color","ProxyChecker.useragent","ProxyChecker.regex"],
     scripts=["bin/proxychecker","bin/proxychecker.py"],
     cmdclass={"test" : proxychecker_test},
-    license="GPL3",
+    license="GPL3+",
     platforms=["linux","darwin","freebsd","netbsd","unixware7"],
     long_description = """\
  Fetaures:

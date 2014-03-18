@@ -27,7 +27,6 @@ from optparse import OptionParser
 from sys import platform,stderr,exit,argv,modules,path as sys_path
 from os import getlogin as username,popen
 from gettext import gettext as _
-from locale import getlocale
 
 
 if os_path.exists("/usr/share/locale/de/LC_MESSAGES/proxychecker.mo"):
@@ -81,17 +80,6 @@ except ImportError:
 			break
 	else:
 		print(_("...[NOTHING FOUND]"))
-		print(_("Searching in some custompaths..."),end="")
-		dirname = os_path.dirname(os.__file__)
-		paths = [dirname+"/site-packages/","/usr/lib/python3.3/site-packages/","/usr/lib/python3/site-packages/","/usr/local/lib/python3.3/dist-packages/","/usr/local/lib/python3/dist-packages/","/home/"+username()+"/lib/python3.3/site-packages/","/home/"+username()+"/lib/python3/site-packages/"]
-		for path in paths:
-			if os_path.exists(path+"/ProxyChecker/proxychecker.py"):
-				sys_path.append(path)
-				break
-		if path in sys_path:
-			print(_("...[FOUND] in {0}").format(path))
-		else:
-			print(_("...[NOTHING FOUND]"))
 
 if 'ProxyChecker.proxychecker' not in modules:
 	try:
