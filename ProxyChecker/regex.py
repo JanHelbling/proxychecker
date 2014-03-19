@@ -20,5 +20,4 @@
 
 import re
 
-proxyregex      = re.compile("\d+\.\d+\.\d+\.\d+:\d+")
-
+proxyregex      = re.compile('\d+\.\d+\.\d+\.\d+:\d+')

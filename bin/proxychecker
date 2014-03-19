@@ -18,93 +18,88 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import urllib.request
-import gettext
-import os,os.path as os_path
-
-
 from optparse import OptionParser
 from sys import platform,stderr,exit,argv,modules,path as sys_path
-from os import getlogin as username,popen
-from gettext import gettext as _
+from os import environ,popen,getcwd,getlogin as username,path as os_path
+from gettext import bindtextdomain,textdomain,gettext as _
 
 
-if os_path.exists("/usr/share/locale/de/LC_MESSAGES/proxychecker.mo"):
-	gettext.bindtextdomain('proxychecker', '/usr/share/locale')
-	gettext.textdomain('proxychecker')
-elif os_path.exists("/share/locale/de/LC_MESSAGES/proxychecker.mo"):
-	gettext.bindtextdomain('proxychecker', '/share/locale')
-	gettext.textdomain('proxychecker')
+if os_path.exists('/usr/share/locale/de/LC_MESSAGES/proxychecker.mo'):
+	bindtextdomain('proxychecker', '/usr/share/locale')
+	textdomain('proxychecker')
+elif os_path.exists('/share/locale/de/LC_MESSAGES/proxychecker.mo'):
+	bindtextdomain('proxychecker', '/share/locale')
+	textdomain('proxychecker')
 
-if "win" in platform:
-	stderr.write(_(" [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n"))
-	stderr.write(_("        (Windows has no syscall named fork()...\n"))
-	stderr.write(_("        You must Upgrade to Linux to use this ;)\n"))
+if 'win' in platform:
+	stderr.write(_(' [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n'))
+	stderr.write(_('        (Windows has no syscall named fork()...\n'))
+	stderr.write(_('        You must Upgrade to Linux to use this ;)\n'))
 	exit(1)
 
 #
 # For import ProxyChecker.proxychecker =>proxychecker
 #
-if os_path.exists("ProxyChecker/proxychecker.py") and "proxychecker" in os.getcwd().split("/")[-1].lower():
-		sys_path.append(".")
+if os_path.exists('ProxyChecker/proxychecker.py') and 'proxychecker' in getcwd().split('/')[-1].lower():
+		sys_path.append('.')
 
 try:
 	from ProxyChecker.proxychecker import proxychecker
 except ImportError:
-	print(_(">>> \"from ProxyChecker.proxychecker import proxychecker\" failed, try to search the module..."))
-	print(_("shell > find / 2>/dev/null | grep -E \"(|site\-packages|dist\-packages)/ProxyChecker/proxychecker.py\"..."),end="")
-	fd = popen("find / 2>/dev/null | grep -E \"(|site\-packages|dist\-packages)/ProxyChecker/proxychecker.py\"")
-	paths = (fd.read()).split("\n")
+	print(_('>>> "from ProxyChecker.proxychecker import proxychecker" failed, try to search the module...'))
+	print(_('shell > find / 2>/dev/null | grep -E "(|site\-packages|dist\-packages)/ProxyChecker/proxychecker.py"...'),end='')
+	fd = popen('find / 2>/dev/null | grep -E "(|site\-packages|dist\-packages)/ProxyChecker/proxychecker.py"')
+	paths = (fd.read()).split('\n')
 	if paths != ['']:
 		for path in paths:
-			path	=	path.replace("/ProxyChecker/proxychecker.py","")
-			print(_("...[FOUND] in {0}").format(path))
+			path	=	path.replace('/ProxyChecker/proxychecker.py','')
+			print(_('...[FOUND] in {0}').format(path))
 			sys_path.append(path)
-			if "SHELL" in os.environ:
-				if os.environ["SHELL"] == "/bin/bash":
-					rc = ".bashrc"
-				elif os.environ["SHELL"] == "/bin/zsh":
-					rc = ".zshrc"
+			if 'SHELL' in environ:
+				if environ['SHELL'] == '/bin/bash':
+					rc = '.bashrc'
+				elif environ['SHELL'] == '/bin/zsh':
+					rc = '.zshrc'
 				else:
 					break
-				answer	=	input(_("Add path to PYTHONPATH in ~/{0}? (to prevent searching the modulepath anytimes) (y/n)").format(rc))
-				if answer.lower() in ["y","yes","j","ja"]:
-					print(_("[EDITING {0}]...").format(os.environ["HOME"]+"/"+rc),end="")
-					rc_file		=	open(os.environ["HOME"]+"/"+rc,"r")
+				answer	=	input(_('Add path to PYTHONPATH in ~/{0}? (to prevent searching the modulepath anytimes) (y/n)').format(rc))
+				if answer.lower() in ['y','yes','j','ja']:
+					print(_('[EDITING {0}/{1}]...').format(environ['HOME'],rc),end='')
+					rc_file		=	open('{0}/{1}'.format(environ['HOME'],rc),'r')
 					rc_content	=	rc_file.read()
 					rc_file.close()
-					rc_file		=	open(os.environ["HOME"]+"/"+rc,"w")
-					rc_file.write(rc_content+"\nexport PYTHONPATH=\"{0}\"\n".format(path))
+					rc_file		=	open('{0}/{1}'.format(environ['HOME'],rc),'w')
+					rc_file.write(rc_content+'\nexport PYTHONPATH="{0}"\n'.format(path))
 					rc_file.close()
-					print(_("...[DONE]"))
+					print(_('...[DONE]'))
 			break
 	else:
-		print(_("...[NOTHING FOUND]"))
+		print(_('...[NOTHING FOUND]'))
 
 if 'ProxyChecker.proxychecker' not in modules:
 	try:
 		from ProxyChecker.proxychecker import proxychecker
 	except ImportError as e:
-		print(_("Could not import \"from ProxyChecker.proxychecker import proxychecker\": {0}.").format(e.msg))
+		print(_('Could not import "from ProxyChecker.proxychecker import proxychecker": {0}.').format(e.msg))
 		exit(1)
 
-if __name__ == "__main__":
-	if len(argv) < 2 or ("--version" not in argv and "-i" not in argv and "--input" not in argv and "-h" not in argv and "--help" not in argv):
-		print(_("Invalid number of arguments! Use -h for options."))
+if __name__ == '__main__':
+	if len(argv) < 2 or ('--version' not in argv and '-i' not in argv and '--input' not in argv and '-h' not in argv and '--help' not in argv):
+		print(_('Invalid number of arguments! Use -h for options.'))
 		exit(0)
 	# Parse options and run the proxychecker
-	parser = OptionParser(usage=_("usage: %prog -i <proxylist[.gz]|URL> [options...]"),version=_("Version: 1.5\nContact & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"))
-	parser.add_option("-i", "--input", dest="input",help=_("read proxys from file (or from stdin), gz format supported"), metavar="FILE")
-	parser.add_option("-o", "--output", dest="output",help=_("write proxys to file (or to a stream), default: checked_proxys"), metavar="FILE",default="checked_proxys")
-	parser.add_option("-u", "--testsite", dest="testsite",help=_("use this site for requests, default: http://www.gnu.org"), metavar="WEBSITE",default="http://www.gnu.org")
-	parser.add_option("-c", "--contains", dest="contains",help=_("good hit must contains ..., default: GNU"), metavar="STRING",default="GNU")
-	parser.add_option("-t", "--timeout", dest="to",help=_("timeout, default: 5.0"), metavar="TIMEOUT",type="float",default=5.0)
-	parser.add_option("-p", "--process", dest="numproc",help=_("number of processes, default: 10"), type="int",metavar="NUM",default=10)
-	parser.add_option("-r", "--referer", dest="referer",help=_("use this site as referer, default: None"),metavar="REFERER",default="")
-	parser.add_option("-b", "--browser-string",type='choice',choices=['mobile','desktop','all'],dest="browserstring", help=_("mobile,desktop or all, default: desktop"), metavar="TYPE",default="desktop")
-	parser.add_option("-P", "--post-data", dest="postdata", help=_("data for post-requests, (eg. \"foo=bar&info=false\"), default: None"),metavar="DATA",default="")
-	parser.add_option("-C", "--cookie", dest="cookie", help=_("cookies, separated by ; (eg. \"abc=123; def=456;\"), default: None"),metavar="COOKIE",default="")
-	parser.add_option("-H", "--header", dest="header", help=_("add a header, splitted by : (eg. \"Range:bytes=500-999\"), default: None") ,default="")
-	parser.add_option("-e", "--color", dest="color",type='choice',choices=['none','yes'], help=_("colored output, none or yes, default: yes"),metavar="COLOR",default="yes")
+	parser = OptionParser(usage=_('usage: %prog -i <proxylist[.gz]|URL> [options...]'),version=_('Version: 1.5\nContact & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]'))
+	parser.add_option('-i', '--input', dest='input',help=_('read proxys from file (or from stdin), gz format supported'), metavar='FILE')
+	parser.add_option('-o', '--output', dest='output',help=_('write proxys to file (or to a stream), default: checked_proxys'), metavar='FILE',default='checked_proxys')
+	parser.add_option('-u', '--testsite', dest='testsite',help=_('use this site for requests, default: http://www.gnu.org'), metavar='WEBSITE',default='http://www.gnu.org')
+	parser.add_option('-c', '--contains', dest='contains',help=_('good hit must contains ..., default: GNU'), metavar='STRING',default='GNU')
+	parser.add_option('-t', '--timeout', dest='to',help=_('timeout, default: 5.0'), metavar='TIMEOUT',type='float',default=5.0)
+	parser.add_option('-p', '--process', dest='numproc',help=_('number of processes, default: 10'), type='int',metavar='NUM',default=10)
+	parser.add_option('-r', '--referer', dest='referer',help=_('use this site as referer, default: None'),metavar='REFERER',default='')
+	parser.add_option('-b', '--browser-string',type='choice',choices=['mobile','desktop','all'],dest='browserstring', help=_('mobile,desktop or all, default: desktop'), metavar='TYPE',default='desktop')
+	parser.add_option('-P', '--post-data', dest='postdata', help=_('data for post-requests, (eg. "foo=bar&info=false"), default: None'),metavar='DATA',default='')
+	parser.add_option('-C', '--cookie', dest='cookie', help=_('cookies, separated by ; (eg. "abc=123; def=456;"), default: None'),metavar='COOKIE',default='')
+	parser.add_option('-H', '--header', dest='header', help=_('add a header, splitted by : (eg. "Range:bytes=500-999"), default: None') ,default='')
+	parser.add_option('-e', '--color', dest='color',type='choice',choices=['none','yes'], help=_('colored output, none or yes, default: yes'),metavar='COLOR',default='yes')
 	(options, args) = parser.parse_args()
 	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.header)
