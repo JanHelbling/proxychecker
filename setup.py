@@ -3,11 +3,11 @@
 from sys import executable,stderr,exit,version
 from os import path as os_path
 
-if version < "3":
-	stderr.write("You need python3 to run this!\n")
-	stderr.write("ArchLinux:     sudo pacman -S python\n")
-	stderr.write("Ubuntu/Debian: sudo apt-get install python3\n")
-	stderr.write("Fedora:        sudo yum install python3\n")
+if version < '3':
+	stderr.write('You need python3 to run this!\n')
+	stderr.write('ArchLinux:     sudo pacman -S python\n')
+	stderr.write('Ubuntu/Debian: sudo apt-get install python3\n')
+	stderr.write('Fedora:        sudo yum install python3\n')
 	exit(1)
 
 import subprocess
@@ -15,10 +15,10 @@ import subprocess
 try:
 	from DistUtilsExtra.auto import setup
 except ImportError:
-	stderr.write("You need python3-distutils-extra to compile the gettext .po to .mo files!\n")
-	stderr.write("ArchLinux:      sudo pacman -S python-distutils-extra\n")
-	stderr.write("Ubuntu/Debian:  sudo apt-get install python3-distutils-extra\n")
-	stderr.write("Fedora:         sudo yum install python3-distutils-extra\n")
+	stderr.write('You need python3-distutils-extra to compile the gettext .po to .mo files!\n')
+	stderr.write('ArchLinux:      sudo pacman -S python-distutils-extra\n')
+	stderr.write('Ubuntu/Debian:  sudo apt-get install python3-distutils-extra\n')
+	stderr.write('Fedora:         sudo yum install python3-distutils-extra\n')
 	exit(1)
 
 from distutils.core import Command
@@ -34,19 +34,19 @@ class proxychecker_test(Command):
         raise SystemExit(errno)
 
 setup(
-    name="proxychecker",
-    version = "1.5",
-    description = "A Advanced, Multithreaded ProxyChecker and Hitfaker",
-    author = "Jan Helbling",
-    author_email = "jan.helbling@gmail.com",
-    url = "http://jan-helbling.no-ip.biz",
-    download_url = "https://github.com/JanHelbling/ProxyChecker/archive/master.zip",
-    keywords = ["Proxychecker","Hitfaker"],
-    py_modules = ["ProxyChecker.proxychecker","ProxyChecker.color","ProxyChecker.useragent","ProxyChecker.regex"],
-    scripts=["bin/proxychecker","bin/proxychecker.py"],
-    cmdclass={"test" : proxychecker_test},
-    license="GPL3+",
-    platforms=["linux","darwin","freebsd","netbsd","unixware7"],
+    name='proxychecker',
+    version = '1.5',
+    description = 'A Advanced, Multithreaded ProxyChecker and Hitfaker',
+    author = 'Jan Helbling',
+    author_email = 'jan.helbling@gmail.com',
+    url = 'http://jan-helbling.no-ip.biz',
+    download_url = 'https://github.com/JanHelbling/ProxyChecker/archive/master.zip',
+    keywords = ['Proxychecker','Hitfaker'],
+    py_modules = ['ProxyChecker.proxychecker','ProxyChecker.color','ProxyChecker.useragent','ProxyChecker.regex'],
+    scripts=['bin/proxychecker','bin/proxychecker.py'],
+    cmdclass={'test' : proxychecker_test},
+    license='GPL3+',
+    platforms=['linux','darwin','freebsd','netbsd','unixware7'],
     long_description = """\
  Fetaures:
 	- Multithreaded ( with fork)
