@@ -39,7 +39,7 @@ setup(
     description = 'A Advanced, Multithreaded ProxyChecker and Hitfaker',
     author = 'Jan Helbling',
     author_email = 'jan.helbling@gmail.com',
-    url = 'http://jan-helbling.no-ip.biz',
+    url = 'http://www.jan-helbling.ch/index.php/projekte/3-proxychecker-hitfaker',
     download_url = 'https://github.com/JanHelbling/ProxyChecker/archive/master.zip',
     keywords = ['Proxychecker','Hitfaker'],
     py_modules = ['ProxyChecker.proxychecker','ProxyChecker.color','ProxyChecker.useragent','ProxyChecker.regex'],
