@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from urllib.request import build_opener,ProxyHandler,urlopen
+from urllib.request import build_opener,ProxyHandler,urlopen,URLError
 from gzip import open as gzip_open
 from http.client import IncompleteRead,BadStatusLine
 from os import path
@@ -147,7 +147,7 @@ class proxychecker:
                                 stdin       =       self.out_file
                         else:
                                 self.out_file   =       open(out_file,'w')
-		except urllib.error.URLError as e:
+		except URLError as e:
                         print(_('...{0}[FAIL]{1}').format(RED,NOCOLOR))
                         if type(e.args[0]) == str:
                                 stderr.write(_('{0} [ERROR] couldn\'t open {1}: {2}{3}\n').format(RED,in_file,e.args[0],NOCOLOR))

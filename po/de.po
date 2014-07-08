@@ -331,9 +331,9 @@ msgstr ""
 "funktionieren...{2}"
 
 #: ../ProxyChecker/proxychecker.py:300
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{0}removing the output-file...{2}"
-msgstr "{0}Entferne Ausgabedatei..."
+msgstr "{0}Entferne Ausgabedatei...{2}"
 
 #: ../ProxyChecker/proxychecker.py:303
 #, python-brace-format
