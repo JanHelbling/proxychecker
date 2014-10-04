@@ -304,7 +304,7 @@ class proxychecker:
 			print(_('{0}[!!!EPIC FAIL!!!] None of {1} proxys we have checked are working...{2}').format(REDBOLD,self.totalproxys,NOCOLOR))
 			if self.out_file.name == devnull:
 				exit(0)
-			print(_('{0}removing the output-file...{2}').format(REDBOLD,NOCOLOR),end='')
+			print(_('{0}removing the output-file...{1}').format(REDBOLD,NOCOLOR),end='')
 			try:
 				unlink(self.out_file.name)
 				print(_('{0}...{1}[OK]{2}').format(REDBOLD,GREEN,NOCOLOR))
