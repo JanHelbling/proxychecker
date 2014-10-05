@@ -70,6 +70,9 @@ Options:
                         default None
   -H HEADER, --header=HEADER
                         add a header, splitted by : (eg.
-                        "Range:bytes=500-999")default: None
+                        "Range:bytes
+                       =500-999")default: None
   -e COLOR, --color=COLOR
                         colored output, none or yes, default yes
+  -s SORT,  --sort=SORT  Run the SHELL-Command "sort -us" bevore exit to erase
+                        dupplicates and sort by alphabet
