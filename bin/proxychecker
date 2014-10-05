@@ -101,5 +101,6 @@ if __name__ == '__main__':
 	parser.add_option('-C', '--cookie', dest='cookie', help=_('cookies, separated by ; (eg. "abc=123; def=456;"), default: None'),metavar='COOKIE',default='')
 	parser.add_option('-H', '--header', dest='header', help=_('add a header, splitted by : (eg. "Range:bytes=500-999"), default: None') ,default='')
 	parser.add_option('-e', '--color', dest='color',type='choice',choices=['none','yes'], help=_('colored output, none or yes, default: yes'),metavar='COLOR',default='yes')
+	parser.add_option('-s', '--sort' , dest='sort', type='choice',choices=['yes','no'],help=_('Run the SHELL-Command "sort -us" bevore exit to erase dupplicates and sort by alphabet'),default='no')
 	(options, args) = parser.parse_args()
-	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.header)
+	p = proxychecker(options.input,options.output,options.testsite,options.to,options.numproc,options.contains,options.referer,options.browserstring,options.postdata,options.cookie,options.color,options.header,options.sort)

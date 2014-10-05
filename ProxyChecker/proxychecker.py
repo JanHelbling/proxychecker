@@ -21,7 +21,7 @@
 from urllib.request import build_opener,ProxyHandler,urlopen,URLError
 from gzip import open as gzip_open
 from http.client import IncompleteRead,BadStatusLine
-from os import path
+from os import path,execvp,rename
 from sys import stderr,stdout,stdin,exit,platform
 from gettext import bindtextdomain,textdomain,gettext as _
 
@@ -58,7 +58,7 @@ from ProxyChecker.regex import *
 
 class proxychecker:
 	"""A advanced Proxychecker/Hitfaker in Python"""
-	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color,header):
+	def __init__(self,in_file,out_file,testsite,to,process_num,contains,referer,browserstring,postdata,cookie,color,header,sort):
 		"""Run's the program"""
 		global RED,REDBOLD,GREEN,GREENBOLD,YELLOW,NOCOLOR
 		if header != "":
@@ -68,6 +68,7 @@ class proxychecker:
 			self.header		=	(header.split(':')[0],header.split(':')[1])
 		else:
 			self.header		=	('','')
+		self.sort		=	sort
 		self.color		=	color.lower()
 		self.cookie             =       cookie
 		self.postdata           =       postdata.encode('utf-8','ignore')
@@ -315,4 +316,22 @@ class proxychecker:
 		else:
 			print(_('{0}[!!!DONE!!!] {1} of {2} proxys we have checked are working!{3}').format(GREENBOLD,self.cnt,self.totalproxys,NOCOLOR))
 			print(_('{0}[New Proxylist saved to => {1}]{2}').format(GREEN,self.out_file.name,NOCOLOR))
+			if self.sort == 'yes':
+				print(_('{0}[Sort&Filter]:~${1} sort -us {2} -o 000{2}{3}...{4}'.format(YELLOW,GREEN,self.out_file.name,YELLOW,NOCOLOR)),end='')
+				pid	=	fork()
+				if not pid:
+					execvp('sort',['sort','-us',self.out_file.name,'-o','000{}'.format(self.out_file.name)])
+					exit(0)
+				(_pid,st)	=	waitpid(pid,0)
+				if WEXITSTATUS(st) == 0:
+					print(_('{0}...{1}[!SUCCESS!]{2}'.format(YELLOW,GREEN,NOCOLOR)))
+				else:
+					print(_('{0}...{1}[!EPICFAIL!]{2}'.format(YELLOW,RED,NOCOLOR)))
+				print(_('{0}[RENAME 000{1} to {1}...{2}'.format(YELLOW,self.out_file.name,NOCOLOR)),end='')
+				try:
+					rename('000{}'.format(self.out_file.name),self.out_file.name)
+				except FileNotFoundError as e:
+					print(_('{0}...ERROR!!!] Could not rename 000{1} in {1}: {2}!{3}'.format(RED,e.filename,e.strerror,NOCOLOR)))
+					exit(1)
+				print(_('{0}...DONE!]{1}'.format(GREEN,NOCOLOR)))
 		exit(0)
