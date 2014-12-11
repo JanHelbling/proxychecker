@@ -24,7 +24,7 @@ import urllib2
 import gzip,sys
 
 from gettext import gettext as _
-from httplib import HTTPException
+from httplib import HTTPException,BadStatusLine,IncompleteRead
 from os import path
 
 
@@ -220,7 +220,7 @@ class proxychecker:
 				fd		=	opener.open(self.testsite,timeout=self.to,data=self.postdata) # Open the website, with timeout to and postdata
 			content		=	fd.read()
 			endtime		=	time()
-			contenttype	=	fd.getheader('Content-Type')
+			contenttype	=	fd.info().getparam('Content-Type')
 			content		=	content.decode('utf-8','ignore')
 			fd.close()
 			endtime		=	"%.3f" % (endtime-starttime)
