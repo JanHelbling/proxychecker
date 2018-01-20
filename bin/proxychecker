@@ -33,15 +33,8 @@ if 'win' in platform:
 	stderr.write(_('        (Windows has no syscall named fork()...\n'))
 	stderr.write(_('        You must Upgrade to Linux to use this ;)\n'))
 	exit(1)
-elif 'unixware7' in platform:
-	try:
-		from os import fork1 as fork
-	except ImportError:
-		from os import fork
-else:
-	from os import fork
 
-from os import waitpid,unlink,devnull,WEXITSTATUS,getenv
+from os import waitpid,unlink,devnull,WEXITSTATUS,getenv,fork
 from socket import timeout
 from random import randint
 from time import time
