@@ -2,7 +2,7 @@
 #
 #    proxychecker.py is a multithreaded hitfaker and proxychecker
 #
-#    Copyright (C) 2014 by Jan Helbling <jan.helbling@gmail.com>
+#    Copyright (C) 2018 by Jan Helbling <jan.helbling@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -376,7 +376,7 @@ if __name__ == '__main__':
 		print(_('Invalid number of arguments! Use -h for options.'))
 		exit(0)
 	# Parse options and run the proxychecker
-	parser = OptionParser(usage=_('usage: %prog -i <proxylist[.gz]|URL> [options...]'),version=_('Version: 1.5\nContact & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]'))
+	parser = OptionParser(usage=_('usage: %prog -i <proxylist[.gz]|URL> [options...]'),version=_('Version: 1.7\nContact & (C): 2018 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]'))
 	parser.add_option('-i', '--input', dest='input',help=_('read proxys from file (or from stdin), gz format supported'), metavar='FILE')
 	parser.add_option('-o', '--output', dest='output',help=_('write proxys to file (or to a stream), default: checked_proxys'), metavar='FILE',default='checked_proxys')
 	parser.add_option('-u', '--testsite', dest='testsite',help=_('use this site for requests, default: http://www.gnu.org'), metavar='WEBSITE',default='http://www.gnu.org')

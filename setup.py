@@ -35,11 +35,11 @@ class proxychecker_test(Command):
 
 setup(
     name='proxychecker',
-    version = '1.6',
+    version = '1.7',
     description = 'A Advanced, Multithreaded ProxyChecker and Hitfaker',
     author = 'Jan Helbling',
     author_email = 'jan.helbling@gmail.com',
-    url = 'http://www.jan-helbling.ch/~jhelbling/linux.py?gpl3-opensource-programm=proxychecker-a-advanced-multithreaded-proxychecker-and-hitfaker',
+    url = 'https://github.com/JanHelbling/proxychecker',
     download_url = 'https://github.com/JanHelbling/ProxyChecker/archive/master.zip',
     keywords = ['Proxychecker','Hitfaker'],
     scripts=['bin/proxychecker','bin/proxychecker.py'],
