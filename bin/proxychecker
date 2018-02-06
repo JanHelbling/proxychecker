@@ -148,14 +148,14 @@ class proxychecker:
 	def __open_files(self,in_file,out_file):
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
-			if in_file not in ['-','/dev/stdin'] and not in_file.startswith('http://'):
+			if in_file not in ['-','/dev/stdin'] and not in_file.startswith('http://') and not in_file.startswith('https://'):
 				if in_file.lower().endswith('.gz'):
 					self.in_file    =       gzip_open(in_file,'rb')
 				else:
 					self.in_file    =       open(in_file,'rb')
 				self.proxys     =       self.in_file.readlines()
 				self.in_file.close()
-			elif in_file.startswith('http://'):
+			elif in_file.startswith('http://') or in_file.startswith('https://'):
 				print(_('{0}[INFO] gather proxys from url...').format(YELLOW),end='')
 				self.from_url   =       True
 				self.http_proxy	=	getenv('http_proxy')
