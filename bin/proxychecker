@@ -146,6 +146,7 @@ class proxychecker:
 		self.__main()
 	
 	def __open_files(self,in_file,out_file):
+		global stdin
 		try:
 			# Open (and read) the proxylist to be checked and the outputfile
 			if in_file not in ['-','/dev/stdin'] and not in_file.startswith('http://') and not in_file.startswith('https://'):
