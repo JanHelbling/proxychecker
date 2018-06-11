@@ -38,7 +38,7 @@ setup(
     version = '1.7',
     description = 'A Advanced, Multithreaded ProxyChecker and Hitfaker',
     author = 'Jan Helbling',
-    author_email = 'jan.helbling@gmail.com',
+    author_email = 'jan.helbling@mailbox.org',
     url = 'https://github.com/JanHelbling/proxychecker',
     download_url = 'https://github.com/JanHelbling/ProxyChecker/archive/master.zip',
     keywords = ['Proxychecker','Hitfaker'],

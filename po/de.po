@@ -1,5 +1,5 @@
 # German Translation for proxychecker.
-# Copyright (C) 2014 Jan Helbling <jan.helbling@gmail.com>
+# Copyright (C) 2014 Jan Helbling <jan.helbling@mailbox.org>
 # This file is distributed under the same license as the PACKAGE package
 #
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-05 02:19+0200\n"
 "PO-Revision-Date: 2014-01-11 02:14+0000\n"
-"Last-Translator: Jan Helbling <jan.helbling@gmail.com>\n"
+"Last-Translator: Jan Helbling <jan.helbling@mailbox.org>\n"
 "Language-Team:\n"
 "Language: German\n"
 "MIME-Version: 1.0\n"
@@ -294,8 +294,8 @@ msgid "usage: %prog -i <proxylist[.gz]|URL> [options...]"
 msgstr "usage: %prog -i <proxylist[.gz]|URL> [Optionen...]"
 
 #: ../bin/proxychecker.py:91
-msgid "Version: 1.5\nContact & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
-msgstr "Version: 1.5\nKontakt & (C): 2014 by Jan Helbling <jan.helbling@gmail.com> [GNU/GPLv3+]"
+msgid "Version: 1.5\nContact & (C): 2014 by Jan Helbling <jan.helbling@mailbox.org> [GNU/GPLv3+]"
+msgstr "Version: 1.5\nKontakt & (C): 2014 by Jan Helbling <jan.helbling@mailbox.org> [GNU/GPLv3+]"
 
 #: ../bin/proxychecker.py:92
 msgid "read proxys from file (or from stdin), gz format supported"
