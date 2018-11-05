@@ -30,14 +30,15 @@ import re
 
 try:
 	from os import waitpid,unlink,devnull,WEXITSTATUS,getenv,fork
-except ImortError as e:
+except ImportError as e:
 	if 'win' in platform:
 		stderr.write(_(' [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n'))
 		stderr.write(_('        (Windows has no syscall named fork()...\n'))
 		stderr.write(_('        You must Upgrade to Linux to use this ;)\n'))
 		exit(1)
 	else:
-		print(e.message)
+		print(e.msg)
+		exit(1)
 
 from socket import timeout
 from random import randint
