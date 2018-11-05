@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #
 #    proxychecker.py is a multithreaded hitfaker and proxychecker
 #
@@ -28,13 +28,17 @@ from http.client import IncompleteRead,BadStatusLine
 from sys import stderr,stdout,stdin,exit,platform
 import re
 
-if 'win' in platform:
-	stderr.write(_(' [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n'))
-	stderr.write(_('        (Windows has no syscall named fork()...\n'))
-	stderr.write(_('        You must Upgrade to Linux to use this ;)\n'))
-	exit(1)
+try:
+	from os import waitpid,unlink,devnull,WEXITSTATUS,getenv,fork
+except ImortError as e:
+	if 'win' in platform:
+		stderr.write(_(' [ERROR] fork could not be imported from os, this programm is not for Windows-Users!!\n'))
+		stderr.write(_('        (Windows has no syscall named fork()...\n'))
+		stderr.write(_('        You must Upgrade to Linux to use this ;)\n'))
+		exit(1)
+	else:
+		print(e.message)
 
-from os import waitpid,unlink,devnull,WEXITSTATUS,getenv,fork
 from socket import timeout
 from random import randint
 from time import time
